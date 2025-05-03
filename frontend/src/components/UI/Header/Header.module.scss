@@ -1,0 +1,21 @@
+
+.navItem{
+  border: 0.5px solid gray;
+  border-radius: 10px;
+
+}
+
+
+.main{
+  background-color: #212227;
+}
+
+.authButton{
+  background-color: #38393D;
+  transition: background-color 0.3s ease;
+
+    &:hover {
+      background-color: black;
+    }
+
+}
