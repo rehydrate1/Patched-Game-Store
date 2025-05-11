@@ -3,9 +3,10 @@ package main
 import (
 	"log"
 	"net/http"
-	"fmt"
 
-	"github.com/rehydrate1/Patched-Game-Store/internal/config"
+	"github.com/go-chi/chi/v5"
+	"github.com/rehydrate1/Patched-Game-Store/api/v1"
+	"github.com/rehydrate1/Patched-Game-Store/config"
 )
 
 func main() {
@@ -14,15 +15,19 @@ func main() {
 		log.Fatalf("FATAL: Could not load configuration: %v",err)
 	}
 	
-	mux := http.NewServeMux()
+	routerV1 := v1.NewRouter()
 
-	mux.HandleFunc("/health", func(w http.ResponseWriter, r *http.Request) {
+	mainRouter := chi.NewRouter()
+	mainRouter.Mount("/api/v1", routerV1)
+
+	mainRouter.Get("/health", func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Set("Content-Type", "application/json")
 		w.WriteHeader(http.StatusOK)
-		fmt.Fprintln(w, "OK")
+		w.Write([]byte(`{"status": "API Gateway OK"'}`))
 	})
 
-	log.Printf("Server started at localhost:%s", cfg.ServerPort)
-	if err := http.ListenAndServe(cfg.ListenAddress, mux); err != nil {
+	log.Printf("Server started at http://localhost:%s", cfg.ServerPort)
+	if err := http.ListenAndServe(cfg.ListenAddress, mainRouter); err != nil {
 		log.Fatalf("FATAL: Could not start server: %v", err)
 	}
 }
