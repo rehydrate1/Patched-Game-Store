@@ -23,7 +23,7 @@ func main() {
 	mainRouter.Get("/health", func(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Content-Type", "application/json")
 		w.WriteHeader(http.StatusOK)
-		w.Write([]byte(`{"status": "API Gateway OK"'}`))
+		w.Write([]byte(`{"status": "API Gateway OK"}`))
 	})
 
 	log.Printf("Server started at http://localhost:%s", cfg.ServerPort)
