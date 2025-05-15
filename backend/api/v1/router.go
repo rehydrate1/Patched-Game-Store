@@ -4,6 +4,7 @@ import (
 	"net/http"
 
 	customMiddleware "github.com/rehydrate1/Patched-Game-Store/api/v1/middleware"
+	"github.com/rehydrate1/Patched-Game-Store/api/v1/handlers"
 
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
@@ -33,6 +34,8 @@ func NewRouter() http.Handler {
 
 	// Группа маршрутов для /api/v1
 	r.Get("/health", healthCheckHandler)
+	r.Get("/games/{gameID}", handlers.GetGameHandler)
+
 
 	return r
 }

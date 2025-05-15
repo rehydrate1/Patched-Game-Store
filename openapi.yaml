@@ -141,6 +141,55 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
 
+  /games/{gameID}:
+    get:
+      tags:
+        - Games
+      summary: Get a specific game by its ID
+      operationId: getGameById
+      parameters:
+        - name: gameID # Имя параметра должно совпадать с тем, что в фигурных скобках
+          in: path
+          required: true
+          description: ID of the game to retrieve
+          schema:
+            type: string # Или integer, если ID числовой
+            format: uuid # Если ID - это UUID, как мы планировали
+            example: "g1a2b3c4-d5e6-f789-0123-456789abcdef"
+      responses:
+        '200':
+          description: Successfully retrieved game details
+          content:
+            application/json:
+              schema:
+                # Пока заглушка, позже здесь будет ссылка на полную схему игры
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: success
+                  message:
+                    type: string
+                    example: "Fetching game with ID: g1a2b3c4-d5e6-f789-0123-456789abcdef"
+        '400':
+          description: Invalid game ID supplied
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Game not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
 # Переиспользуемые компоненты
 components:
   schemas:
