@@ -148,13 +148,13 @@ paths:
       summary: Get a specific game by its ID
       operationId: getGameById
       parameters:
-        - name: gameID # Имя параметра должно совпадать с тем, что в фигурных скобках
+        - name: gameID
           in: path
           required: true
           description: ID of the game to retrieve
           schema:
-            type: string # Или integer, если ID числовой
-            format: uuid # Если ID - это UUID, как мы планировали
+            type: string
+            format: uuid 
             example: "g1a2b3c4-d5e6-f789-0123-456789abcdef"
       responses:
         '200':
@@ -179,6 +179,61 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
         '404':
           description: Game not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /search:
+    get:
+      tags:
+        - Games
+      summary: Search for games based on query parameters
+      operationId: searchGames
+      parameters:
+        - name: q
+          in: query
+          description: Search term
+          required: false
+          schema:
+            type: string
+            example: "witcher"
+        - name: genre
+          in: query
+          description: Filter by genre
+          required: false
+          schema:
+            type: string
+            example: "rpg"
+        - name: limit
+          in: query 
+          description: Number of results to return
+          required: false
+          schema:
+            type: integer
+            format: int32
+            default: 10
+            example: 20
+      responses:
+        '200':
+          description: Search results
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                  message:
+                    type: string
+        '400':
+          description: Invalid query parameters
           content:
             application/json:
               schema:
