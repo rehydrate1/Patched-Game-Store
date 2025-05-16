@@ -1,9 +1,14 @@
 package handlers
 
 import (
-	"net/http"
+	"encoding/json"
 	"fmt"
+	"io"
+	"net/http"
+
 	"github.com/go-chi/chi/v5"
+
+	"github.com/rehydrate1/Patched-Game-Store/internal/domain"
 )
 
 // Получение игры по ID
@@ -37,4 +42,35 @@ func SearchGamesHandler(w http.ResponseWriter, r *http.Request) {
 	response := fmt.Sprintf(`{"status": "success", "message": "%s"}`, message)
 	w.WriteHeader(http.StatusOK)
 	w.Write([]byte(response))
+}
+
+// Создание новой игры
+func CreateGameHandler(w http.ResponseWriter, r *http.Request) {
+	var input domain.CreateGameRequest
+
+	body, err := io.ReadAll(r.Body)
+	if err != nil {
+		http.Error(w, "Failed to read request body", http.StatusInternalServerError)
+		return
+	}
+	defer r.Body.Close()
+
+	if err := json.Unmarshal(body, &input); err != nil {
+		http.Error(w, "Invalid JSON format: "+err.Error(), http.StatusBadRequest)
+		return
+	}
+
+	// TODO: валидация входных данных
+	// TODO: логика создания игры в сервисе и сохранения в БД
+
+	responsePayload := struct {
+		ID string `json:"id"`
+		domain.CreateGameRequest
+	}{
+		ID:	"temp-game-id-123", // заглушка
+		CreateGameRequest: input,
+	}
+
+	w.WriteHeader(http.StatusCreated)
+	json.NewEncoder(w).Encode(responsePayload)
 }

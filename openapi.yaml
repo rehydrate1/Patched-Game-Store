@@ -141,6 +141,39 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
 
+    post:
+      tags:
+        - Games
+      summary: Create a new game
+      operationId: createGame
+      requestBody: # Описываем тело запроса
+        description: Game object that needs to be added to the store
+        required: true
+        content:
+          application/json:
+            schema:
+              # Ссылка на схему из components
+              $ref: '#/components/schemas/CreateGameRequest' 
+      responses:
+        '201': # Created
+          description: Game created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GameResponse'     
+        '400':
+          description: Invalid input, object invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
   /games/{gameID}:
     get:
       tags:
@@ -313,6 +346,107 @@ components:
           type: string
           format: date-time # ISO 8601
           example: "2023-10-27T10:30:00Z"
+
+    CreateGameRequest:
+      type: object
+      required:
+        - title
+        - description
+        - price
+        - releaseDate
+      properties:
+        title:
+          type: string
+          minLength: 3
+          maxLength: 100
+          example: "Epic Adventure Game"
+        description:
+          type: string
+          minLength: 10
+          example: "An amazing adventure through..."
+        price:
+          type: number
+          format: float
+          minimum: 0.01 # Цена должна быть положительной
+          example: 29.99
+        releaseDate:
+          type: string
+          format: date # OpenAPI 'date' соответствует YYYY-MM-DD
+          description: "Release date in YYYY-MM-DD format"
+          example: "2024-12-31"
+        coverImageUrl:
+          type: string
+          format: url
+          example: "http://example.com/cover.jpg"
+        developer:
+          type: string
+          example: "Indie Devs"
+        publisher:
+          type: string
+          example: "Self-Published"
+        genres:
+          type: array
+          items:
+            type: string
+          example: ["action", "adventure"]
+        platforms:
+          type: array
+          items:
+            type: string
+          example: ["pc", "ps5"]
+
+    GameResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          example: "g1a2b3c4-d5e6-f789-0123-456789abcdef"
+          readOnly: true # ID генерируется сервером
+        title:
+          type: string
+          example: "Epic Adventure Game"
+        description:
+          type: string
+          example: "An amazing adventure through..."
+        price:
+          type: number
+          format: float
+          example: 29.99
+        releaseDate: # В ответе это может быть полная дата-время
+          type: string
+          format: date-time # ISO 8601, например, 2024-12-31T00:00:00Z
+          example: "2024-12-31T00:00:00Z"
+        coverImageUrl:
+          type: string
+          format: url
+          example: "http://example.com/cover.jpg"
+        developer:
+          type: string
+          example: "Indie Devs"
+        publisher:
+          type: string
+          example: "Self-Published"
+        genres:
+          type: array
+          items:
+            type: string
+          example: ["action", "adventure"]
+        platforms:
+          type: array
+          items:
+            type: string
+          example: ["pc", "ps5"]
+        createdAt:
+          type: string
+          format: date-time
+          example: "2023-10-28T10:20:30Z"
+          readOnly: true # Генерируется сервером
+        updatedAt:
+          type: string
+          format: date-time
+          example: "2023-10-28T10:20:30Z"
+          readOnly: true # Генерируется сервером
 
     GameSummaryResponse: # Упрощенная схема для списков игр
       type: object

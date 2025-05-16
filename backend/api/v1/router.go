@@ -34,6 +34,8 @@ func NewRouter() http.Handler {
 
 	// Группа маршрутов для /api/v1
 	r.Get("/health", healthCheckHandler)
+	r.Get("/search", handlers.SearchGamesHandler)
+	r.Get("/games", handlers.CreateGameHandler)
 	r.Get("/games/{gameID}", handlers.GetGameHandler)
 
 
