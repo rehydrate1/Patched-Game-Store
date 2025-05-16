@@ -3,8 +3,8 @@ package v1
 import (
 	"net/http"
 
-	customMiddleware "github.com/rehydrate1/Patched-Game-Store/api/v1/middleware"
 	"github.com/rehydrate1/Patched-Game-Store/api/v1/handlers"
+	customMiddleware "github.com/rehydrate1/Patched-Game-Store/api/v1/middleware"
 
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
@@ -16,11 +16,11 @@ func NewRouter() http.Handler {
 
 	// Настройка CORS
 	corsMiddleware := cors.New(cors.Options{
-		AllowedOrigins: []string{"http://localhost:3000", "http://127.0.0.1:3000"},
-		AllowedMethods: []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
-		AllowedHeaders: []string{"Accept", "Authorization", "Content-Type", "X-CSRF-Token", "X-Custom-Header"},
+		AllowedOrigins:   []string{"http://localhost:3000", "http://127.0.0.1:3000"},
+		AllowedMethods:   []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
+		AllowedHeaders:   []string{"Accept", "Authorization", "Content-Type", "X-CSRF-Token", "X-Custom-Header"},
 		AllowCredentials: true,
-		MaxAge: 300,
+		MaxAge:           300,
 	})
 	r.Use(corsMiddleware.Handler)
 
@@ -37,7 +37,6 @@ func NewRouter() http.Handler {
 	r.Get("/search", handlers.SearchGamesHandler)
 	r.Get("/games", handlers.CreateGameHandler)
 	r.Get("/games/{gameID}", handlers.GetGameHandler)
-
 
 	return r
 }

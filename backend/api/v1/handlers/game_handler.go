@@ -67,7 +67,7 @@ func CreateGameHandler(w http.ResponseWriter, r *http.Request) {
 		ID string `json:"id"`
 		domain.CreateGameRequest
 	}{
-		ID:	"temp-game-id-123", // заглушка
+		ID:                "temp-game-id-123", // заглушка
 		CreateGameRequest: input,
 	}
 
