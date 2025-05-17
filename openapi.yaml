@@ -1,0 +1,373 @@
+openapi: 3.0.3
+info:
+  title: Patched API
+  version: v1.0.0
+  description: API for managing a digital game store
+
+servers:
+  - url: http://localhost:8080/api/v1
+    description: Development server
+
+tags:
+  - name: Authentication
+    description: Operations related to user authentication (register, login)
+  - name: Games
+    description: OPerations related to games catalog
+
+paths:
+  /auth/register:
+    post:
+      tags:
+        - Authentication
+      summary: Register a new user
+      operationId: registerUser
+      requestBody:
+        description: User registration details
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserRegistrationRequest'
+      responses:
+        '201':
+          description: User registered successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserResponse'
+        '400':
+          description: Invalid input data (e.g., email already exists, password too short)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  
+  /auth/login:
+    post:
+      tags:
+        - Authentication
+      summary: Log in an existing user
+      operationId: loginUser
+      requestBody:
+        description: User login credentials
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserLoginRequest'
+      responses:
+        '200':
+          description: User logged in successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthTokensResponse'
+        '400':
+          description: Invalid input data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Invalid input data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Invalid input data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /games:
+    get:
+      tags:
+        - Games
+      summary: Get a list of games
+      operationId: listGames
+      parameters:
+        - name: page
+          in: query
+          description: Page number for pagination
+          required: false
+          schema:
+            type: integer
+            format: int32
+            default: 1
+            minimum: 1
+        - name: limit
+          in: query
+          description: Number of items per page
+          required: false
+          schema:
+            type: integer
+            format: int32
+            default: 10
+            minimum: 1
+            maximum: 100
+        # Сюда добавить фильтрацию и сортировку
+
+      responses:
+        '200':
+          description: A list of games
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  games:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/GameSummaryResponse'
+                  pagination:
+                    $ref: '#/components/schemas/PaginationResponse'
+        '400':
+          description: Invalid query parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /games/{gameID}:
+    get:
+      tags:
+        - Games
+      summary: Get a specific game by its ID
+      operationId: getGameById
+      parameters:
+        - name: gameID
+          in: path
+          required: true
+          description: ID of the game to retrieve
+          schema:
+            type: string
+            format: uuid 
+            example: "g1a2b3c4-d5e6-f789-0123-456789abcdef"
+      responses:
+        '200':
+          description: Successfully retrieved game details
+          content:
+            application/json:
+              schema:
+                # Пока заглушка, позже здесь будет ссылка на полную схему игры
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: success
+                  message:
+                    type: string
+                    example: "Fetching game with ID: g1a2b3c4-d5e6-f789-0123-456789abcdef"
+        '400':
+          description: Invalid game ID supplied
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Game not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /search:
+    get:
+      tags:
+        - Games
+      summary: Search for games based on query parameters
+      operationId: searchGames
+      parameters:
+        - name: q
+          in: query
+          description: Search term
+          required: false
+          schema:
+            type: string
+            example: "witcher"
+        - name: genre
+          in: query
+          description: Filter by genre
+          required: false
+          schema:
+            type: string
+            example: "rpg"
+        - name: limit
+          in: query 
+          description: Number of results to return
+          required: false
+          schema:
+            type: integer
+            format: int32
+            default: 10
+            example: 20
+      responses:
+        '200':
+          description: Search results
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                  message:
+                    type: string
+        '400':
+          description: Invalid query parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+# Переиспользуемые компоненты
+components:
+  schemas:
+    UserRegistrationRequest:
+      type: object
+      required:
+        - email
+        - password
+      properties:
+        email:
+          type: string
+          format: email
+          example: user@example.com
+        password:
+          type: string
+          format: password
+          minLength: 8
+          example: "password123"
+        username: # Опциональное поле
+          type: string
+          example: "JohnDoe"
+
+    UserLoginRequest:
+      type: object
+      required:
+        - email
+        - password
+      properties:
+        email:
+          type: string
+          format: email
+          example: user@example.com
+        password:
+          type: string
+          format: password
+          example: "password123"
+
+    AuthTokensResponse:
+      type: object
+      properties:
+        accessToken:
+          type: string
+          example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+        refreshToken:
+          type: string
+          example: "def50200f097e6..."
+
+    UserResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid # Предположим, что ID пользователя - это UUID
+          example: "a1b2c3d4-e5f6-7890-1234-567890abcdef"
+        email:
+          type: string
+          format: email
+          example: user@example.com
+        username:
+          type: string
+          example: "JohnDoe"
+        # role: # Добавим позже
+        #   type: string
+        #   example: "user"
+        createdAt:
+          type: string
+          format: date-time # ISO 8601
+          example: "2023-10-27T10:30:00Z"
+
+    GameSummaryResponse: # Упрощенная схема для списков игр
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          example: "g1a2b3c4-d5e6-f789-0123-456789abcdef"
+        title:
+          type: string
+          example: "Cyberpunk 2077"
+        price:
+          type: number
+          format: float
+          example: 59.99
+        coverImageUrl:
+          type: string
+          format: url
+          example: "http://example.com/covers/cp2077.jpg"
+        # Добавим жанры и платформы позже
+
+    PaginationResponse:
+      type: object
+      properties:
+        currentPage:
+          type: integer
+          example: 1
+        pageSize:
+          type: integer
+          example: 10
+        totalPages:
+          type: integer
+          example: 5
+        totalItems:
+          type: integer
+          example: 48
+
+    ErrorResponse:
+      type: object
+      required:
+        - message
+      properties:
+        message:
+          type: string
+          example: "Invalid input data"
+        code: # Опциональный код ошибки приложения
+          type: string
+          example: "VALIDATION_ERROR"
+        details: # Опциональные детали, могут быть строкой или объектом
+          type: object # или array
+          additionalProperties: true # Позволяет гибко добавлять поля
+          example: {"field": "email", "error": "already exists"}
+  
+  # securitySchemes: # Пока пусто, добавим JWT позже
+    # BearerAuth:
+    #   type: http
+    #   scheme: bearer
+    #   bearerFormat: JWT
