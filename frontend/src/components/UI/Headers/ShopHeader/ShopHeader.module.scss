@@ -37,3 +37,15 @@
     border-color: #aeb2ae;
   }
 }
+
+.catalogList{
+  background-color: #212227;
+}
+
+.catalogElement{
+  color: white;
+
+  &:hover{
+    background-color: #38393D;
+  }
+}

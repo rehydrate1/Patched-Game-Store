@@ -15,7 +15,7 @@ export default function MainHeader() {
 
                     <Link href={'/frontend/public'}>
                         <div className={'p-3'}>
-                            <h1 className='text-bold text-2xl'>Patched</h1>
+                            <h1 className='font-semibold text-2xl'>Patched</h1>
                         </div>
                     </Link>
 
