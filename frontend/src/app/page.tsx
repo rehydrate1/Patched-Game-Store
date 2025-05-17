@@ -1,5 +1,6 @@
 import Dashboard from './Dashboard'
-import Header from "@/components/UI/Header/Header";
+import MainHeader from "@/components/UI/MainHeader/MainHeader";
+import ShopHeader from "@/components/UI/ShopHeader/ShopHeader";
 
 
 
@@ -12,7 +13,8 @@ export const metadata = {
 export default function Home() {
   return (
     <>
-      <Header />
+      <MainHeader />
+        <ShopHeader />
       <Dashboard />
     </>
   );

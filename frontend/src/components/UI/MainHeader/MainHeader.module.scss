@@ -11,11 +11,12 @@
 }
 
 .authButton{
-  background-color: #38393D;
+  background-color: #00FE92;
   transition: background-color 0.3s ease;
+  color: #000;
 
     &:hover {
-      background-color: black;
+      background-color: #099f5f;
     }
 
 }
