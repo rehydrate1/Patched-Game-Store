@@ -29,9 +29,10 @@ func NewRouter() http.Handler {
 	r.Use(middleware.RealIP)
 	r.Use(middleware.Logger)
 	r.Use(middleware.Recoverer)
-
+	
 	r.Use(customMiddleware.CommonHeadersMiddleware)
-
+	r.Use(customMiddleware.ContextLoggerMiddleware)
+	
 	// Группа маршрутов для /api/v1
 	r.Get("/health", healthCheckHandler)
 	r.Get("/search", handlers.SearchGamesHandler)
@@ -42,6 +43,9 @@ func NewRouter() http.Handler {
 }
 
 func healthCheckHandler(w http.ResponseWriter, r *http.Request) {
+	l := customMiddleware.GetLoggerFromContext(r)
+	l.Info().Msg("Health check endpoint called")
+
 	w.WriteHeader(http.StatusOK)
 	w.Write([]byte(`{"status": "OK"}`))
 }
