@@ -1,0 +1,46 @@
+
+
+
+.main{
+  background: #212227 ;
+
+}
+
+.inputField{
+  border-color: #222224;
+  background-color: #38393D;
+  color: white;
+  transition: background-color 0.5s ease-in-out;
+
+  &:focus {
+    border-color: #00FE92;
+  }
+}
+
+.submitButton{
+  background-color: #00FE92;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: #099f5f;
+  }
+
+}
+
+.links{
+  color: #00FE92;
+  transition: background-color 0.4s ease-in-out;
+
+  &:hover {
+    color: #09865a;
+
+  }
+}
+
+.errorMessage {
+  background-color: #00FE92;
+  border: 1px solid #034a08;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  border-radius: 0.375rem;
+}

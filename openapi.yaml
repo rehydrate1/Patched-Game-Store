@@ -12,7 +12,7 @@ tags:
   - name: Authentication
     description: Operations related to user authentication (register, login)
   - name: Games
-    description: OPerations related to games catalog
+    description: OPerations related to keys catalog
 
 paths:
   /auth/register:
@@ -90,7 +90,7 @@ paths:
     get:
       tags:
         - Games
-      summary: Get a list of games
+      summary: Get a list of keys
       operationId: listGames
       parameters:
         - name: page
@@ -116,7 +116,7 @@ paths:
 
       responses:
         '200':
-          description: A list of games
+          description: A list of keys
           content:
             application/json:
               schema:
@@ -227,7 +227,7 @@ paths:
     get:
       tags:
         - Games
-      summary: Search for games based on query parameters
+      summary: Search for keys based on query parameters
       operationId: searchGames
       parameters:
         - name: q

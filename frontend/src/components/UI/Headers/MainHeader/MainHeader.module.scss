@@ -1,0 +1,24 @@
+.navItem{
+  transition: background-color 0.25s ease-in-out;
+
+  &:hover{
+    background-color: #099f5f;
+
+  }
+}
+
+
+.main{
+  background-color: #212227;
+}
+
+.authButton{
+  background-color: #00FE92;
+  transition: background-color 0.3s ease;
+  color: #000;
+
+    &:hover {
+      background-color: #099f5f;
+    }
+
+}
