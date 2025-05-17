@@ -1,0 +1,39 @@
+
+.catalogButton{
+  background-color: #00FE92;
+  transition: background-color 0.3s ease;
+  color: #000;
+
+  &:hover {
+    background-color: #099f5f;
+  }
+}
+
+
+.main{
+  background-color: #212227;
+
+}
+
+.shopButton {
+  background-color: #38393D;
+  color: white;
+  border: 1px solid transparent;
+  transition: border-color 0.3s ease;
+
+  &:hover {
+    border-color: #aeb2ae;
+  }
+}
+
+
+.searchInput{
+  background-color: #38393D;
+  color: white;
+  border: solid 1px #38393D;
+  transition: border-color 0.5s ease;
+
+  &:hover{
+    border-color: #aeb2ae;
+  }
+}

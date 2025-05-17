@@ -1,6 +1,6 @@
 import Dashboard from './Dashboard'
-import MainHeader from "@/components/UI/MainHeader/MainHeader";
-import ShopHeader from "@/components/UI/ShopHeader/ShopHeader";
+import MainHeader from "@/components/UI/Headers/MainHeader/MainHeader";
+import ShopHeader from "@/components/UI/Headers/ShopHeader/ShopHeader";
 
 
 

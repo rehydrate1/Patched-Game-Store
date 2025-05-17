@@ -1,8 +1,10 @@
-
 .navItem{
-  border: 0.5px solid gray;
-  border-radius: 10px;
+  transition: background-color 0.25s ease-in-out;
 
+  &:hover{
+    background-color: #099f5f;
+
+  }
 }
 
 
