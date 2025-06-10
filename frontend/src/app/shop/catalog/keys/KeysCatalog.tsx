@@ -2,12 +2,28 @@
 import styles from "./KeysCatalog.module.scss"
 
 
-export default function KeysCatalog(){
+interface KeysCatalogProps {
+    keysArray?: {
+        id: number;
+        name: string;
+        price: string;
+        picture: string;
+        releaseData: string;
+        platforms: string[];
+        applications: string[];
+        genres: string[];
+        developer: string
+    }[]
+}
+
+export default function KeysCatalog({keysArray}: KeysCatalogProps) {
 
 
-    return(
+    return (
         <>
-            games catalog
+            {keysArray.map((game)
+
+            )}
         </>
     );
 

@@ -489,17 +489,35 @@ components:
       type: object
       properties:
         id:
-          type: string
-          format: uuid
-          example: "g1a2b3c4-d5e6-f789-0123-456789abcdef"
-        title:
+          type: number
+          example: "1"
+        name:
           type: string
           example: "Cyberpunk 2077"
+        releaseData:
+          type: string
+          format: data
+          example: "27.08.2022"
+        platforms:
+          type: string
+          format: arr
+          example: "windows,macos"
+        applications:
+          type: string
+          format: arr
+          example: "steam, origin"
         price:
           type: number
           format: float
           example: 59.99
-        coverImageUrl:
+        genres:
+          type: string
+          format: arr
+          example: "ММО, гонки, шутеры"
+        developer:
+          type: string
+          example: "Ubisoft gay pride"
+        picture:
           type: string
           format: url
           example: "http://example.com/covers/cp2077.jpg"
