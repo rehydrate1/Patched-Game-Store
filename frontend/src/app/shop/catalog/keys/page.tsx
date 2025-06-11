@@ -10,11 +10,12 @@ export const metadata = {
 export default function KeysCatalogPage(){
 
     const arrayOfData = [
-        {id: 1,
+        {
+         id: 1,
          name: "Grand Theft Auto 5",
-         price: "",
-         picture: "",
-         releaseData: "",
+         price: "899",
+         picture: "https://media.rockstargames.com/rockstargames-newsite/uploads/e4e67668228df3eb050e64232a664f454ab7b030.jpg",
+         releaseData: "28.11.2013",
          platforms: ['windows'],
          applications: ['steam'],
          genres: ['Экшен', 'Мультиплеер'],
