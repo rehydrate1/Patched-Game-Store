@@ -4,6 +4,9 @@ import styles from "./AddNewKey.module.scss";
 import MainInput from "@/components/UI/Inputs/MainInput/MainInput";
 import {useState} from "react";
 import TextAreaInput from "@/components/UI/Inputs/TextAreaInput/TextAreaInput";
+import CheckboxGroup from "@/components/UI/Inputs/CheckboxGroup/CheckboxGroup";
+import MultiSelectDropdown, { SelectOption } from "@/components/UI/Inputs/MultiSelectDropdown/MultiSelectDropdown";
+
 
 export default function AddNewKey() {
 
@@ -14,14 +17,38 @@ export default function AddNewKey() {
     const [developer, setDeveloper] = useState<string>('');
     const [publisher, setPublisher] = useState<string>('');
     const [description, setDescription] = useState<string>('');
-    // Для жанров и платформ могут понадобиться другие инпуты (например, multi-select),
-    // но для примера пока оставим MainInput
-    const [genres, setGenres] = useState<string>('');
-    const [platforms, setPlatforms] = useState<string>('');
+    const [applications, setApplications] = useState<SelectOption[]>([]);
+    const [genres, setGenres] = useState<SelectOption[]>([]);
+    const [platforms, setPlatforms] = useState<SelectOption[]>([]);
 
+    const platformOptions: SelectOption[] = [
+        { value: 'Windows', label: 'Windows' },
+        { value: 'macOS', label: 'macOS' },
+        { value: 'Linux', label: 'Linux' },
+    ];
+
+    const applicationOptions: SelectOption[] = [
+        { value: 'Steam', label: 'Steam' },
+        { value: 'Epic Games', label: 'Epic Games' },
+        { value: 'Rockstar Launcher', label: 'Rockstar Launcher' },
+        { value: 'GOG', label: 'GOG' },
+        { value: 'Bethesda.net', label: 'Bethesda.net' },
+        { value: 'Ubisoft', label: 'Ubisoft' },
+    ];
+
+    const genreOptions: SelectOption[] = [
+        { value: 'action', label: 'Экшен' },
+        { value: 'rpg', label: 'RPG' },
+        { value: 'strategy', label: 'Стратегия' },
+        { value: 'shooter', label: 'Шутер' },
+        { value: 'adventure', label: 'Приключение' },
+        { value: 'simulator', label: 'Симулятор' },
+        { value: 'horror', label: 'Хоррор' },
+        { value: 'indie', label: 'Инди' },
+    ];
 
     return (
-        <div className="flex items-center justify-center min-h-screen p-4">
+        <div className="flex items-center justify-center min-h-screen p-4 mt-8">
 
             <div className={`w-full max-w-3xl p-6 space-y-6 rounded-lg ${styles.mainCard}`}>
                 <h1 className="text-2xl text-white font-semibold text-center">
@@ -78,19 +105,38 @@ export default function AddNewKey() {
                         onChange={setPublisher}
                     />
 
-                    <MainInput
-                        id="genres"
-                        label={'Жанры (через запятую)'}
-                        value={genres}
-                        onChange={setGenres}
-                    />
+                    <div className="md:col-span-2">
+                        <MultiSelectDropdown
+                            label="Жанры"
+                            options={genreOptions}
+                            value={genres}
+                            onChange={setGenres}
+                            placeholder="Выберите один или несколько жанров..."
+                        />
+                    </div>
 
-                    <MainInput
-                        id="platforms"
-                        label={'Платформы (через запятую)'}
-                        value={platforms}
-                        onChange={setPlatforms}
-                    />
+                    <div className="md:col-span-2">
+                        <MultiSelectDropdown
+                            label="Платформы"
+                            options={platformOptions}
+                            value={platforms}
+                            onChange={setPlatforms}
+                            placeholder="Выберите одну или несколько платформ..."
+                        />
+                    </div>
+
+                    <div className="md:col-span-2">
+                        <MultiSelectDropdown
+                            label="Способы активации"
+                            options={applicationOptions}
+                            value={applications}
+                            onChange={setApplications}
+                            placeholder="Выберите один или несколько способов активации..."
+                        />
+                    </div>
+
+
+
 
                     <div className="md:col-span-2">
                         <TextAreaInput id={description} label={'Описание'} value={description} onChange={setDescription} />
