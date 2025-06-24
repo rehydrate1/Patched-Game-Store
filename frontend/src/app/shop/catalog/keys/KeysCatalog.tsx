@@ -22,7 +22,7 @@ interface KeysCatalogProps {
 
 const applicationIcons = {
     'Steam': '/steamIcon.svg',
-    'Epic Games Store': '/icons/epic.svg',
+    'Epic Games123': '/icons/epic.svg',
     'Ubisoft': '/ubisoftIcons.svg',
     'Xbox': '/xboxIcon.svg',
     'EA': '/eaIcon.svg',
@@ -31,7 +31,7 @@ const applicationIcons = {
 const platformIcons = {
     'macOS': '/appleIcon.svg',
     'Windows': '/windowsIcon.svg',
-    'Linux': '/linuxIcons.svg',
+    'Linux': '/linuxIcon.svg',
 };
 
 
@@ -220,8 +220,8 @@ export default function KeysCatalog({ keysArray = [] }: KeysCatalogProps) {
                     {filteredKeys.length > 0 ? (
                         <div className="grid grid-cols-1 gap-4">
                             {filteredKeys.map((game) => (
-                                <div key={game.id} className={`flex flex-col sm:flex-row items-center py-4 px-6 rounded-lg ${styles.mainCard}`}>
-                                    <Link href={`/shop/catalog/keys/${game.id}`}><Image className="rounded-md w-full sm:w-auto mb-4 sm:mb-0" src={game.picture} width={200} height={200} alt={game.name} /></Link>
+                                <div key={game.id} className={`flex flex-col sm:flex-row items-center py-5 px-6 rounded-lg ${styles.mainCard}`}>
+                                    <Link href={`/shop/catalog/keys/${game.id}`}><Image className="rounded-md w-full sm:w-auto mb-4 sm:mb-0" src={game.picture} width={1920} height={1080} alt={game.name} /></Link>
                                     <div className="flex flex-col sm:flex-row flex-grow items-center justify-between pl-0 sm:pl-6 w-full">
                                         <div className="text-center sm:text-left mb-4 sm:mb-0">
                                             <Link href={`/shop/catalog/keys/${game.id}`}><h1 className={`text-white text-xl font-semibold`}>{game.name}</h1></Link>

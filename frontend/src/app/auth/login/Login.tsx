@@ -4,6 +4,7 @@ import {FormEvent, useState} from "react";
 import { useRouter } from 'next/navigation';
 import Link from "next/link";
 import {EyeIcon, EyeSlashIcon} from "@heroicons/react/24/outline";
+import MainInput from "@/components/UI/Inputs/MainInput/MainInput";
 
 
 
@@ -102,21 +103,14 @@ export default function Login(){
                     )}
 
                     <form className="space-y-6" onSubmit={handleSubmit}>
-                        <div>
-                            <label htmlFor="email" className="block text-sm font-medium text-white">
-                                Email
-                            </label>
-                            <input
-                                id="email"
-                                name="email"
-                                type="text"
-                                autoComplete="email"
-                                required
-                                className={`mt-1 block w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm ${styles.inputField}`}
-                                value={email}
-                                onChange={(e) => setEmail(e.target.value)}
-                            />
-                        </div>
+
+                        <MainInput
+                            id={email}
+                            type={'email'}
+                            value={email}
+                            onChange={setEmail}
+                            label={'Email'}
+                        />
 
                         <div>
                             <label htmlFor="password" className="block text-sm font-medium text-white">

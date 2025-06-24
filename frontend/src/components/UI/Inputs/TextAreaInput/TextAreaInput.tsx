@@ -1,17 +1,20 @@
-interface MainInputProps {
+import styles from "./TextAreaInput.module.scss"
+
+
+interface TextAreaInputProps {
     id: string;
     label: string;
     value: string;
     onChange: (newValue: string) => void;
+    rows?: number;
     placeholder?: string;
     className?: string;
-    type?: string;
     required?: boolean;
 }
-import styles from "./MainInput.module.scss";
 
-export default function MainInput({id, label, value, onChange, placeholder = '',
-                                      className = '', type ='text', required = true}:MainInputProps ){
+
+export default function TextAreaInput({id, label, value, onChange, placeholder = '',
+                                          rows = 4, required = true, className = ''}:TextAreaInputProps ){
 
 
     return (
@@ -19,15 +22,15 @@ export default function MainInput({id, label, value, onChange, placeholder = '',
             <label htmlFor={id} className="block text-sm font-medium text-white">
                 {label}
             </label>
-            <input
-                type={type}
+            <textarea
                 id={id}
                 name={id}
+                rows={rows}
                 value={value}
                 onChange={(e) => onChange(e.target.value)}
                 required={required}
-                className={`mt-1 block w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none 
-                 sm:text-sm ${styles.inputField} ${className}`}
+                className={`w-full mt-1 px-4 py-2 border rounded-lg focus:outline-none ${styles.descriptionTextarea} 
+                 ${className}`}
                 placeholder={placeholder}
             />
         </div>
