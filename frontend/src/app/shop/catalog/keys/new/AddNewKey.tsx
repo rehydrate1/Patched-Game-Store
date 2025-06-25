@@ -55,12 +55,6 @@ export default function AddNewKey() {
                     Добавить новый ключ
                 </h1>
 
-                {/*
-                    1. `grid` - включаем CSS Grid.
-                    2. `grid-cols-1` - по умолчанию (на мобильных) у нас будет одна колонка.
-                    3. `md:grid-cols-2` - на экранах среднего размера (md) и больше, сетка переключится на 2 колонки.
-                    4. `gap-6` - устанавливает одинаковый отступ между всеми элементами сетки (и по горизонтали, и по вертикали).
-                */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <MainInput
                         id="gameName"
@@ -111,7 +105,6 @@ export default function AddNewKey() {
                             options={genreOptions}
                             value={genres}
                             onChange={setGenres}
-                            placeholder="Выберите один или несколько жанров..."
                         />
                     </div>
 
@@ -121,7 +114,6 @@ export default function AddNewKey() {
                             options={platformOptions}
                             value={platforms}
                             onChange={setPlatforms}
-                            placeholder="Выберите одну или несколько платформ..."
                         />
                     </div>
 
@@ -131,19 +123,13 @@ export default function AddNewKey() {
                             options={applicationOptions}
                             value={applications}
                             onChange={setApplications}
-                            placeholder="Выберите один или несколько способов активации..."
                         />
                     </div>
-
-
-
 
                     <div className="md:col-span-2">
                         <TextAreaInput id={description} label={'Описание'} value={description} onChange={setDescription} />
                     </div>
                 </div>
-
-
 
                 <div className="flex justify-сenter">
                     <button type="submit" className={`text-black cursor-pointer w-full font-semibold p-2 rounded-md ${styles.addButton}`}>
