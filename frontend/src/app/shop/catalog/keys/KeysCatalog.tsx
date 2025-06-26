@@ -3,6 +3,7 @@
 import styles from "./KeysCatalog.module.scss";
 import Image from "next/image";
 import { useState, useEffect, useMemo } from 'react';
+import {useRouter} from "next/navigation";
 
 interface KeysCatalogProps {
     keysArray?: {
@@ -39,8 +40,8 @@ export default function KeysCatalog({ keysArray = [] }: KeysCatalogProps) {
     const [selectedPlatforms, setSelectedPlatforms] = useState<string[]>([]);
     const [selectedGenres, setSelectedGenres] = useState<string[]>([]);
     const [selectedApplications, setSelectedApplications] = useState<string[]>([]);
-
     const [filteredKeys, setFilteredKeys] = useState(keysArray);
+    const router = useRouter();
 
     const allPlatforms = useMemo(() => {
         const platformsSet = new Set<string>();
@@ -63,7 +64,7 @@ export default function KeysCatalog({ keysArray = [] }: KeysCatalogProps) {
     useEffect(() => {
         let tempKeys = [...keysArray];
 
-        // Фильтрация по цене
+
         const from = parseFloat(priceFrom);
         const to = parseFloat(priceTo);
 
@@ -128,6 +129,10 @@ export default function KeysCatalog({ keysArray = [] }: KeysCatalogProps) {
         setSelectedGenres([]);
         setSelectedApplications([]);
     };
+
+    const addNewKey = () => {
+        router.push('/catalog/keys/new')
+    }
 
     return (
         <>
@@ -198,6 +203,12 @@ export default function KeysCatalog({ keysArray = [] }: KeysCatalogProps) {
                     <div className="mt-4">
                         <button onClick={resetFilters} className={`text-black w-full font-semibold p-2 rounded-md ${styles.addButton}`}>
                             Сбросить фильтры
+                        </button>
+                    </div>
+
+                    <div className="mt-4">
+                        <button onClick={addNewKey} className={`text-black w-full font-semibold p-2 rounded-md ${styles.addButton}`}>
+                            Добавить новый товар
                         </button>
                     </div>
                 </aside>
