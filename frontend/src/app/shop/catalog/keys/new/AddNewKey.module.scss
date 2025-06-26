@@ -1,0 +1,16 @@
+.mainCard{
+  background-color: #212227;
+
+}
+
+
+.addButton{
+
+  background-color: #00FE92;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+
+    background-color: #099f5f;
+  }
+}

@@ -4,6 +4,7 @@ import styles from "./KeysCatalog.module.scss";
 import Image from "next/image";
 import { useState, useEffect, useMemo } from 'react';
 import {useRouter} from "next/navigation";
+import Link from "next/link";
 
 interface KeysCatalogProps {
     keysArray?: {
@@ -21,7 +22,7 @@ interface KeysCatalogProps {
 
 const applicationIcons = {
     'Steam': '/steamIcon.svg',
-    'Epic Games Store': '/icons/epic.svg',
+    'Epic Games123': '/icons/epic.svg',
     'Ubisoft': '/ubisoftIcons.svg',
     'Xbox': '/xboxIcon.svg',
     'EA': '/eaIcon.svg',
@@ -30,7 +31,7 @@ const applicationIcons = {
 const platformIcons = {
     'macOS': '/appleIcon.svg',
     'Windows': '/windowsIcon.svg',
-    'Linux': '/linuxIcons.svg',
+    'Linux': '/linuxIcon.svg',
 };
 
 
@@ -130,19 +131,21 @@ export default function KeysCatalog({ keysArray = [] }: KeysCatalogProps) {
         setSelectedApplications([]);
     };
 
-    const addNewKey = () => {
-        router.push('/catalog/keys/new')
-    }
+    const addNewKeyPage = () => {
+        router.push('/shop/catalog/keys/new');
+    };
+
+
 
     return (
         <>
             <div className="flex flex-col md:flex-row container mx-auto my-10 gap-8">
 
-                <aside className={`text-white p-6 rounded-lg w-full md:w-1/4 ${styles.mainCard} h-fit`}>
+                <aside className={`text-white p-6 rounded-lg w-full md:w-1/4 ${styles.mainAside} h-fit`}>
                     <h2 className="text-2xl font-bold mb-6">Фильтры</h2>
 
                     <div className="mb-6">
-                        <h3 className="font-semibold mb-3">Цена, ₽</h3>
+                        <h3 className="font-semibold mb-2">Цена, ₽</h3>
                         <div className="flex items-center gap-2">
                             <input
                                 type="number"
@@ -165,7 +168,7 @@ export default function KeysCatalog({ keysArray = [] }: KeysCatalogProps) {
                     </div>
 
                     <div className="mb-6">
-                        <h3 className="font-semibold mb-3">Платформы</h3>
+                        <h3 className="font-semibold mb-2">Платформы</h3>
                         <div className="space-y-2">
                             {allPlatforms.map(platform => (
                                 <div key={platform} className="flex items-center">
@@ -177,7 +180,7 @@ export default function KeysCatalog({ keysArray = [] }: KeysCatalogProps) {
                     </div>
 
                     <div className="mb-6">
-                        <h3 className="font-semibold mb-3">Активация в</h3>
+                        <h3 className="font-semibold mb-2">Активация в</h3>
                         <div className="space-y-2">
                             {allApplications.map(app => (
                                 <div key={app} className="flex items-center">
@@ -189,7 +192,7 @@ export default function KeysCatalog({ keysArray = [] }: KeysCatalogProps) {
                     </div>
 
                     <div className="mb-6">
-                        <h3 className="font-semibold mb-3">Жанры</h3>
+                        <h3 className="font-semibold mb-2">Жанры</h3>
                         <div className="space-y-2">
                             {allGenres.map(genre => (
                                 <div key={genre} className="flex items-center">
@@ -201,14 +204,14 @@ export default function KeysCatalog({ keysArray = [] }: KeysCatalogProps) {
                     </div>
 
                     <div className="mt-4">
-                        <button onClick={resetFilters} className={`text-black w-full font-semibold p-2 rounded-md ${styles.addButton}`}>
+                        <button onClick={resetFilters} className={`text-black cursor-pointer w-full font-semibold p-2 rounded-md ${styles.addButton}`}>
                             Сбросить фильтры
                         </button>
                     </div>
 
                     <div className="mt-4">
-                        <button onClick={addNewKey} className={`text-black w-full font-semibold p-2 rounded-md ${styles.addButton}`}>
-                            Добавить новый товар
+                        <button onClick={addNewKeyPage} className={`text-black cursor-pointer w-full font-semibold p-2 rounded-md ${styles.addButton}`}>
+                            Добавить новый ключ
                         </button>
                     </div>
                 </aside>
@@ -217,26 +220,26 @@ export default function KeysCatalog({ keysArray = [] }: KeysCatalogProps) {
                     {filteredKeys.length > 0 ? (
                         <div className="grid grid-cols-1 gap-4">
                             {filteredKeys.map((game) => (
-                                <div key={game.id} className={`flex flex-col sm:flex-row items-center py-4 px-6 rounded-lg ${styles.mainCard}`}>
-                                    <Image className="rounded-md w-full sm:w-auto mb-4 sm:mb-0" src={game.picture} width={200} height={200} alt={game.name} />
+                                <div key={game.id} className={`flex flex-col sm:flex-row items-center py-5 px-6 rounded-lg ${styles.mainCard}`}>
+                                    <Link href={`/shop/catalog/keys/${game.id}`}><Image className="rounded-md w-full sm:w-auto mb-4 sm:mb-0" src={game.picture} width={1920} height={1080} alt={game.name} /></Link>
                                     <div className="flex flex-col sm:flex-row flex-grow items-center justify-between pl-0 sm:pl-6 w-full">
                                         <div className="text-center sm:text-left mb-4 sm:mb-0">
-                                            <h1 className={`text-white text-xl font-semibold`}>{game.name}</h1>
+                                            <Link href={`/shop/catalog/keys/${game.id}`}><h1 className={`text-white text-xl font-semibold`}>{game.name}</h1></Link>
                                             <p className={`text-gray-400 mt-1`}>Дата выхода: {game.releaseData}</p>
                                             <div className="flex items-center gap-4">
-                                                <div className="flex items-center gap-4 pt-5">
+                                                <div className="flex items-center gap-4 pt-3">
                                                     {game.applications.map(app => {
                                                         const iconSrc = applicationIcons[app];
-                                                        return iconSrc ? <Image key={app} src={iconSrc} width={30} height={30} alt={`${app} Icon`} /> : null;
+                                                        return iconSrc ? <Image key={app} src={iconSrc} width={24} height={24} alt={`${app} Icon`} /> : null;
                                                     })}
                                                 </div>
 
                                                 <hr className={styles.separator} />
 
-                                                <div className="flex items-center gap-4 pt-5">
+                                                <div className="flex items-center gap-4 pt-3">
                                                     {game.platforms.map(platform => {
                                                         const iconSrc = platformIcons[platform];
-                                                        return iconSrc ? <Image key={platform} src={iconSrc} width={30} height={30} alt={`${platform} Icon`} /> : null;
+                                                        return iconSrc ? <Image key={platform} src={iconSrc} width={24} height={24} alt={`${platform} Icon`} /> : null;
                                                     })}
                                                 </div>
                                             </div>
@@ -244,7 +247,7 @@ export default function KeysCatalog({ keysArray = [] }: KeysCatalogProps) {
                                     </div>
                                     <div className="text-center sm:text-right">
                                         <h1 className={`text-white font-bold text-4xl mb-2 sm:mb-0`}>{game.price} ₽</h1>
-                                        <button className={`text-black font-semibold p-2 mt-5 rounded-md ${styles.addButton}`}>Добавить в корзину</button>
+                                        <button className={`text-black cursor-pointer font-semibold p-2 mt-5 rounded-md ${styles.addButton}`}>Добавить в корзину</button>
                                     </div>
                                 </div>
                                 </div>

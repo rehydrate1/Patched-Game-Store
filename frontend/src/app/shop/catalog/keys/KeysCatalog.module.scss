@@ -1,6 +1,19 @@
 .mainCard{
 
   background-color: #212227;
+  color: white;
+  border: 1px solid transparent;
+  transition: border-color 0.3s ease;
+
+  &:hover {
+    border-color: #aeb2ae;
+  }
+}
+
+.mainAside{
+
+  background-color: #212227;
+
 }
 
 
@@ -31,6 +44,6 @@
 .separator {
   border: none;
   border-left: 1.5px solid #ccc;
-  height: 30px;
-  margin-top: 24px;
+  height: 27px;
+  margin-top: 18px;
 }
