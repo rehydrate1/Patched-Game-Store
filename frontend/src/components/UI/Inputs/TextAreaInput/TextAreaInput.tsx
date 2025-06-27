@@ -10,11 +10,12 @@ interface TextAreaInputProps {
     placeholder?: string;
     className?: string;
     required?: boolean;
+    error?: string;
 }
 
 
 export default function TextAreaInput({id, label, value, onChange, placeholder = '',
-                                          rows = 4, required = true, className = ''}:TextAreaInputProps ){
+                                          rows = 4, required = true, className = '', error}:TextAreaInputProps ){
 
 
     return (
@@ -30,9 +31,13 @@ export default function TextAreaInput({id, label, value, onChange, placeholder =
                 onChange={(e) => onChange(e.target.value)}
                 required={required}
                 className={`w-full mt-1 px-4 py-2 border rounded-lg focus:outline-none ${styles.descriptionTextarea} 
-                 ${className}`}
+                ${error ? 'border-red-500' : 'border-gray-600'} ${className}`}
                 placeholder={placeholder}
             />
+
+            {error && (
+                <p className="mt-1 pl-1 text-xs text-red-400">{error}</p>
+            )}
         </div>
     )
 }
