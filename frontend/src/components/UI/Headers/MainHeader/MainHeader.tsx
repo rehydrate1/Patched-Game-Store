@@ -31,7 +31,7 @@ export default function MainHeader() {
                             <li>
                                 <Link href={'/shop'}>
                                     <div className={`flex text-center justify-center items-center p-1 rounded-md ${styles.navItem}`}>
-                                        <h3 className={`p-1 px-2`}>Магазин игр</h3>
+                                        <h3 className={`p-1 px-2 `}>Магазин игр</h3>
                                     </div>
                                 </Link>
                             </li>
@@ -53,7 +53,7 @@ export default function MainHeader() {
                     </div>
 
                     <Link href={'/auth/login'} className={`hidden md:flex p-2 px-8 rounded-md text-center items-center ${styles.authButton}`}>
-                        <h3 className={`text-bold text-m`}>Войти</h3>
+                        <h1 className={`font-semibold text-m`}>Войти</h1>
                     </Link>
 
                     <div className="md:hidden">
