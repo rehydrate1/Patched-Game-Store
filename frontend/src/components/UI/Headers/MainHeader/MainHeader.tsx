@@ -53,7 +53,7 @@ export default function MainHeader() {
                     </div>
 
                     <Link href={'/auth/login'} className={`hidden md:flex p-2 px-8 rounded-md text-center items-center ${styles.authButton}`}>
-                        <h1 className={`font-semibold text-m`}>Войти</h1>
+                        <h3 className={`font-bold text-m`}>Войти</h3>
                     </Link>
 
                     <div className="md:hidden">

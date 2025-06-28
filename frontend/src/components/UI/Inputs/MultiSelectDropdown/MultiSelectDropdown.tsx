@@ -16,11 +16,12 @@ type MultiSelectProps = {
     value: SelectOption[];
     onChange: (selected: SelectOption[]) => void;
     placeholder?: string;
+    error?: string;
 }
 
 
 
-export default function MultiSelectDropdown({ label, options, value, onChange, placeholder = "" }: MultiSelectProps) {
+export default function MultiSelectDropdown({ label, options, value, onChange, placeholder = "", error }: MultiSelectProps) {
     return (
         <div>
             <label className="block text-sm font-medium text-white mb-1">
@@ -33,9 +34,13 @@ export default function MultiSelectDropdown({ label, options, value, onChange, p
                 onChange={(selected) => onChange(selected as SelectOption[])} // Обработчик изменений
                 classNamePrefix="custom-select"
                 placeholder={placeholder}
-                className={styles.multiSelectContainer}
+                className={`${styles.multiSelectContainer} ${error ? 'border-red-500' : 'border-gray-600'}`}
                 noOptionsMessage={() => "Ничего не найдено"}
             />
+
+            {error && (
+                <p className="mt-1 pl-1 text-xs text-red-400">{error}</p>
+            )}
         </div>
     )
 }
