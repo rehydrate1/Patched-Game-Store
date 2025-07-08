@@ -5,6 +5,7 @@ import Image from "next/image";
 import { useState, useEffect, useMemo } from 'react';
 import {useRouter} from "next/navigation";
 import Link from "next/link";
+import MainProductCard from "@/components/ProductCards/MainProductCard/MainProductCard";
 
 interface KeysCatalogProps {
     keysArray?: {
@@ -20,19 +21,7 @@ interface KeysCatalogProps {
     }[];
 }
 
-const applicationIcons = {
-    'Steam': '/steamIcon.svg',
-    'Epic Games123': '/icons/epic.svg',
-    'Ubisoft': '/ubisoftIcons.svg',
-    'Xbox': '/xboxIcon.svg',
-    'EA': '/eaIcon.svg',
-};
 
-const platformIcons = {
-    'macOS': '/appleIcon.svg',
-    'Windows': '/windowsIcon.svg',
-    'Linux': '/linuxIcon.svg',
-};
 
 
 export default function KeysCatalog({ keysArray = [] }: KeysCatalogProps) {
@@ -220,38 +209,18 @@ export default function KeysCatalog({ keysArray = [] }: KeysCatalogProps) {
                     {filteredKeys.length > 0 ? (
                         <div className="grid grid-cols-1 gap-4">
                             {filteredKeys.map((game) => (
-                                <div key={game.id} className={`flex flex-col sm:flex-row items-center py-5 px-6 rounded-lg ${styles.mainCard}`}>
-                                    <Link href={`/shop/catalog/keys/${game.id}`}><Image className="rounded-md w-full sm:w-auto mb-4 sm:mb-0" src={game.picture} width={1920} height={1080} alt={game.name} /></Link>
-                                    <div className="flex flex-col sm:flex-row flex-grow items-center justify-between pl-0 sm:pl-6 w-full">
-                                        <div className="text-center sm:text-left mb-4 sm:mb-0">
-                                            <Link href={`/shop/catalog/keys/${game.id}`}><h1 className={`text-white text-xl font-semibold`}>{game.name}</h1></Link>
-                                            <p className={`text-gray-400 mt-1`}>Дата выхода: {game.releaseData}</p>
-                                            <div className="flex items-center gap-4">
-                                                <div className="flex items-center gap-4 pt-3">
-                                                    {game.applications.map(app => {
-                                                        const iconSrc = applicationIcons[app];
-                                                        return iconSrc ? <Image key={app} src={iconSrc} width={24} height={24} alt={`${app} Icon`} /> : null;
-                                                    })}
-                                                </div>
-
-                                                <hr className={styles.separator} />
-
-                                                <div className="flex items-center gap-4 pt-3">
-                                                    {game.platforms.map(platform => {
-                                                        const iconSrc = platformIcons[platform];
-                                                        return iconSrc ? <Image key={platform} src={iconSrc} width={24} height={24} alt={`${platform} Icon`} /> : null;
-                                                    })}
-                                                </div>
-                                            </div>
-
-                                    </div>
-                                    <div className="text-center sm:text-right">
-                                        <h1 className={`text-white font-bold text-4xl mb-2 sm:mb-0`}>{game.price} ₽</h1>
-                                        <button className={`text-black cursor-pointer font-semibold p-2 mt-5 rounded-md ${styles.addButton}`}>Добавить в корзину</button>
-                                    </div>
-                                </div>
-                                </div>
-                                ))}
+                                <MainProductCard
+                                    key={game.id}
+                                    id={game.id}
+                                    name={game.name}
+                                    price={game.price}
+                                    picture={game.picture}
+                                    releaseData={game.releaseData}
+                                    platforms={game.platforms}
+                                    applications={game.applications}
+                                    genres={game.genres}
+                                />
+                            ))}
                         </div>
                     ) : (
                         <div className={`flex flex-col items-center justify-center p-10 rounded-lg ${styles.mainCard}`}>
