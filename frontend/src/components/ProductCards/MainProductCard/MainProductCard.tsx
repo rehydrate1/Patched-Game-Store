@@ -51,7 +51,7 @@ export default function MainProductCard({ id, name, price, picture, releaseData,
                             {name}
                         </h1>
                     </Link>
-                    <p className="text-gray-400 mt-1 text-sm">Дата выхода: {releaseData}</p>
+                    <p className="text-gray-400 mt-1 text-md">Дата выхода: {releaseData}</p>
 
                     <div className="flex flex-wrap justify-center lg:justify-start items-center gap-x-4 gap-y-2 mt-3">
 
@@ -81,8 +81,8 @@ export default function MainProductCard({ id, name, price, picture, releaseData,
                     </div>
                 </div>
 
-                <div className="flex flex-col items-center lg:items-end w-full lg:w-auto flex-shrink-0 mt-4 lg:mt-0">
-                    <h2 className="text-white font-bold text-2xl md:text-4xl mb-5">
+                <div className="flex flex-col items-center lg:items-end w-full lg:w-auto flex-shrink-0 mt-2 lg:mt-0">
+                    <h2 className="text-white font-bold text-3xl md:text-4xl mb-5">
                         {price} ₽
                     </h2>
 
