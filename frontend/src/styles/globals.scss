@@ -4,3 +4,8 @@
 html, body, #root {
   background-color: #14151B;
 }
+
+.authBackground{
+  background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)),
+  url("/authbackground.jpg");;
+}
