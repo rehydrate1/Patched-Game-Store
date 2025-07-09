@@ -31,7 +31,7 @@ export default function MainHeader() {
                             <li>
                                 <Link href={'/shop'}>
                                     <div className={`flex text-center justify-center items-center p-1 rounded-md ${styles.navItem}`}>
-                                        <h3 className={`p-1 px-2`}>Магазин игр</h3>
+                                        <h3 className={`p-1 px-2 `}>Магазин игр</h3>
                                     </div>
                                 </Link>
                             </li>

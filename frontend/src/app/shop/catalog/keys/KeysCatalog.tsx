@@ -1,10 +1,8 @@
 "use client";
 
 import styles from "./KeysCatalog.module.scss";
-import Image from "next/image";
 import { useState, useEffect, useMemo } from 'react';
 import {useRouter} from "next/navigation";
-import Link from "next/link";
 import MainProductCard from "@/components/ProductCards/MainProductCard/MainProductCard";
 
 interface KeysCatalogProps {
@@ -54,7 +52,7 @@ export default function KeysCatalog({ keysArray = [] }: KeysCatalogProps) {
     useEffect(() => {
         let tempKeys = [...keysArray];
 
-        // Фильтрация по цене
+
         const from = parseFloat(priceFrom);
         const to = parseFloat(priceTo);
 

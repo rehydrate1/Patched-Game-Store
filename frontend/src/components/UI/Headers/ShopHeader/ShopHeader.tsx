@@ -88,7 +88,7 @@ export default function ShopHeader() {
                                     id="search"
                                     name="search"
                                     className={`block w-full pr-3 pl-10 py-2 border rounded-md leading-8 placeholder-white focus:outline-none sm:text-sm ${styles.searchInput}`}
-                                    placeholder="Поиск..." // Сделал плейсхолдер короче для мобильных
+                                    placeholder="Поиск..."
                                     type="search"
                                     value={search}
                                     onChange={(e) => setSearch(e.target.value)}
