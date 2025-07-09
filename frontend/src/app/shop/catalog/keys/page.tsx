@@ -15,7 +15,7 @@ export default function KeysCatalogPage(){
             picture: "https://cdn.akamai.steamstatic.com/steam/apps/271590/header.jpg",
             releaseData: "14.04.2015",
             platforms: ['Windows'],
-            applications: ['Steam', 'Rockstar Launcher'],
+            applications: ['Steam' ],
             genres: ['Экшен', 'Открытый мир'],
             developer: 'Rockstar Games'
         },
@@ -59,7 +59,7 @@ export default function KeysCatalogPage(){
             picture: "https://cdn.akamai.steamstatic.com/steam/apps/1174180/header.jpg",
             releaseData: "05.11.2019",
             platforms: ['Windows'],
-            applications: ['Steam', 'Rockstar Launcher', 'Epic Games'],
+            applications: ['Steam', 'Epic Games'],
             genres: ['Экшен', 'Приключения', 'Вестерн'],
             developer: 'Rockstar Games'
         },
@@ -103,7 +103,7 @@ export default function KeysCatalogPage(){
             picture: "https://cdn.akamai.steamstatic.com/steam/apps/1086940/header.jpg",
             releaseData: "03.08.2023",
             platforms: ['Windows', 'macOS'],
-            applications: ['Steam', 'GOG'],
+            applications: ['Steam', 'GOG', 'EA'],
             genres: ['RPG', 'Пошаговая', 'Фэнтези', 'Приключения'],
             developer: 'Larian Studios'
         },
@@ -114,7 +114,7 @@ export default function KeysCatalogPage(){
             picture: "https://cdn.akamai.steamstatic.com/steam/apps/489830/header.jpg",
             releaseData: "28.10.2016",
             platforms: ['Windows'],
-            applications: ['Steam'],
+            applications: ['Steam', 'Ubisoft Connect'],
             genres: ['RPG', 'Открытый мир', 'Фэнтези'],
             developer: 'Bethesda Game Studios'
         },
@@ -125,7 +125,7 @@ export default function KeysCatalogPage(){
             picture: "https://cdn.akamai.steamstatic.com/steam/apps/782330/header.jpg",
             releaseData: "20.03.2020",
             platforms: ['Windows'],
-            applications: ['Steam', 'Bethesda.net'],
+            applications: ['Steam', 'EA'],
             genres: ['Шутер', 'Экшен'],
             developer: 'id Software'
         },

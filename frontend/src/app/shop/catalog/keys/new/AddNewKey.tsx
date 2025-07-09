@@ -29,10 +29,9 @@ export default function AddNewKey() {
     const applicationOptions: SelectOption[] = [
         { value: 'Steam', label: 'Steam' },
         { value: 'Epic Games', label: 'Epic Games' },
-        { value: 'Rockstar Launcher', label: 'Rockstar Launcher' },
         { value: 'GOG', label: 'GOG' },
-        { value: 'Bethesda.net', label: 'Bethesda.net' },
-        { value: 'Ubisoft', label: 'Ubisoft' },
+        { value: 'EA', label: 'EA' },
+        { value: 'Ubisoft Connect', label: 'Ubisoft Connect' },
     ];
 
     const genreOptions: SelectOption[] = [

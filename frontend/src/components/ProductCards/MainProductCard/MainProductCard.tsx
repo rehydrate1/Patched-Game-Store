@@ -13,13 +13,13 @@ interface MainProductCardProps {
     genres: string[],
 }
 
-// Объекты с иконками оставляем без изменений
 const applicationIcons = {
     'Steam': '/steamIcon.svg',
     'Epic Games': '/epic.svg',
-    'Ubisoft': '/ubisoftIcons.svg',
-    'Xbox': '/xboxIcon.svg',
+    'GOG': '/gog.svg',
+    'Bethesda.net': '/bethesda.svg',
     'EA': '/eaIcon.svg',
+    'Ubisoft Connect': "/ubisoftIcon.svg",
 };
 
 const platformIcons = {

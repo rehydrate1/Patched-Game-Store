@@ -8,9 +8,10 @@ const arrayOfData = [
         picture: "https://cdn.akamai.steamstatic.com/steam/apps/271590/header.jpg",
         releaseData: "14.04.2015",
         platforms: ['Windows'],
-        applications: ['Steam', 'Rockstar Launcher'],
+        applications: ['Steam' ],
         genres: ['Экшен', 'Открытый мир'],
-        developer: 'Rockstar Games'
+        developer: 'Rockstar Games',
+        publisher: '2K Games',
     },
     {
         id: 2,
@@ -21,7 +22,8 @@ const arrayOfData = [
         platforms: ['Windows'],
         applications: ['Steam'],
         genres: ['Экшен', 'Открытый мир'],
-        developer: 'Rockstar Games'
+        developer: 'Rockstar Games',
+        publisher: '2K Games',
     },
     {
         id: 3,
@@ -32,7 +34,8 @@ const arrayOfData = [
         platforms: ['Windows'],
         applications: ['Steam', 'GOG', 'Epic Games'],
         genres: ['RPG', 'Открытый мир', 'Фэнтези'],
-        developer: 'CD PROJEKT RED'
+        developer: 'CD PROJEKT RED',
+        publisher: 'CD PROJEKT RED',
     },
     {
         id: 4,
@@ -43,7 +46,8 @@ const arrayOfData = [
         platforms: ['Windows'],
         applications: ['GOG', 'Steam'],
         genres: ['RPG', 'Экшен', 'Открытый мир', 'Киберпанк'],
-        developer: 'CD PROJEKT RED'
+        developer: 'CD PROJEKT RED',
+        publisher: 'CD PROJEKT RED'
     },
     {
         id: 5,
@@ -52,9 +56,10 @@ const arrayOfData = [
         picture: "https://cdn.akamai.steamstatic.com/steam/apps/1174180/header.jpg",
         releaseData: "05.11.2019",
         platforms: ['Windows'],
-        applications: ['Steam', 'Rockstar Launcher', 'Epic Games'],
+        applications: ['Steam', 'Epic Games'],
         genres: ['Экшен', 'Приключения', 'Вестерн'],
-        developer: 'Rockstar Games'
+        developer: 'Rockstar Games',
+        publisher: '2K Games',
     },
     {
         id: 6,
@@ -65,7 +70,8 @@ const arrayOfData = [
         platforms: ['Windows'],
         applications: ['Steam'],
         genres: ['RPG', 'Экшен', 'Хардкор', 'Фэнтези', 'Открытый мир'],
-        developer: 'FromSoftware Inc.'
+        developer: 'FromSoftware Inc.',
+        publisher: 'Bandai Namko',
     },
     {
         id: 7,
@@ -76,7 +82,8 @@ const arrayOfData = [
         platforms: ['Windows', 'macOS', 'Linux'],
         applications: ['Steam'],
         genres: ['Метроидвания', 'Платформер', 'Инди'],
-        developer: 'Team Cherry'
+        developer: 'Team Cherry',
+        publisher: 'Bandai Namko',
     },
     {
         id: 8,
@@ -87,7 +94,8 @@ const arrayOfData = [
         platforms: ['Windows', 'macOS', 'Linux'],
         applications: ['Steam', 'GOG'],
         genres: ['Симулятор', 'RPG', 'Инди'],
-        developer: 'ConcernedApe'
+        developer: 'ConcernedApe',
+        publisher: 'Bandai Namko',
     },
     {
         id: 9,
@@ -96,9 +104,10 @@ const arrayOfData = [
         picture: "https://cdn.akamai.steamstatic.com/steam/apps/1086940/header.jpg",
         releaseData: "03.08.2023",
         platforms: ['Windows', 'macOS'],
-        applications: ['Steam', 'GOG'],
+        applications: ['Steam', 'GOG', 'EA'],
         genres: ['RPG', 'Пошаговая', 'Фэнтези', 'Приключения'],
-        developer: 'Larian Studios'
+        developer: 'Larian Studios',
+        publisher: 'Larian Studios',
     },
     {
         id: 10,
@@ -107,9 +116,10 @@ const arrayOfData = [
         picture: "https://cdn.akamai.steamstatic.com/steam/apps/489830/header.jpg",
         releaseData: "28.10.2016",
         platforms: ['Windows'],
-        applications: ['Steam'],
+        applications: ['Steam', 'Ubisoft Connect'],
         genres: ['RPG', 'Открытый мир', 'Фэнтези'],
-        developer: 'Bethesda Game Studios'
+        developer: 'Bethesda Game Studios',
+        publisher: 'Bethesda',
     },
     {
         id: 11,
@@ -118,9 +128,10 @@ const arrayOfData = [
         picture: "https://cdn.akamai.steamstatic.com/steam/apps/782330/header.jpg",
         releaseData: "20.03.2020",
         platforms: ['Windows'],
-        applications: ['Steam', 'Bethesda.net'],
+        applications: ['Steam', 'EA'],
         genres: ['Шутер', 'Экшен'],
-        developer: 'id Software'
+        developer: 'id Software',
+        publisher: 'Bethesda',
     },
     {
         id: 12,
@@ -131,7 +142,8 @@ const arrayOfData = [
         platforms: ['Windows', 'macOS'],
         applications: ['Steam', 'Epic Games'],
         genres: ['Экшен', 'Roguelike', 'Инди'],
-        developer: 'Supergiant Games'
+        developer: 'Supergiant Games',
+        publisher: 'Bandai Namko',
     },
     {
         id: 13,
@@ -142,7 +154,8 @@ const arrayOfData = [
         platforms: ['Windows', 'macOS', 'Linux'],
         applications: ['Steam'],
         genres: ['Стратегия', 'Симулятор', 'Выживание', 'Автоматизация'],
-        developer: 'Wube Software LTD'
+        developer: 'Wube Software LTD',
+        publisher: 'Wube Software LTD',
     },
     {
         id: 14,
@@ -153,7 +166,8 @@ const arrayOfData = [
         platforms: ['Windows', 'macOS', 'Linux'],
         applications: ['Steam', 'GOG'],
         genres: ['Песочница', 'Приключения', 'Выживание'],
-        developer: 'Re-Logic'
+        developer: 'Re-Logic',
+        publisher: 'prikol',
     },
     {
         id: 15,
@@ -164,9 +178,11 @@ const arrayOfData = [
         platforms: ['Windows', 'macOS', 'Linux'],
         applications: ['Steam', 'Epic Games'],
         genres: ['Глобальная стратегия', 'Пошаговая стратегия'],
-        developer: 'Firaxis Games'
+        developer: 'Firaxis Games',
+        publisher: 'Ubisoft'
     }
 ];
+
 export async function generateMetadata({ params }) {
     const { keyId } = params;
     const product = arrayOfData.find(item => item.id === parseInt(keyId));
