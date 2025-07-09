@@ -191,13 +191,13 @@ export default function KeysCatalog({ keysArray = [] }: KeysCatalogProps) {
                     </div>
 
                     <div className="mt-4">
-                        <button onClick={resetFilters} className={`text-black cursor-pointer w-full font-semibold p-2 rounded-md ${styles.addButton}`}>
+                        <button onClick={resetFilters} className={`text-black myButtonColor cursor-pointer w-full font-semibold p-2 rounded-md `}>
                             Сбросить фильтры
                         </button>
                     </div>
 
                     <div className="mt-4">
-                        <button onClick={addNewKeyPage} className={`text-black cursor-pointer w-full font-semibold p-2 rounded-md ${styles.addButton}`}>
+                        <button onClick={addNewKeyPage} className={`text-black cursor-pointer w-full font-semibold p-2 rounded-md myButtonColor `}>
                             Добавить новый ключ
                         </button>
                     </div>

@@ -9,8 +9,7 @@ export type SelectOption = {
     label: string;
 };
 
-// Пропсы нашего компонента
-type MultiSelectProps = {
+interface MultiSelectProps {
     label: string;
     options: SelectOption[];
     value: SelectOption[];
@@ -28,10 +27,10 @@ export default function MultiSelectDropdown({ label, options, value, onChange, p
                 {label}
             </label>
             <Select
-                isMulti // <-- Самый важный проп, включает режим мульти-выбора
-                options={options} // Наши опции
-                value={value} // Текущие выбранные значения
-                onChange={(selected) => onChange(selected as SelectOption[])} // Обработчик изменений
+                isMulti
+                options={options}
+                value={value}
+                onChange={(selected) => onChange(selected as SelectOption[])}
                 classNamePrefix="custom-select"
                 placeholder={placeholder}
                 className={`${styles.multiSelectContainer} ${error ? 'border-red-500' : 'border-gray-600'}`}

@@ -100,7 +100,7 @@ export default function MainProductCard({ id, name, price, picture, releaseData,
                         {price} ₽
                     </h2>
 
-                    <button onClick={handleAddToCart} className={`w-full lg:w-auto text-black cursor-pointer font-semibold py-2 px-4 rounded-md ${styles.addButton}`}>
+                    <button onClick={handleAddToCart} className={`w-full lg:w-auto myButtonColor text-black cursor-pointer font-semibold py-2 px-4 rounded-md ${styles.addButton}`}>
                         Добавить в корзину
                     </button>
 

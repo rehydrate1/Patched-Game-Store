@@ -31,7 +31,7 @@ export default function MainHeader() {
                             <li>
                                 <Link href={'/shop'}>
                                     <div className={`flex text-center justify-center items-center p-1 rounded-md ${styles.navItem}`}>
-                                        <h3 className={`p-1 px-2 `}>Магазин игр</h3>
+                                        <h3 className={`p-1 px-2 `}>Магазин ключей</h3>
                                     </div>
                                 </Link>
                             </li>
@@ -45,7 +45,22 @@ export default function MainHeader() {
                             <li>
                                 <Link href={'/service-balance'}>
                                     <div className={`flex text-center items-center p-1 rounded-md ${styles.navItem}`}>
-                                        <h3 className={`p-1 px-2`}>Пополнение сервисов</h3>
+                                        <h3 className={`p-1 px-2`}>Гарании</h3>
+                                    </div>
+                                </Link>
+                            </li>
+
+                            <li>
+                                <Link href={'/service-balance'}>
+                                    <div className={`flex text-center items-center p-1 rounded-md ${styles.navItem}`}>
+                                        <h3 className={`p-1 px-2`}>Поддержка</h3>
+                                    </div>
+                                </Link>
+                            </li>
+                            <li>
+                                <Link href={'/service-balance'}>
+                                    <div className={`flex text-center items-center p-1 rounded-md ${styles.navItem}`}>
+                                        <h3 className={`p-1 px-2`}>О нас</h3>
                                     </div>
                                 </Link>
                             </li>
