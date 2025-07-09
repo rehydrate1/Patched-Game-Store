@@ -1,6 +1,11 @@
+"use client"
+
 import styles from "./MainProductCard.module.scss";
 import Link from "next/link";
 import Image from "next/image";
+import {addItem} from "@/store/slices/cartSlice";
+import {useAppDispatch} from "@/hooks/useTypedRedux";
+
 
 interface MainProductCardProps {
     id: number,
@@ -29,6 +34,15 @@ const platformIcons = {
 };
 
 export default function MainProductCard({ id, name, price, picture, releaseData, platforms, applications, genres = [] }: MainProductCardProps) {
+
+    const dispatch = useAppDispatch(); // Получаем функцию dispatch
+
+    const handleAddToCart = () => {
+        // Создаем объект товара (без quantity)
+        const itemToAdd = { id, name, price, picture };
+        // Отправляем action с данными товара
+        dispatch(addItem(itemToAdd));
+    };
 
     return (
         <div key={id} className={`flex flex-col md:flex-row items-center p-4 md:p-6 rounded-lg ${styles.mainCard} gap-4 md:gap-6`}>
@@ -86,7 +100,7 @@ export default function MainProductCard({ id, name, price, picture, releaseData,
                         {price} ₽
                     </h2>
 
-                    <button className={`w-full lg:w-auto text-black cursor-pointer font-semibold py-2 px-4 rounded-md ${styles.addButton}`}>
+                    <button onClick={handleAddToCart} className={`w-full lg:w-auto text-black cursor-pointer font-semibold py-2 px-4 rounded-md ${styles.addButton}`}>
                         Добавить в корзину
                     </button>
 

@@ -2,6 +2,8 @@
 import styles from "./ShopHeader.module.scss";
 import Link from "next/link";
 import { useState, useRef, useEffect } from "react";
+import { useAppSelector } from '@/hooks/useTypedRedux'; // <-- 1. ИМПОРТИРУЕМ ХУК
+
 
 import {
     Bars3Icon,
@@ -18,9 +20,12 @@ const catalogElements = [
 export default function ShopHeader() {
     const [isOpenCatalog, setIsOpenCatalog] = useState<boolean>(false);
     const [search, setSearch] = useState<string>('');
-
+    const cartItems = useAppSelector(state => state.cart.items);
     const catalogButtonRef = useRef<HTMLDivElement>(null);
     const catalogDropdownRef = useRef<HTMLDivElement>(null);
+
+    const totalItems = cartItems.reduce((total, item) => total + item.quantity, 0);
+
 
     // Ваш useEffect для закрытия каталога остается без изменений
     useEffect(() => {
@@ -98,10 +103,26 @@ export default function ShopHeader() {
                     </div>
 
                     <div className="flex-shrink-0 flex items-center justify-center">
-                        <Link href="/shop/cart">
+
+                        <Link href="/shop/cart" className="relative">
                             <div className={`p-2 ${styles.shopButton} rounded-md`}>
                                 <ShoppingCartIcon className="h-7 w-7 md:h-8 md:w-8 text-gray-100" aria-hidden="true" />
                             </div>
+
+                            {/* УСЛОВНЫЙ РЕНДЕРИНГ КРУЖКА-СЧЕТЧИКА */}
+                            {totalItems > 0 && (
+                                <span
+                                    key={totalItems} // key заставит React перерендерить элемент и запустить анимацию
+                                    className={`
+                                        absolute -top-1 -right-1 
+                                        bg-red-500 text-white text-xs font-bold 
+                                        rounded-full h-5 w-5 flex items-center justify-center
+                                        animate-bounce-short // Добавляем кастомную анимацию
+                                    `}
+                                >
+                                    {totalItems > 99 ? '99+' : totalItems}
+                                </span>
+                            )}
                         </Link>
                     </div>
                 </div>
