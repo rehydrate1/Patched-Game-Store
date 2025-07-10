@@ -3,6 +3,8 @@ import { useState } from "react";
 import styles from "./MainHeader.module.scss";
 import Link from "next/link";
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
+import PCHeaderItem from "@/components/UI/NavItems/PCHeaderItem/PCHeaderItem";
+import MobileHeaderItem from "@/components/UI/NavItems/MobileHeaderItem/MobileHeaderItem";
 
 export default function MainHeader() {
     const [isMenuOpen, setIsMenuOpen] =useState(false);
@@ -28,46 +30,36 @@ export default function MainHeader() {
 
                     <div className={'hidden md:block'}>
                         <ul className={'flex gap-20 items-center'}>
-                            <li>
-                                <Link href={'/shop'}>
-                                    <div className={`flex text-center justify-center items-center p-1 rounded-md ${styles.navItem}`}>
-                                        <h3 className={`p-1 px-2 `}>Магазин ключей</h3>
-                                    </div>
-                                </Link>
-                            </li>
-                            <li>
-                                <Link href={'/steam-balance'}>
-                                    <div className={`flex text-center mx-auto items-center p-1 rounded-md ${styles.navItem}`}>
-                                        <h3 className={`p-1 px-2`}>Пополнение Steam</h3>
-                                    </div>
-                                </Link>
-                            </li>
-                            <li>
-                                <Link href={'/service-balance'}>
-                                    <div className={`flex text-center items-center p-1 rounded-md ${styles.navItem}`}>
-                                        <h3 className={`p-1 px-2`}>Гарании</h3>
-                                    </div>
-                                </Link>
-                            </li>
 
-                            <li>
-                                <Link href={'/service-balance'}>
-                                    <div className={`flex text-center items-center p-1 rounded-md ${styles.navItem}`}>
-                                        <h3 className={`p-1 px-2`}>Поддержка</h3>
-                                    </div>
-                                </Link>
-                            </li>
-                            <li>
-                                <Link href={'/service-balance'}>
-                                    <div className={`flex text-center items-center p-1 rounded-md ${styles.navItem}`}>
-                                        <h3 className={`p-1 px-2`}>О нас</h3>
-                                    </div>
-                                </Link>
-                            </li>
+                            <PCHeaderItem
+                                text={'Магазин игр'}
+                                link={'/shop'}
+                            />
+
+                            <PCHeaderItem
+                                text={'Пополнение Steam'}
+                                link={'/steam-balance'}
+                            />
+
+                            <PCHeaderItem
+                                text={'Гарантии'}
+                                link={'/service-balance'}
+                            />
+
+                            <PCHeaderItem
+                                text={'Поддержка'}
+                                link={'/support'}
+                            />
+
+                            <PCHeaderItem
+                                text={'О нас'}
+                                link={'/about'}
+                            />
+
                         </ul>
                     </div>
 
-                    <Link href={'/auth/login'} className={`hidden md:flex p-2 px-8 rounded-md text-center items-center ${styles.authButton}`}>
+                    <Link href={'/auth/login'} className={`hidden md:flex p-2 px-8 rounded-md text-center items-center myButtonColor `}>
                         <h3 className={`font-bold text-m`}>Войти</h3>
                     </Link>
 
@@ -85,31 +77,41 @@ export default function MainHeader() {
                 {/* --- ВЫПАДАЮЩЕЕ МОБИЛЬНОЕ МЕНЮ --- */}
                 {isMenuOpen && (
                     <div className="md:hidden absolute top-full left-0 w-full bg-[#212227] z-20 shadow-lg text-white">
-                        <ul className="flex flex-col items-center gap-2 p-4"> {/* Уменьшил gap, увеличил padding */}
-                            <li className="w-full">
-                                <Link href={'/shop'} onClick={closeMenu}>
-                                    <div className={`w-full text-center justify-center items-center p-3 rounded-md ${styles.navItem}`}>
-                                        <h3 className={`text-lg`}>Магазин игр</h3>
-                                    </div>
-                                </Link>
-                            </li>
-                            <li className="w-full">
-                                <Link href={'/steam-balance'} onClick={closeMenu}>
-                                    <div className={`w-full text-center items-center p-3 rounded-md ${styles.navItem}`}>
-                                        <h3 className={`text-lg`}>Пополнение Steam</h3>
-                                    </div>
-                                </Link>
-                            </li>
-                            <li className="w-full">
-                                <Link href={'/service-balance'} onClick={closeMenu}>
-                                    <div className={`w-full text-center items-center p-3 rounded-md ${styles.navItem}`}>
-                                        <h3 className={`text-lg`}>Пополнение сервисов</h3>
-                                    </div>
-                                </Link>
-                            </li>
+                        <ul className="flex flex-col items-center gap-2 p-4">
+
+                            <MobileHeaderItem
+                                text={'Магазин игр'}
+                                link={'/shop'}
+                                functionName={closeMenu}
+                            />
+
+                            <MobileHeaderItem
+                                text={'Пополнение Steam'}
+                                link={'/steam-balance'}
+                                functionName={closeMenu}
+                            />
+
+                            <MobileHeaderItem
+                                text={'Гарантии'}
+                                link={'/shop'}
+                                functionName={closeMenu}
+                            />
+
+                            <MobileHeaderItem
+                                text={'Поддержка'}
+                                link={'/support'}
+                                functionName={closeMenu}
+                            />
+
+                            <MobileHeaderItem
+                                text={'О нас'}
+                                link={'/about'}
+                                functionName={closeMenu}
+                            />
+
                         </ul>
-                        <div className="p-4 border-t border-gray-700">
-                            <Link href={'/auth/login'} onClick={closeMenu} className={`block w-full p-3 rounded-md text-center ${styles.authButton}`}>
+                        <div className="p-4 border-t mb-5  border-gray-700">
+                            <Link href={'/auth/login'} onClick={closeMenu} className={`block w-full mt-5 p-3 rounded-md text-center myButtonColor`}>
                                 <h3 className={`font-bold text-lg`}>Войти</h3>
                             </Link>
                         </div>
