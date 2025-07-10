@@ -1,15 +1,13 @@
-// Ваш кастомный фон для основной карточки
 .mainCard {
   background-color: #212227;
 }
 
-// Стили для кнопки, в основном для hover-эффекта и кастомного цвета
 .buyButton {
-  background-color: #00FE92; // Ваш яркий, акцентный цвет
+  background-color: #00FE92;
   transition: background-color 0.3s ease;
 
   &:hover {
-    background-color: #099f5f; // Цвет при наведении
+    background-color: #099f5f;
   }
 
 }

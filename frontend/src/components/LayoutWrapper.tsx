@@ -18,7 +18,7 @@ export default function LayoutWrapper({ children }: { children: React.ReactNode 
                 {!isAuthPage && (
                     <MainHeader />
                 )}
-                {!isAuthPage && isShopPage && (
+                {!isAuthPage && (
                     <ShopHeader />
                 )}
                 <main>

@@ -48,7 +48,7 @@ export default function ShopHeader() {
 
     return (
         <>
-            <div className={`${styles.main} pt-3 pb-5`}>
+            <div className={`${styles.main} pt-3 pb-6`}>
                 <div className="container mx-auto  flex items-center justify-between px-2 gap-2 md:px-0 md:gap-4">
 
                     <div className="flex-shrink-0 relative" ref={catalogButtonRef}>
