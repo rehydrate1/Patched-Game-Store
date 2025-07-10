@@ -2,7 +2,7 @@
 import styles from "./ShopHeader.module.scss";
 import Link from "next/link";
 import { useState, useRef, useEffect } from "react";
-import { useAppSelector } from '@/hooks/useTypedRedux'; // <-- 1. ИМПОРТИРУЕМ ХУК
+import { useAppSelector } from '@/hooks/useTypedRedux';
 
 
 import {
@@ -53,7 +53,7 @@ export default function ShopHeader() {
 
                     <div className="flex-shrink-0 relative" ref={catalogButtonRef}>
                         <div
-                            className={`flex justify-center items-center p-3 md:px-4 md:py-3 rounded-md ${styles.catalogButton} cursor-pointer`}
+                            className={`flex justify-center items-center p-3 md:px-4 md:py-3 rounded-md myButtonColor cursor-pointer`}
                             onClick={() => setIsOpenCatalog(!isOpenCatalog)}
                         >
                             <Bars3Icon className={'h-6 w-6 text-black'} />
