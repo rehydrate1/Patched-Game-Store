@@ -38,3 +38,22 @@ html, body, #root {
 
 }
 
+
+.swiper-pagination-bullet {
+  background-color: #aeb2ae !important; /* Цвет неактивной точки */
+  opacity: 0.6;
+  transition: all 0.3s ease;
+}
+
+.swiper-pagination-bullet-active {
+  background-color: #00FE92 !important; /* Цвет активной точки */
+  opacity: 1;
+  transform: scale(1.2);
+}
+
+/* Дополнительно: скроем пагинацию на больших экранах */
+@media (min-width: 1024px) {
+  .swiper-pagination {
+    display: none !important;
+  }
+}

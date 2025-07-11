@@ -23,6 +23,7 @@ import styles from './Dashboard.module.scss'
 import TextPressure from "@/components/UI/Modern/TextPressure";
 import Image from "next/image";
 import MainPrivilegeCards from "@/components/PrivilegeCards/MainPrivilegeCard";
+import Link from "next/link";
 
 
 const privileges = [
@@ -107,15 +108,19 @@ export default function Dashboard({products}) {
                             {products.map(game => (
                                 <SwiperSlide key={game.id}>
                                     <div className="group relative bg-[#1A1129] rounded-xl overflow-hidden
-                                                     border border-transparent hover:border-[#00FE92] transition-all duration-300 h-full flex flex-col">
+                                                     border border-transparent hover:border-[#aeb2ae] transition-all duration-300 h-full flex flex-col">
                                         <Image src={game.picture} alt={game.name} width={1920} height={1080} className="w-full h-auto object-cover aspect-[3/4] transition-transform duration-300 group-hover:scale-105"/>
                                         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent"></div>
                                         <div className="absolute bottom-0 left-0 p-4 w-full">
-                                            <h1 className="text-xl font-bold text-white">{game.name}</h1>
+                                            <Link href={`/shop/catalog/keys/${game.id}`}>
+                                                <h1 className="text-2xl font-bold hover:text-green-400 text-white">{game.name}</h1>
+                                            </Link>
+
                                             <div className="flex items-baseline gap-2 mt-2">
-                                                <p className="text-2xl font-bold text-white">{game.price}</p>
+                                                <p className="text-2xl font-bold text-white">{game.price} ₽</p>
                                             </div>
-                                            <button className="mt-4 w-full bg-[#00FE92] text-black font-bold py-2 rounded-lg
+
+                                            <button className="mt-6 w-full bg-[#00FE92] hover:bg-[#099f5f] cursor-pointer text-black font-bold py-2 rounded-lg
                                                              flex items-center justify-center gap-2 opacity-0 group-hover:opacity-100
                                                              transform translate-y-4 group-hover:translate-y-0 transition-all duration-300">
                                                 <ShoppingCartIcon className="h-5 w-5" /> В корзину
