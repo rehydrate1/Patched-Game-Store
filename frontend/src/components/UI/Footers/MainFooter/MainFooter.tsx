@@ -14,7 +14,7 @@ export default function MainFooter() {
                             Patched
                         </h2>
                         <p className="text-sm text-gray-400 mb-6 max-w-xs">
-                            Ваш надежный портал в мир цифровых игр.
+                            Ваш надежный портал в цифровой мир
                         </p>
                         <div className="flex space-x-4">
                             <a href="#" className="text-gray-400 transition-all duration-300 transform hover:text-white hover:-translate-y-1 hover:scale-110" aria-label="Discord">
@@ -32,11 +32,9 @@ export default function MainFooter() {
                     <div>
                         <h3 className="text-sm font-semibold text-white uppercase tracking-wider">Магазин</h3>
                         <ul className="space-y-4 mt-4">
-                            <FooterNavItem text={'Магазин игр'} link={'/'} />
-                            <FooterNavItem text={'Пополнение Steam'} link={'/'} />
-                            <FooterNavItem text={'Предзаказы'} link={'/'} />
-                            <FooterNavItem text={'Скидки'} link={'/'} />
-                            <FooterNavItem text={''} link={'/'} />
+                            <FooterNavItem text={'Магазин игр'} link={'/shop/catalog/keys'} />
+                            <FooterNavItem text={'Пополнение Steam'} link={'/steam-balance'} />
+                            <FooterNavItem text={'Корзина'} link={'/shop/cart'} />
                         </ul>
                     </div>
 
@@ -44,18 +42,17 @@ export default function MainFooter() {
                         <h3 className="text-sm font-semibold text-white uppercase tracking-wider">Информация</h3>
                         <ul className="space-y-4 mt-4">
                             <FooterNavItem text={'Гарантии'} link={'/'} />
-                            <FooterNavItem text={'Поддержка'} link={'/'} />
-                            <FooterNavItem text={'О нас'} link={'/'} />
-                            <FooterNavItem text={'Политика конфиденциальности'} link={'/'} />
+                            <FooterNavItem text={'Поддержка'} link={'/support'} />
+                            <FooterNavItem text={'О нас'} link={'/about'} />
                         </ul>
                     </div>
 
                     <div>
                         <h3 className="text-sm font-semibold text-white uppercase tracking-wider">Помощь</h3>
                         <ul className="space-y-4 mt-4">
-                            <FooterNavItem text={'FAQ'} link={'/'} />
+                            <FooterNavItem text={'FAQ'} link={'/faq'} />
                             <FooterNavItem text={'Как сделать заказ?'} link={'/'} />
-                            <FooterNavItem text={'Контакты'} link={'/'} />
+                            <FooterNavItem text={'Контакты'} link={'/contact'} />
                         </ul>
                     </div>
 
