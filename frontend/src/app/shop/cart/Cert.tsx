@@ -30,7 +30,7 @@ export default function Cart() {
     // Блок для пустой корзины остается без изменений, он уже адаптивен
     if (cartItems.length === 0) {
         return (
-            <div className="container mx-auto text-center py-20 px-4">
+            <div className="container mx-auto text-center py-40 px-4">
                 <XCircleIcon className="mx-auto h-24 w-24 text-gray-400" />
                 <h1 className="mt-4 text-3xl font-bold tracking-tight text-white sm:text-5xl">Корзина пуста</h1>
                 <p className="mt-6 text-base leading-7 text-gray-400">Похоже, вы еще не добавили ни одного товара.</p>

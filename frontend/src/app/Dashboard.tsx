@@ -85,7 +85,7 @@ export default function Dashboard() {
                 </section>
 
 
-                <section id="why-us" className="mb-24">
+                <section id="why-us" className="mb-5">
                     <h2 className="text-4xl font-bold text-center mb-20 text-white">Почему Patched?</h2>
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                         {privileges.map(privilege => (
