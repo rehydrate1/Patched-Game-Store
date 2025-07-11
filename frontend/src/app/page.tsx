@@ -119,6 +119,61 @@ const arrayOfData = [
         genres: ['RPG', 'Открытый мир', 'Фэнтези'],
         developer: 'Bethesda Game Studios'
     },
+    {
+        id: 11,
+        name: "DOOM Eternal",
+        price: "1999",
+        picture: "https://cdn.akamai.steamstatic.com/steam/apps/782330/header.jpg",
+        releaseData: "20.03.2020",
+        platforms: ['Windows'],
+        applications: ['Steam', 'EA'],
+        genres: ['Шутер', 'Экшен'],
+        developer: 'id Software'
+    },
+    {
+        id: 12,
+        name: "Hades",
+        price: "899",
+        picture: "https://cdn.akamai.steamstatic.com/steam/apps/1145360/header.jpg",
+        releaseData: "17.09.2020",
+        platforms: ['Windows', 'macOS'],
+        applications: ['Steam', 'Epic Games'],
+        genres: ['Экшен', 'Roguelike', 'Инди'],
+        developer: 'Supergiant Games'
+    },
+    {
+        id: 13,
+        name: "Factorio",
+        price: "1000",
+        picture: "https://cdn.akamai.steamstatic.com/steam/apps/427520/header.jpg",
+        releaseData: "14.08.2020",
+        platforms: ['Windows', 'macOS', 'Linux'],
+        applications: ['Steam'],
+        genres: ['Стратегия', 'Симулятор', 'Выживание', 'Автоматизация'],
+        developer: 'Wube Software LTD'
+    },
+    {
+        id: 14,
+        name: "Terraria",
+        price: "249",
+        picture: "https://cdn.akamai.steamstatic.com/steam/apps/105600/header.jpg",
+        releaseData: "16.05.2011",
+        platforms: ['Windows', 'macOS', 'Linux'],
+        applications: ['Steam', 'GOG'],
+        genres: ['Песочница', 'Приключения', 'Выживание'],
+        developer: 'Re-Logic'
+    },
+    {
+        id: 15,
+        name: "Sid Meier's Civilization VI",
+        price: "1999",
+        picture: "https://cdn.akamai.steamstatic.com/steam/apps/289070/header.jpg",
+        releaseData: "21.10.2016",
+        platforms: ['Windows', 'macOS', 'Linux'],
+        applications: ['Steam', 'Epic Games'],
+        genres: ['Глобальная стратегия', 'Пошаговая стратегия'],
+        developer: 'Firaxis Games'
+    }
 ];
 
 

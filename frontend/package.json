@@ -19,6 +19,7 @@
     "react-redux": "^9.2.0",
     "react-select": "^5.10.1",
     "sass": "^1.87.0",
+    "swiper": "^11.2.10",
     "tailwind-scrollbar-hide": "^4.0.0"
   },
   "devDependencies": {
