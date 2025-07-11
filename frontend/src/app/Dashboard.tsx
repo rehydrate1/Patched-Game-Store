@@ -1,23 +1,36 @@
 "use client";
 
-
 import {
     ShoppingCartIcon,
     TagIcon,
-    BoltIcon,
-    ShieldCheckIcon
+    ShieldCheckIcon,
+    GiftIcon,
+    RocketLaunchIcon,
+    ClockIcon,
+    SparklesIcon,
 } from '@heroicons/react/24/outline';
+
 import TextPressure from "@/components/UI/Modern/TextPressure";
 import Image from "next/image";
 import MainPrivilegeCards from "@/components/PrivilegeCards/MainPrivilegeCard";
 
 
 const popularGames = [
-    { id: 1, title: "Cyber Glitch 2099", price: "2499₽", oldPrice: "3199₽", image: "https://cdn.akamai.steamstatic.com/steam/apps/271590/header.jpg" },
+    { id: 1, title: "Cyber Glitch 2099", price: "2499₽",  image: "https://cdn.akamai.steamstatic.com/steam/apps/271590/header.jpg" },
     { id: 2, title: "Void Runners", price: "1899₽", image: "https://cdn.akamai.steamstatic.com/steam/apps/12210/header.jpg" },
     { id: 3, title: "Starfall Odyssey", price: "2999₽", image: "https://cdn.akamai.steamstatic.com/steam/apps/292030/header.jpg" },
     { id: 4, title: "Neon Fury", price: "999₽", image: "https://cdn.akamai.steamstatic.com/steam/apps/1091500/header.jpg" },
 ];
+
+const privileges = [
+    { icon: TagIcon, title: 'Лучшие цены', text: 'Регулярные распродажи и эксклюзивные скидки для наших пользователей' },
+    { icon: GiftIcon, title: 'Моментальная доставка', text: 'Получите ключ от игры сразу после оплаты и начните загрузку' },
+    { icon: SparklesIcon, title: 'Игры в день релиза', text: 'Мы работаем только с проверенными издателями и разработчиками' },
+    { icon: RocketLaunchIcon, title: 'Быстрое пополнение', text: 'Мы работаем только с проверенными издателями и разработчиками' },
+    { icon: ClockIcon, title: 'Круглосуточная поддержка', text: 'Мы работаем только с проверенными издателями и разработчиками' },
+    { icon: ShieldCheckIcon, title: 'Надежный сервис', text: 'Мы работаем только с проверенными издателями и разработчиками' },
+];
+
 
 export default function Dashboard() {
     return (
@@ -46,7 +59,6 @@ export default function Dashboard() {
             </header>
 
             <main className="container mx-auto px-6 py-20">
-                {/* Остальная часть страницы остается без изменений */}
                 <section id="popular-games" className="mb-35">
                     <h2 className="text-4xl font-bold text-center mb-20 text-white">Сейчас в топе продаж</h2>
 
@@ -60,7 +72,6 @@ export default function Dashboard() {
                                     <h3 className="text-xl font-bold text-white">{game.title}</h3>
                                     <div className="flex items-baseline gap-2 mt-2">
                                         <p className="text-2xl font-bold text-white">{game.price}</p>
-                                        {game.oldPrice && <p className="text-lg text-gray-400 line-through">{game.oldPrice}</p>}
                                     </div>
                                     <button className="mt-4 w-full bg-[#00FE92] text-black font-bold py-2 rounded-lg
                                                      flex items-center justify-center gap-2 opacity-0 group-hover:opacity-100
@@ -74,46 +85,17 @@ export default function Dashboard() {
                 </section>
 
 
-
                 <section id="why-us" className="mb-24">
                     <h2 className="text-4xl font-bold text-center mb-20 text-white">Почему Patched?</h2>
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-
-                        <MainPrivilegeCards
-                            title={'Лучшие цены'}
-                            icon={TagIcon}
-                            text={'Регулярные распродажи и эксклюзивные скидки для наших пользователей'}
-                        />
-
-                        <MainPrivilegeCards
-                            title={'Моментальная доставка'}
-                            icon={BoltIcon}
-                            text={'Получите ключ от игры сразу после оплаты и начните загрузку'}
-                        />
-
-                        <MainPrivilegeCards
-                            title={'Игры в день релиза'}
-                            icon={ShieldCheckIcon}
-                            text={'Мы работаем только с проверенными издателями и разработчиками'}
-                        />
-
-                        <MainPrivilegeCards
-                            title={'Моментальное пополнение'}
-                            icon={ShieldCheckIcon}
-                            text={'Мы работаем только с проверенными издателями и разработчиками'}
-                        />
-
-                        <MainPrivilegeCards
-                            title={'Круглосуточная поддержка'}
-                            icon={ShieldCheckIcon}
-                            text={'Мы работаем только с проверенными издателями и разработчиками'}
-                        />
-
-                        <MainPrivilegeCards
-                            title={'Надежный сервис'}
-                            icon={ShieldCheckIcon}
-                            text={'Мы работаем только с проверенными издателями и разработчиками'}
-                        />
+                        {privileges.map(privilege => (
+                            <MainPrivilegeCards
+                                key = {privilege.title}
+                                title = {privilege.title}
+                                icon = {privilege.icon}
+                                text = {privilege.text}
+                            />
+                        ))}
                     </div>
                 </section>
 

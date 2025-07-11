@@ -1,0 +1,9 @@
+.mainCard{
+
+  background-color: #212227;
+  transition: border-color 0.3s ease;
+
+  &:hover {
+    border-color: #aeb2ae;
+  }
+}
