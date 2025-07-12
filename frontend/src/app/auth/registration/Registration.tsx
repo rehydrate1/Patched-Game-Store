@@ -5,9 +5,10 @@ import { useRouter } from 'next/navigation';
 import {EyeIcon, EyeSlashIcon} from "@heroicons/react/24/outline";
 import Link from "next/link";
 import MainInput from "@/components/UI/Inputs/MainInput/MainInput";
+import Particles from "@/components/UI/Modern/Particles";
 
 
-export default function Login(){
+export default function Registration(){
 
     const [userName, setUserName] = useState<string>("");
     const [email, setEmail] = useState<string>("");
@@ -83,9 +84,6 @@ export default function Login(){
             return;
         }
 
-
-
-
         try {
             console.log([userName, email, password, confirmPassword]);
 
@@ -111,13 +109,23 @@ export default function Login(){
     }
 
 
-
-
-
     return (
-        <>
-            <div className={`flex items-center justify-center min-h-screen authBackground`}>
+        <div className="relative min-h-screen overflow-hidden">
 
+            <div className="absolute inset-0 z-0">
+                <Particles
+                    particleColors={['#00FE92', '#ffffff']}
+                    particleCount={300}
+                    particleSpread={10}
+                    speed={0.1}
+                    particleBaseSize={200}
+                    moveParticlesOnHover={true}
+                    alphaParticles={false}
+                    disableRotation={false}
+                />
+            </div>
+
+            <div className="relative z-10 flex items-center justify-center min-h-screen">
                 <div className={`w-full max-w-md p-8 space-y-6 rounded-lg shadow-md ${styles.main}`}>
                     <h2 className="text-2xl font-semibold text-center text-white">
                         Регистрация
@@ -153,9 +161,9 @@ export default function Login(){
                                     id="password"
                                     name="password"
                                     type={showPassword ? 'text' : 'password'}
-                                    autoComplete="current-password"
+                                    autoComplete="new-password"
                                     required
-                                    className={`block w-full px-3 py-2 pr-10 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none  sm:text-sm ${styles.inputField}`}
+                                    className={`block mainInput w-full px-3 py-2 pr-10 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none  sm:text-sm `}
                                     value={password}
                                     onChange={(e) => setPassword(e.target.value)}
                                 />
@@ -185,7 +193,7 @@ export default function Login(){
                             <button
                                 type="submit"
                                 className={`w-full flex justify-center py-2 px-4 border border-transparent 
-                                rounded-md shadow-sm text-m font-medium text-black ${styles.submitButton}`}
+                                rounded-md shadow-sm text-m cursor-pointer font-medium text-black ${styles.submitButton}`}
                             >
                                 Зарегистрироваться
                             </button>
@@ -196,8 +204,7 @@ export default function Login(){
                         Уже есть аккаунт? <Link href="/auth/login" className={`font-medium text-indigo-600 hover:text-indigo-500 ${styles.links}`}>Авторизоваться</Link>
                     </div>
                 </div>
-
             </div>
-        </>
+        </div>
     );
 }

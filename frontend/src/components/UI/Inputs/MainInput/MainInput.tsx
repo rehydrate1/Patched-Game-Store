@@ -29,7 +29,7 @@ export default function MainInput({id, label, value, onChange, placeholder = '',
                 onChange={(e) => onChange(e.target.value)}
                 required={required}
                 className={`mt-1 block w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none 
-                 sm:text-sm ${error ? 'border-red-500' : 'border-gray-600'} ${styles.inputField} ${className}`}
+                 sm:text-sm ${error ? 'border-red-500' : 'border-gray-600'} mainInput ${className}`}
                 placeholder={placeholder}
             />
 

@@ -14,8 +14,8 @@ import {
 } from '@heroicons/react/24/outline';
 
 // компоненты Swiper
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation } from 'swiper/modules';
+import {Swiper, SwiperSlide} from 'swiper/react';
+import {Navigation} from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/navigation';
 
@@ -24,6 +24,7 @@ import TextPressure from "@/components/UI/Modern/TextPressure";
 import Image from "next/image";
 import MainPrivilegeCards from "@/components/PrivilegeCards/MainPrivilegeCard";
 import Link from "next/link";
+import Aurora from "@/components/UI/Modern/Aurora";
 
 
 const privileges = [
@@ -63,12 +64,18 @@ export default function Dashboard({products}) {
     return (
         <div className="min-h-screen">
 
-            <header className="relative min-h-screen flex items-center justify-center overflow-hidden"><div className="absolute inset-0 bg-gradient-to-br from-[#4F0A78] to-[#004AAD] opacity-80"></div>
-                <div className="absolute top-1/4 left-1/4 w-32 h-32 bg-[#AFFF34]/10 rounded-full filter blur-2xl animate-pulse"></div>
-                <div className="absolute bottom-1/4 right-1/4 w-48 h-48 bg-[#004AAD]/20 rounded-lg filter blur-3xl animate-pulse delay-1000"></div>
+            <header className="relative min-h-screen flex items-center justify-center overflow-hidden">
+
+                <div className="absolute inset-0 z-0">
+                    <Aurora
+                        colorStops={["#099f5f", "#00FE92", "#00d17a"]}
+                        amplitude={0.6}
+                        speed={0.9}
+                        blend={0.45}
+                    />
+                </div>
 
                 <div className="relative z-10 text-center w-full flex flex-col items-center">
-
                     <div className="w-full max-w-7xl">
                         <TextPressure
                             text="PATCHED"
@@ -85,7 +92,10 @@ export default function Dashboard({products}) {
                 </div>
             </header>
 
+
             <main className="py-20">
+
+
                 <section id="popular-games" className="mb-35 relative">
                     <div className="container mx-auto px-6">
                         <h2 className="text-4xl font-bold text-center mb-20 text-white">Сейчас в топе продаж</h2>
@@ -99,9 +109,9 @@ export default function Dashboard({products}) {
                             loop={true}
                             spaceBetween={32}
                             breakpoints={{
-                                640: { slidesPerView: 1, spaceBetween: 20 },
-                                768: { slidesPerView: 2, spaceBetween: 30 },
-                                1024: { slidesPerView: 4, spaceBetween: 32 },
+                                640: {slidesPerView: 1, spaceBetween: 20},
+                                768: {slidesPerView: 2, spaceBetween: 30},
+                                1024: {slidesPerView: 4, spaceBetween: 32},
                             }}
                             className="!pb-10"
                         >
@@ -109,8 +119,10 @@ export default function Dashboard({products}) {
                                 <SwiperSlide key={game.id}>
                                     <div className="group relative bg-[#1A1129] rounded-xl overflow-hidden
                                                      border border-transparent hover:border-[#aeb2ae] transition-all duration-300 h-full flex flex-col">
-                                        <Image src={game.picture} alt={game.name} width={1920} height={1080} className="w-full h-auto object-cover aspect-[3/4] transition-transform duration-300 group-hover:scale-105"/>
-                                        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent"></div>
+                                        <Image src={game.picture} alt={game.name} width={1920} height={1080}
+                                               className="w-full h-auto object-cover aspect-[3/4] transition-transform duration-300 group-hover:scale-105"/>
+                                        <div
+                                            className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent"></div>
                                         <div className="absolute bottom-0 left-0 p-4 w-full">
                                             <Link href={`/shop/catalog/keys/${game.id}`}>
                                                 <h1 className="text-2xl font-bold hover:text-green-400 text-white">{game.name}</h1>
@@ -123,7 +135,7 @@ export default function Dashboard({products}) {
                                             <button className="mt-6 w-full bg-[#00FE92] hover:bg-[#099f5f] cursor-pointer text-black font-bold py-2 rounded-lg
                                                              flex items-center justify-center gap-2 opacity-0 group-hover:opacity-100
                                                              transform translate-y-4 group-hover:translate-y-0 transition-all duration-300">
-                                                <ShoppingCartIcon className="h-5 w-5" /> В корзину
+                                                <ShoppingCartIcon className="h-5 w-5"/> В корзину
                                             </button>
                                         </div>
                                     </div>
@@ -135,12 +147,12 @@ export default function Dashboard({products}) {
                     <div className="swiper-button-prev-custom absolute top-1/2 left-4 lg:left-12 transform
                     z-10 cursor-pointer p-2 bg-[#212227] hover:bg-[#00FE92] hover:text-black rounded-full
                     transition-colors duration-300">
-                        <ChevronLeftIcon className="h-12 w-12 text-white hover:text-black " />
+                        <ChevronLeftIcon className="h-12 w-12 text-white hover:text-black "/>
                     </div>
                     <div className={`swiper-button-next-custom absolute top-1/2 right-4 lg:right-12 transform
                         z-10 cursor-pointer p-2  bg-[#212227] hover:bg-[#00FE92] hover:text-black rounded-full
                         transition-colors duration-300 `}>
-                        <ChevronRightIcon className="h-12 w-12 text-white hover:text-black" />
+                        <ChevronRightIcon className="h-12 w-12 text-white hover:text-black"/>
                     </div>
                 </section>
 

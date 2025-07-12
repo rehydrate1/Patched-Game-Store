@@ -1,21 +1,9 @@
 
-
-
 .main{
   background: #212227 ;
 
 }
 
-.inputField{
-  border-color: #222224;
-  background-color: #38393D;
-  color: white;
-  transition: background-color 0.5s ease-in-out;
-
-  &:focus {
-    border-color: #00FE92;
-  }
-}
 
 .submitButton{
   background-color: #00FE92;
