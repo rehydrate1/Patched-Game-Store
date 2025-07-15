@@ -13,7 +13,6 @@ import {
     ChevronRightIcon,
 } from '@heroicons/react/24/outline';
 
-// компоненты Swiper
 import {Swiper, SwiperSlide} from 'swiper/react';
 import {Navigation} from 'swiper/modules';
 import 'swiper/css';
@@ -25,6 +24,7 @@ import Image from "next/image";
 import MainPrivilegeCards from "@/components/PrivilegeCards/MainPrivilegeCard";
 import Link from "next/link";
 import Aurora from "@/components/UI/Modern/Aurora";
+import Feedback from "@/components/Feedback/Feedback";
 
 
 const privileges = [
@@ -58,6 +58,73 @@ const privileges = [
         title: 'Надежный сервис',
         text: 'Мы работаем только с официальными издателями, гарантируя легальность и работоспособность каждого ключа'
     },
+];
+
+const testimonialsData = [
+    {
+        id: 1,
+        author: 'Alex_Gamer',
+        avatar: 'https://i.pravatar.cc/48?u=alex_gamer',
+        game: 'Cyberpunk 2077',
+        rating: 5,
+        text: 'Ключ пришел моментально, даже не успел чайник вскипеть! Все активировалось без проблем. Спасибо, Patched, теперь только к вам!'
+    },
+    {
+        id: 2,
+        author: 'Elena_Swift',
+        avatar: 'https://i.pravatar.cc/48?u=elena_swift',
+        game: 'Elden Ring',
+        rating: 5,
+        text: 'Очень боялась покупать ключи в интернете, но тут все прошло гладко. Цена была самой низкой из всех, что я нашла. Поддержка ответила на мой вопрос за 5 минут. Супер!'
+    },
+    {
+        id: 3,
+        author: 'MadMax_Play',
+        avatar: 'https://i.pravatar.cc/48?u=madmax_play',
+        game: 'Baldur\'s Gate 3',
+        rating: 5,
+        text: 'Пополнил Стим через этот сайт, деньги пришли сразу же. Удобно, быстро и без заморочек с зарубежными картами. Настоящее спасение.'
+    },
+    {
+        id: 4,
+        author: 'GamerGirl94',
+        avatar: 'https://i.pravatar.cc/48?u=GamerGirl94',
+        game: 'Helldivers 2',
+        rating: 5,
+        text: 'Купила ключ для Helldivers 2, активация в Steam прошла успешно. Цена порадовала, ниже чем у конкурентов. Буду брать еще!'
+    },
+    {
+        id: 5,
+        author: 'S_T_A_L_K_E_R',
+        avatar: 'https://i.pravatar.cc/48?u=S_T_A_L_K_E_R',
+        game: 'Escape from Tarkov',
+        rating: 5,
+        text: 'Все четко и быстро. Ключ пришел на почту через минуту после оплаты. Сервис на высшем уровне, рекомендую.'
+    },
+    {
+        id: 6,
+        author: 'Dmitry_S',
+        avatar: 'https://i.pravatar.cc/48?u=Dmitry_S',
+        game: 'Starfield',
+        rating: 4,
+        text: 'Немного волновался, так как покупал впервые. Но все прошло отлично. Единственное, ждал ключ минут 15, но в остальном все супер.'
+    },
+    {
+        id: 7,
+        author: 'Katya_Stream',
+        avatar: 'https://i.pravatar.cc/48?u=Katya_Stream',
+        game: 'Lethal Company',
+        rating: 5,
+        text: 'Брали с друзьями сразу 4 ключа для Lethal Company. Все пришли моментально, уже играем! Спасибо за отличные цены и скорость!'
+    },
+    {
+        id: 8,
+        author: 'Old_Gamer',
+        avatar: 'https://i.pravatar.cc/48?u=Old_Gamer',
+        game: 'Пополнение Steam',
+        rating: 5,
+        text: 'Отличный способ пополнить кошелек Steam. Комиссия адекватная, деньги зачисляются практически мгновенно. Теперь не нужно просить друзей из-за границы.'
+    }
 ];
 
 export default function Dashboard({products}) {
@@ -144,15 +211,15 @@ export default function Dashboard({products}) {
                         </Swiper>
                     </div>
 
-                    <div className="swiper-button-prev-custom absolute top-1/2 left-4 lg:left-12 transform
-                    z-10 cursor-pointer p-2 bg-[#212227] hover:bg-[#00FE92] hover:text-black rounded-full
-                    transition-colors duration-300">
-                        <ChevronLeftIcon className="h-12 w-12 text-white hover:text-black "/>
+                    <div className="swiper-button-prev-custom absolute top-1/2 left-4 xl:left-12 2xl:left-24 transform
+                                z-10 cursor-pointer p-2 bg-[#212227]/80  hover:bg-[#00FE92] hover:text-black rounded-full backdrop-blur-sm
+                                transition-all duration-300 hidden md:block">
+                        <ChevronLeftIcon className="h-10 w-10 text-white hover:text-black "/>
                     </div>
-                    <div className={`swiper-button-next-custom absolute top-1/2 right-4 lg:right-12 transform
-                        z-10 cursor-pointer p-2  bg-[#212227] hover:bg-[#00FE92] hover:text-black rounded-full
-                        transition-colors duration-300 `}>
-                        <ChevronRightIcon className="h-12 w-12 text-white hover:text-black"/>
+                    <div className={`swiper-button-next-custom absolute top-1/2 right-4 xl:right-12 2xl:right-24 transform
+                                z-10 cursor-pointer p-2 bg-[#212227]/80  hover:bg-[#00FE92] hover:text-black rounded-full backdrop-blur-sm
+                                transition-all duration-300 hidden md:block`}>
+                        <ChevronRightIcon className="h-10 w-10 text-white hover:text-black"/>
                     </div>
                 </section>
 
@@ -172,6 +239,9 @@ export default function Dashboard({products}) {
                         </div>
                     </div>
                 </section>
+
+                <Feedback testimonials={testimonialsData} />
+
 
             </main>
         </div>
