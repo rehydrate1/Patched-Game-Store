@@ -78,14 +78,8 @@ export default function Feedback({ testimonials }) {
                                         <StarRating rating={testimonial.rating} />
                                         <blockquote className="mt-4 text-gray-300 italic">
                                             {/* Ограничиваем количество строк для предсказуемого вида */}
-                                            <p className="line-clamp-4">“{testimonial.text}”</p>
+                                            <p className="line-clamp-4 text-xl">“{testimonial.text}”</p>
                                         </blockquote>
-                                    </div>
-
-                                    <div className="mt-6 text-right">
-                                        <span className="text-xs font-semibold text-green-400 bg-green-900/50 px-2 py-1 rounded-md">
-                                            Проверенный покупатель
-                                        </span>
                                     </div>
                                 </div>
                             </SwiperSlide>

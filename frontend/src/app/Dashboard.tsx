@@ -1,5 +1,4 @@
-"use client";
-
+"use client"
 
 import {
     ShoppingCartIcon,
@@ -19,6 +18,8 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 
 import styles from './Dashboard.module.scss'
+
+import MainFAQ from "@/components/FAQ/MainFAQ";
 import TextPressure from "@/components/UI/Modern/TextPressure";
 import Image from "next/image";
 import MainPrivilegeCards from "@/components/PrivilegeCards/MainPrivilegeCard";
@@ -26,6 +27,33 @@ import Link from "next/link";
 import Aurora from "@/components/UI/Modern/Aurora";
 import Feedback from "@/components/Feedback/Feedback";
 
+
+const faqData = [
+    {
+        question: "Как быстро я получу свой ключ после оплаты?",
+        answer: "Моментально! Сразу после подтверждения оплаты цифровой ключ от игры автоматически отправляется на вашу электронную почту. Также он будет доступен в вашем личном кабинете на сайте."
+    },
+    {
+        question: "Это официальные ключи? Мой аккаунт не забанят?",
+        answer: "Абсолютно! Мы работаем только с официальными дистрибьюторами и издателями игр. Все ключи являются лицензионными, поэтому вы можете быть уверены в безопасности вашего аккаунта."
+    },
+    {
+        question: "Что делать, если ключ не работает или возникла проблема с активацией?",
+        answer: "Не волнуйтесь! Наша служба поддержки работает круглосуточно и готова помочь. Просто напишите нам в чат на сайте или на почту, приложив скриншот ошибки, и мы оперативно решим ваш вопрос."
+    },
+    {
+        question: "Я купил игру, но она мне не понравилась. Могу я вернуть деньги?",
+        answer: "К сожалению, согласно правилам цифровой дистрибуции, возврат средств за активированный цифровой ключ невозможен. Пожалуйста, убедитесь, что вы покупаете нужную игру и ваш ПК соответствует системным требованиям."
+    },
+    {
+        question: "У меня нет зарубежной карты. Как я могу пополнить Steam или купить игру?",
+        answer: "С помощью нашего сервиса вы можете легко пополнить баланс вашего кошелька Steam или приобрести любую игру, используя российские банковские карты. Мы берем все сложности с конвертацией и оплатой на себя!"
+    },
+    {
+        question: "Что означает 'Region: GLOBAL' или 'Region: RU/CIS'?",
+        answer: "Это регион активации ключа. 'GLOBAL' означает, что ключ можно активировать в любой стране мира. 'RU/CIS' означает, что ключ предназначен для активации в России и странах СНГ. Внимательно читайте описание товара перед покупкой."
+    }
+];
 
 const privileges = [
     {
@@ -242,6 +270,17 @@ export default function Dashboard({products}) {
 
                 <Feedback testimonials={testimonialsData} />
 
+
+                <section className="py-20 mt-15 sm:py-20">
+                    <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+                        <div className="text-center max-w-3xl mx-auto">
+                            <h2 className="text-3xl font-bold text-white tracking-tight sm:text-4xl">Часто задаваемые вопросы</h2>
+                        </div>
+                        <div className="mt-14">
+                            <MainFAQ faqData = {faqData} />
+                        </div>
+                    </div>
+                </section>
 
             </main>
         </div>
