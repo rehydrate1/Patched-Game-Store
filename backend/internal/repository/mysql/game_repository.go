@@ -19,7 +19,7 @@ type gameMemoryRepository struct {
 	games map[string]*domain.Game
 }
 
-func NewGameMemoryReposityory() GameRepository {
+func NewGameMemoryRepository() GameRepository {
 	return &gameMemoryRepository{
 		games: make(map[string]*domain.Game),
 	}

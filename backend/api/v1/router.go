@@ -5,13 +5,16 @@ import (
 
 	"github.com/rehydrate1/Patched-Game-Store/api/v1/handlers"
 	customMiddleware "github.com/rehydrate1/Patched-Game-Store/api/v1/middleware"
+	"github.com/rehydrate1/Patched-Game-Store/internal/service"
 
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
 	"github.com/go-chi/cors"
 )
 
-func NewRouter() http.Handler {
+func NewRouter(gameService service.GameService) http.Handler {
+	gameHandler := handlers.NewGameHandler(gameService)
+
 	r := chi.NewRouter()
 
 	// Настройка CORS
@@ -29,23 +32,15 @@ func NewRouter() http.Handler {
 	r.Use(middleware.RealIP)
 	r.Use(middleware.Logger)
 	r.Use(middleware.Recoverer)
-	
+
 	r.Use(customMiddleware.CommonHeadersMiddleware)
 	r.Use(customMiddleware.ContextLoggerMiddleware)
-	
+
 	// Группа маршрутов для /api/v1
-	r.Get("/health", healthCheckHandler)
-	r.Get("/search", handlers.SearchGamesHandler)
-	r.Get("/games", handlers.CreateGameHandler)
-	r.Get("/games/{gameID}", handlers.GetGameHandler)
+	r.Get("/health", handlers.HealthCheck)
+	// r.Get("/search", handlers.SearchGamesHandler)
+	r.Post("/games", gameHandler.CreateGame)
+	r.Get("/games/{gameID}", gameHandler.GetGame)
 
 	return r
-}
-
-func healthCheckHandler(w http.ResponseWriter, r *http.Request) {
-	l := customMiddleware.GetLoggerFromContext(r)
-	l.Info().Msg("Health check endpoint called")
-
-	w.WriteHeader(http.StatusOK)
-	w.Write([]byte(`{"status": "OK"}`))
 }
