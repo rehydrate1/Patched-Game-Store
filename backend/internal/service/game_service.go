@@ -66,5 +66,9 @@ func (s *gameService) GetByID(ctx context.Context, id string) (*domain.Game, err
 		s.logger.Error().Err(err).Msg("Service: failed to get game by id from repository")
 		return nil, err
 	}
+
+	if game == nil {
+		return nil, ErrNotFound
+	}
 	return game, nil
 }

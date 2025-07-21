@@ -2,10 +2,12 @@ package handlers
 
 import (
 	"encoding/json"
+	"errors"
 	"net/http"
 
 	"github.com/go-chi/chi/v5"
 	"github.com/rehydrate1/Patched-Game-Store/api/v1/middleware"
+	"github.com/rehydrate1/Patched-Game-Store/api/v1/response"
 	"github.com/rehydrate1/Patched-Game-Store/internal/domain"
 	"github.com/rehydrate1/Patched-Game-Store/internal/service"
 )
@@ -31,19 +33,17 @@ func (h *GameHandler) GetGame(w http.ResponseWriter, r *http.Request) {
 
 	game, err := h.service.GetByID(r.Context(), gameID)
 	if err != nil {
-		// TODO: Здесь будет централизованная обработка ошибок
+		if errors.Is(err, service.ErrNotFound) {
+			l.Warn().Err(err).Str("game_id", gameID).Msg("Handler: game not found")
+			response.Error(w, http.StatusNotFound, "Game not found")
+			return
+		}
 		l.Error().Err(err).Msg("Handler: failed to get game")
-		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
-		return
-	}
-	if game == nil {
-		// TODO: Централизованная обработка ошибок (Not Found)
-		http.Error(w, "Game not found", http.StatusNotFound)
+		response.Error(w, http.StatusInternalServerError, "internal Server Error")
 		return
 	}
 
-	w.WriteHeader(http.StatusOK)
-	json.NewEncoder(w).Encode(game)
+	response.JSON(w, http.StatusOK, game)
 }
 
 // Метод-обработчик для создания игры
@@ -52,8 +52,8 @@ func (h *GameHandler) CreateGame(w http.ResponseWriter, r *http.Request) {
 	var input domain.CreateGameRequest
 
 	if err := json.NewDecoder(r.Body).Decode(&input); err != nil {
-		l.Error().Err(err).Msg("Handler: failed to decode request body")
-		http.Error(w, "Invalid request body", http.StatusBadRequest)
+		l.Warn().Err(err).Msg("Handler: failed to decode request body")
+		response.Error(w, http.StatusBadRequest, "Invalid request body")
 		return
 	}
 	defer r.Body.Close()
@@ -62,11 +62,11 @@ func (h *GameHandler) CreateGame(w http.ResponseWriter, r *http.Request) {
 
 	createdGame, err := h.service.Create(r.Context(), input)
 	if err != nil {
+		// TODO: добавить проверку на service.ErrAlreadyExists
 		l.Error().Err(err).Msg("Handler: failed to create game")
-		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
+		response.Error(w, http.StatusInternalServerError, "Internal Server Error")
 		return
 	}
 
-	w.WriteHeader(http.StatusCreated)
-	json.NewEncoder(w).Encode(createdGame)
+	response.JSON(w, http.StatusCreated, createdGame)
 }
