@@ -5,10 +5,11 @@ interface SteamInputProps {
     value: string,
     onChange: (newValue: string) => void;
     label: string
+    error?: string;
 }
 
 
-export default function SteamInput({ id, placeholder = '', value, label, onChange }: SteamInputProps) {
+export default function SteamInput({ id, placeholder = '', value, label, onChange, error }: SteamInputProps) {
 
     return (
         <>
@@ -31,6 +32,10 @@ export default function SteamInput({ id, placeholder = '', value, label, onChang
             >
                 {label}
             </label>
+
+            {error && (
+                <p className="mt-2 text-xs text-red-400">{error}</p>
+            )}
         </>
     )
 }
