@@ -1,0 +1,82 @@
+.multiSelectContainer {
+
+  :global {
+    // Контроллер - основной блок инпута
+    .custom-select__control {
+      background-color: #38393D;
+      border-color: #38393D;
+      color: white;
+      box-shadow: none !important;
+      transition: border-color 0.25s ease;
+
+      &:hover {
+        border-color: #aeb2ae;
+      }
+
+      &--is-focused {
+        border-color: #00FE92 !important;
+      }
+    }
+
+    // Выпадающее меню
+    .custom-select__menu {
+      background-color: #38393D;
+    }
+
+    // Одна опция в списке
+    .custom-select__option {
+      background-color: transparent;
+      color: white;
+
+      &--is-selected {
+        background-color: #014d23;
+        &:hover {
+          background-color: #014d23; // Чтобы при наведении на выбранное цвет не менялся
+        }
+      }
+
+      &--is-focused {
+        background-color: #014d23;
+        cursor: pointer;
+      }
+
+      &:active {
+        background-color: #014d23;
+      }
+    }
+
+    // "Таблетка" (pill) с выбранным значением
+    .custom-select__multi-value {
+      background-color: white;
+      border-radius: 5px;
+
+
+      .custom-select__multi-value__label {
+        color: black ;
+      }
+
+      .custom-select__multi-value__remove {
+        color: black;
+        &:hover {
+          background-color: white;
+          cursor: pointer;
+        }
+      }
+    }
+
+    // Поле для ввода текста (поиска)
+    .custom-select__input-container,
+    .custom-select__input {
+      color: white !important;
+    }
+
+    // Плейсхолдер
+    .custom-select__placeholder {
+      color: white;
+    }
+
+    .custom-select__indicator-separator {
+      display: none;
+    }
+  }
+}

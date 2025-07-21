@@ -12,7 +12,9 @@ tags:
   - name: Authentication
     description: Operations related to user authentication (register, login)
   - name: Games
-    description: OPerations related to games catalog
+    description: OPerations related to keys catalog
+  - name: Admin_GameKeys
+    description: Operations for administrators to manage game keys
 
 paths:
   /auth/register:
@@ -75,13 +77,13 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
         '401':
-          description: Invalid input data
+          description: Unauthorized
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
         '500':
-          description: Invalid input data
+          description: Internal server error
           content:
             application/json:
               schema:
@@ -90,7 +92,7 @@ paths:
     get:
       tags:
         - Games
-      summary: Get a list of games
+      summary: Get a list of keys
       operationId: listGames
       parameters:
         - name: page
@@ -116,7 +118,7 @@ paths:
 
       responses:
         '200':
-          description: A list of games
+          description: A list of keys
           content:
             application/json:
               schema:
@@ -140,6 +142,178 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+
+    post:
+      tags:
+        - Games
+      summary: Create a new game
+      operationId: createGame
+      requestBody: # Описываем тело запроса
+        description: Game object that needs to be added to the store
+        required: true
+        content:
+          application/json:
+            schema:
+              # Ссылка на схему из components
+              $ref: '#/components/schemas/CreateGameRequest' 
+      responses:
+        '201': # Created
+          description: Game created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GameResponse'     
+        '400':
+          description: Invalid input, object invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /games/{gameID}:
+    get:
+      tags:
+        - Games
+      summary: Get a specific game by its ID
+      operationId: getGameById
+      parameters:
+        - name: gameID
+          in: path
+          required: true
+          description: ID of the game to retrieve
+          schema:
+            type: string
+            format: uuid 
+            example: "g1a2b3c4-d5e6-f789-0123-456789abcdef"
+      responses:
+        '200':
+          description: Successfully retrieved game details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GameResponse'
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: success
+                  message:
+                    type: string
+                    example: "Fetching game with ID: g1a2b3c4-d5e6-f789-0123-456789abcdef"
+        '400':
+          description: Invalid game ID supplied
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Game not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /search:
+    get:
+      tags:
+        - Games
+      summary: Search for keys based on query parameters
+      operationId: searchGames
+      parameters:
+        - name: q
+          in: query
+          description: Search term
+          required: false
+          schema:
+            type: string
+            example: "witcher"
+        - name: genre
+          in: query
+          description: Filter by genre
+          required: false
+          schema:
+            type: string
+            example: "rpg"
+        - name: limit
+          in: query 
+          description: Number of results to return
+          required: false
+          schema:
+            type: integer
+            format: int32
+            default: 10
+            example: 20
+      responses:
+        '200':
+          description: Search results
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  games:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/GameSummaryResponse'
+                  pagination:
+                    $ref: '#/components/schemas/PaginationResponse'
+        '400':
+          description: Invalid query parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /admin/games/{gameID}/keys:
+    post:
+      tags:
+        - Admin_GameKeys
+      summary: Add new keys for a game
+      security:
+        - BearerAuth: [] # Требует админских прав
+      parameters:
+        - name: gameID
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AddKeysRequest'
+      responses:
+        '201':
+          description: Keys added successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  countAdded:
+                    type: integer
 
 # Переиспользуемые компоненты
 components:
@@ -210,25 +384,184 @@ components:
           format: date-time # ISO 8601
           example: "2023-10-27T10:30:00Z"
 
-    GameSummaryResponse: # Упрощенная схема для списков игр
+    CreateGameRequest:
+      type: object
+      required:
+        - title
+        - description
+        - price
+        - releaseDate
+      properties:
+        title:
+          type: string
+          minLength: 3
+          maxLength: 100
+          example: "Epic Adventure Game"
+        description:
+          type: string
+          minLength: 10
+          example: "An amazing adventure through..."
+        price:
+          type: number
+          format: float
+          minimum: 0.01 # Цена должна быть положительной
+          example: 29.99
+        releaseDate:
+          type: string
+          format: date # OpenAPI 'date' соответствует YYYY-MM-DD
+          description: "Release date in YYYY-MM-DD format"
+          example: "2024-12-31"
+        coverImageUrl:
+          type: string
+          format: url
+          example: "http://example.com/cover.jpg"
+        developer:
+          type: string
+          example: "Indie Devs"
+        publisher:
+          type: string
+          example: "Self-Published"
+        genres:
+          type: array
+          items:
+            type: string
+          example: ["action", "adventure"]
+        platforms:
+          type: array
+          items:
+            type: string
+          example: ["pc", "ps5"]
+
+    GameResponse:
       type: object
       properties:
         id:
           type: string
           format: uuid
           example: "g1a2b3c4-d5e6-f789-0123-456789abcdef"
+          readOnly: true # ID генерируется сервером
         title:
           type: string
+          example: "Epic Adventure Game"
+        description:
+          type: string
+          example: "An amazing adventure through..."
+        price:
+          type: number
+          format: float
+          example: 29.99
+        releaseDate: # В ответе это может быть полная дата-время
+          type: string
+          format: date-time # ISO 8601, например, 2024-12-31T00:00:00Z
+          example: "2024-12-31T00:00:00Z"
+        coverImageUrl:
+          type: string
+          format: url
+          example: "http://example.com/cover.jpg"
+        developer:
+          type: string
+          example: "Indie Devs"
+        publisher:
+          type: string
+          example: "Self-Published"
+        genres:
+          type: array
+          items:
+            type: string
+          example: ["action", "adventure"]
+        platforms:
+          type: array
+          items:
+            type: string
+          example: ["pc", "ps5"]
+        createdAt:
+          type: string
+          format: date-time
+          example: "2023-10-28T10:20:30Z"
+          readOnly: true # Генерируется сервером
+        updatedAt:
+          type: string
+          format: date-time
+          example: "2023-10-28T10:20:30Z"
+          readOnly: true # Генерируется сервером
+
+    GameSummaryResponse: # Упрощенная схема для списков игр
+      type: object
+      properties:
+        id:
+          type: number
+          example: "1"
+        name:
+          type: string
           example: "Cyberpunk 2077"
+        releaseData:
+          type: string
+          format: data
+          example: "27.08.2022"
+        platforms:
+          type: string
+          format: arr
+          example: "windows,macos"
+        applications:
+          type: string
+          format: arr
+          example: "steam, origin"
         price:
           type: number
           format: float
           example: 59.99
-        coverImageUrl:
+        genres:
+          type: string
+          format: arr
+          example: "ММО, гонки, шутеры"
+        developer:
+          type: string
+          example: "Ubisoft gay pride"
+        picture:
           type: string
           format: url
           example: "http://example.com/covers/cp2077.jpg"
         # Добавим жанры и платформы позже
+
+    GameKeyResponse: # Схема для ответа, когда ключ УЖЕ куплен и его нужно показать
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        gameId:
+          type: string
+          format: uuid
+        platform:
+          type: string
+          example: "Steam"
+        region:
+          type: string
+          example: "Global"
+        keyValue: # Это поле будет только в специальном эндпоинте для отображения купленного ключа
+          type: string
+          example: "ABCDE-12345-FGHIJ"
+        # isSold, soldAt, soldToUserId можно не показывать в общем списке, а только для админа
+
+    AddKeysRequest:
+      type: object
+      required:
+        - platform
+        - keyValues
+      properties:
+        platform:
+          type: string
+          example: "Steam"
+        region:
+          type: string
+          nullable: true # Может быть не указан
+          example: "EU"
+        keyValues:
+          type: array
+          minItems: 1
+          items:
+            type: string
+            example: "XXXXX-YYYYY-ZZZZZ"
 
     PaginationResponse:
       type: object

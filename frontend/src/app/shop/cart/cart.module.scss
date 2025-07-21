@@ -1,0 +1,57 @@
+
+
+.mainCard {
+  background-color: #212227;
+  color: white;
+  border: 1px solid transparent;
+  transition: border-color 0.3s ease;
+
+  &:hover {
+    border-color: #aeb2ae;
+  }
+}
+
+.primaryButton {
+  display: inline-block;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-weight: 600;
+  text-align: center;
+  color: #1a1e25;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  background-color: #00FE92;
+
+  &:hover {
+    background-color: #099f5f;
+    box-shadow: 0 4px 15px rgba(0, 254, 146, 0.2);
+  }
+}
+
+.removeButton {
+  background-color: #38393D;
+  color: #e2e8f0; // Светло-серый
+  border: 1px solid transparent;
+  transition: all 0.2s ease;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #ef4444;
+    color: white;
+  }
+}
+
+.summaryCard {
+  background-color: #1a1e25;
+  border: 1px solid #2d333b;
+}
+
+.clearButton {
+  background-color: transparent;
+  transition: all 0.2s ease;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #2d3748;
+  }
+}
