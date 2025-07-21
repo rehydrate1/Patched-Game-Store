@@ -13,8 +13,6 @@ import (
 )
 
 func NewRouter(gameService service.GameService) http.Handler {
-	gameHandler := handlers.NewGameHandler(gameService)
-
 	r := chi.NewRouter()
 
 	// Настройка CORS
@@ -39,8 +37,9 @@ func NewRouter(gameService service.GameService) http.Handler {
 	// Группа маршрутов для /api/v1
 	r.Get("/health", handlers.HealthCheck)
 	// r.Get("/search", handlers.SearchGamesHandler)
-	r.Post("/games", gameHandler.CreateGame)
-	r.Get("/games/{gameID}", gameHandler.GetGame)
+	
+	gameHandler := handlers.NewGameHandler(gameService)
+	r.Mount("/games", gameHandler.Routes())
 
 	return r
 }

@@ -70,3 +70,13 @@ func (h *GameHandler) CreateGame(w http.ResponseWriter, r *http.Request) {
 
 	response.JSON(w, http.StatusCreated, createdGame)
 }
+
+// Маршруты для ресурса "игры"
+func (h *GameHandler) Routes() chi.Router {
+	r := chi.NewRouter()
+	
+	r.Post("/", h.CreateGame)
+	r.Get("/{gameID}", h.GetGame)
+
+	return r
+}
