@@ -35,7 +35,7 @@ func main() {
 	log.Info().Msg("Database connection established successfully")
 
 	log.Info().Msg("Initializing dependencies...")
-	
+
 	gameRepo := repository.NewGameMemoryRepository()
 	log.Info().Msg("Game repository initialized")
 

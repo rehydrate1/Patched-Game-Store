@@ -23,6 +23,11 @@ func NewConnection(dbConfig *config.DBConfig) (*sql.DB, error) {
 		return nil, fmt.Errorf("failed to open database connection: %w", err)
 	}
 
+	db.SetMaxOpenConns(dbConfig.MaxOpenConns)
+	db.SetMaxIdleConns(dbConfig.MaxIdleConns)
+	db.SetConnMaxLifetime(dbConfig.ConnMaxLifetime)
+	db.SetConnMaxIdleTime(dbConfig.ConnMaxIdleTime)
+
 	err = db.Ping()
 	if err != nil {
 		db.Close()
