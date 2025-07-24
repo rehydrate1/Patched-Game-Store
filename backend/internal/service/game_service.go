@@ -43,8 +43,8 @@ func (s *gameService) Create(ctx context.Context, input domain.CreateGameRequest
 		CoverImageURL: input.CoverImageURL,
 		Developer:     input.Developer,
 		Publisher:     input.Publisher,
-		Geners:        input.Geners,
-		Platforms:     input.Platforms,
+		// Geners:        input.Geners,
+		// Platforms:     input.Platforms,
 		CreatedAt:     time.Now(),
 		UpdatedAt:     time.Now(),
 	}

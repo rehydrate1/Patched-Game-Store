@@ -1,0 +1,9 @@
+DROP TABLE IF EXISTS system_requirements;
+DROP TABLE IF EXISTS game_gallery_images;
+DROP TABLE IF EXISTS game_applications;
+DROP TABLE IF EXISTS game_platforms;
+DROP TABLE IF EXISTS game_genres;
+DROP TABLE IF EXISTS applications;
+DROP TABLE IF EXISTS platforms;
+DROP TABLE IF EXISTS genres;
+DROP TABLE IF EXISTS games;

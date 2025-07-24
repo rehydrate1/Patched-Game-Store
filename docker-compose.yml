@@ -4,13 +4,14 @@ services:
     container_name: gamestore-mysql
     restart: unless-stopped
     environment:
-      MYSQL_ROOT_PASSWORD: $(DB_ROOT_PASSWORD)
-      MYSQL_DATABASE: $(DB_NAME)
-      MYSQL_USER: $(DB_USER)
-      MYSQL_PASSWORD: $(DB_PASSWORD)
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${DB_NAME}
+      MYSQL_USER: ${DB_USER}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
     ports:
-      - "$(DB_PORT_HOST):$(DB_PORT_CONTAINER)"
+      - "${DB_PORT_HOST}:${DB_PORT_CONTAINER}"
     volumes:
       - db_data:/var/lib/mysql
+
 volumes:
   db_data:
