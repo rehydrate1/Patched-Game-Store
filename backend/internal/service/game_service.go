@@ -6,7 +6,7 @@ import (
 
 	"github.com/google/uuid"
 	"github.com/rehydrate1/Patched-Game-Store/internal/domain"
-	"github.com/rehydrate1/Patched-Game-Store/internal/repository/mysql"
+	"github.com/rehydrate1/Patched-Game-Store/internal/repository"
 	"github.com/rs/zerolog"
 )
 

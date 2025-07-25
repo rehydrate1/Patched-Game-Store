@@ -36,7 +36,7 @@ func main() {
 
 	log.Info().Msg("Initializing dependencies...")
 
-	gameRepo := repository.NewGameMemoryRepository()
+	gameRepo := mysql.NewGameRepository(db)
 	log.Info().Msg("Game repository initialized")
 
 	globalLogger := log.Logger
