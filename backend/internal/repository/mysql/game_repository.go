@@ -9,18 +9,19 @@ import (
 	"github.com/rehydrate1/Patched-Game-Store/internal/repository"
 )
 
-
+// Реализует интерфейс GameRepository для работы с MySQL
 type gameRepository struct {
 	db *sql.DB
 }
 
+// Создаёт новый экземпляр репозиторя для MySQL
 func NewGameRepository(db *sql.DB) repository.GameRepository {
 	return &gameRepository{
 		db: db,
 	}
 }
 
-
+// Создаёт новую игру в базе данных
 func (r *gameRepository) Create(ctx context.Context, game *domain.Game) error {
 	tx, err := r.db.BeginTx(ctx, nil)
 	if err != nil {
@@ -91,8 +92,40 @@ func (r *gameRepository) Create(ctx context.Context, game *domain.Game) error {
 	return nil
 }
 
-
+// Извелекает одну игру по её ID
 func (r *gameRepository) GetByID(ctx context.Context, id string) (*domain.Game, error) {
-	
-	return nil, nil
+	query := `SELECT id, title, description, price, release_date, cover_image_url, developer, publisher, created_at, updated_at FROM games WHERE id = ?`
+	row := r.db.QueryRowContext(ctx, query, id)
+
+	var game domain.Game
+	var releaseDate sql.NullTime
+
+	err := row.Scan(
+		&game.ID,
+		&game.Title,
+		&game.Description,
+		&game.Price,
+		&releaseDate,
+		&game.CoverImageURL,
+		&game.Developer,
+		&game.Publisher,
+		&game.CreatedAt,
+		&game.UpdatedAt,
+	)
+
+	if err != nil {
+		if err == sql.ErrNoRows {
+			return nil, nil
+		}
+		return nil, fmt.Errorf("failed to get game by id: %w", err)
+	}
+
+	if releaseDate.Valid {
+		game.ReleaseDate = releaseDate.Time
+	}
+
+	// TODO: Запросы для получения связанных данных(жанрыб платформы, галерея, системные требования)
+	// и заполнить соответствующие поля в структуре games
+
+	return &game, nil
 }
