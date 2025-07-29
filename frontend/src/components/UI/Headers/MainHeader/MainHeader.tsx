@@ -42,7 +42,7 @@ export default function MainHeader() {
 
                             <PCHeaderItem
                                 text={'Гарантии'}
-                                link={'/service-balance'}
+                                link={'/guarantees'}
                             />
 
                             <PCHeaderItem

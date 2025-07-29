@@ -2,7 +2,7 @@ import Login from './Login'
 
 
 export const metadata = {
-    title: "Авторизация",
+    title: "Авторизация | Patched",
     description: "Авторизация в систему",
 }
 

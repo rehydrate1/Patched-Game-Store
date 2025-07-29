@@ -2,7 +2,7 @@ import SteamBalance from "./SteamBalance"
 
 
 export const metadata = {
-    title: 'Пополнение Steam баланса',
+    title: 'Пополнение Steam баланса | Patched',
     description: 'Страница пополнения вашего Steam аккаунта',
 }
 

@@ -1,7 +1,7 @@
 import Registration from './Registration'
 
 export const metadata = {
-    title: 'Регистрация',
+    title: 'Регистрация | Patched',
     description: 'Регистрация на сайте',
 }
 

@@ -1,20 +1,21 @@
 import Profile from "./Profile";
 
 export const metadata = {
-    title: 'Профиль пользователя',
+    title: 'Профиль пользователя | Patched',
     description: 'Страница пользовательского профиля магазина Patched',
+}
+
+export interface ProfileMenuItems{
+    id: string;
+    label: string;
+    icon: 'UserCircleIcon' | 'ShoppingBagIcon' | 'EnvelopeIcon' | 'LockClosedIcon' ;
 }
 
 
 export default function ProfilePage() {
 
-    interface MenuItems{
-        id: string;
-        label: string;
-        icon: 'UserCircleIcon' | 'ShoppingBagIcon' | 'EnvelopeIcon' | 'LockClosedIcon' ;
-    }
 
-    const menuItems: MenuItems [] = [
+    const menuItems: ProfileMenuItems [] = [
         { id: 'profile', label: 'Профиль', icon: 'UserCircleIcon' },
         { id: 'history', label: 'История покупок', icon: 'ShoppingBagIcon' },
         { id: 'email', label: 'Сменить почту', icon: 'EnvelopeIcon' },

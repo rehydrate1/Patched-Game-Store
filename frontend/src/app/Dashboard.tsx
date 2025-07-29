@@ -25,7 +25,12 @@ import MainPrivilegeCards from "@/components/PrivilegeCards/MainPrivilegeCard";
 import Link from "next/link";
 import Aurora from "@/components/UI/Modern/Aurora";
 import Feedback from "@/components/Feedback/Feedback";
-
+import {
+    DashboardFaqData,
+    DashboardArrayOfData,
+    DashboardTestimonialsData,
+    DashboardPrivileges
+} from "@/app/page";
 
 const icons = {
     TagIcon: TagIcon,
@@ -36,7 +41,14 @@ const icons = {
     ShieldCheckIcon: ShieldCheckIcon,
 }
 
-export default function Dashboard({arrayOfData, faqData, testimonialsData, privileges}) {
+interface DashboardProps {
+    arrayOfData: DashboardArrayOfData[];
+    faqData: DashboardFaqData[];
+    testimonialsData: DashboardTestimonialsData[];
+    privileges: DashboardPrivileges[];
+}
+
+export default function Dashboard({arrayOfData, faqData, testimonialsData, privileges}:DashboardProps) {
     return (
         <div className="min-h-screen">
 

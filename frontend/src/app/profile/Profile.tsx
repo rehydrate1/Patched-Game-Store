@@ -12,8 +12,13 @@ import AccountProfile from "@/components/Profile/AccountProfile";
 import ChangePassword from '@/components/Profile/ChangePassword';
 import PurchaseHistory from '@/components/Profile/PurchaseHistory';
 import ChangeEmail from '@/components/Profile/ChangeEmail';
+import {ProfileMenuItems} from "@/app/profile/page";
 
-export default function ProfileClient({menuItems}) {
+interface ProfileClientProps {
+    menuItems: ProfileMenuItems[],
+}
+
+export default function ProfileClient({menuItems}:ProfileClientProps) {
 
     const [activeTab, setActiveTab] = useState('profile');
 

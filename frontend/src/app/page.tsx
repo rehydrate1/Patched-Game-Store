@@ -1,29 +1,40 @@
 import Dashboard from './Dashboard'
-import {
-    ClockIcon,
-    GiftIcon,
-    RocketLaunchIcon,
-    ShieldCheckIcon,
-    SparklesIcon,
-    TagIcon
-} from "@heroicons/react/24/outline";
-
 
 
 
 export const metadata = {
-    title: "Patched",
+    title: "Главное | Patched",
     description: "Patched - цифровой магазин игр",
 }
 
-interface ArrayOfData {
+export interface DashboardArrayOfData {
     id: number;
     name: string;
     price: string;
     picture: string;
 }
 
-const arrayOfData: ArrayOfData[] = [
+export interface DashboardFaqData {
+    question: string;
+    answer: string;
+}
+
+export interface DashboardTestimonialsData {
+    id: number;
+    author: string;
+    avatar: string;
+    game: string;
+    rating: number;
+    text: string;
+}
+
+export interface DashboardPrivileges {
+    icon: 'TagIcon' | 'GiftIcon' | 'SparklesIcon' | 'RocketLaunchIcon' | 'ClockIcon' | 'ShieldCheckIcon' ;
+    title: string;
+    text: string;
+}
+
+const arrayOfData: DashboardArrayOfData[] = [
     {
         id: 1,
         name: "Grand Theft Auto V",
@@ -108,19 +119,9 @@ const arrayOfData: ArrayOfData[] = [
         price: "249",
         picture: "https://cdn.akamai.steamstatic.com/steam/apps/105600/header.jpg",
     },
-    {
-        id: 15,
-        name: "Sid Meier's Civilization VI",
-        price: "1999",
-    }
 ];
 
-interface FaqData {
-    question: string;
-    answer: string;
-}
-
-const faqData: FaqData[] = [
+const faqData: DashboardFaqData[] = [
     {
         question: "Как быстро я получу свой ключ после оплаты?",
         answer: "Моментально! Сразу после подтверждения оплаты цифровой ключ от игры автоматически отправляется на вашу электронную почту. Также он будет доступен в вашем личном кабинете на сайте."
@@ -147,16 +148,7 @@ const faqData: FaqData[] = [
     }
 ];
 
-interface TestimonialsData {
-    id: number;
-    author: string;
-    avatar: string;
-    game: string;
-    rating: number;
-    text: string;
-}
-
-const testimonialsData: TestimonialsData[] = [
+const testimonialsData: DashboardTestimonialsData[] = [
     {
         id: 1,
         author: 'Alex_Gamer',
@@ -223,14 +215,7 @@ const testimonialsData: TestimonialsData[] = [
     }
 ];
 
-
-interface Privileges {
-    icon: 'TagIcon' | 'GiftIcon' | 'SparklesIcon' | 'RocketLaunchIcon' | 'ClockIcon' | 'ShieldCheckIcon' ;
-    title: string;
-    text: string;
-}
-
-const privileges:Privileges[] = [
+const privileges:DashboardPrivileges[] = [
     {
         icon: 'TagIcon',
         title: 'Лучшие цены',

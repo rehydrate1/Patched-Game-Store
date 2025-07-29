@@ -1,12 +1,11 @@
 "use client"
 
-import styles from './SteamBalance.module.scss';
 
 import {
     CheckIcon
 } from '@heroicons/react/24/outline';
 
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import SteamInput from "@/components/UI/Inputs/SteamInput/SteamInput";
 import SteamFAQ from "@/components/FAQ/SteamFAQ";
 import Link from "next/link";
@@ -125,7 +124,7 @@ export default function SteamBalance() {
             return;
         }
 
-        const peyload = {
+        const payload = {
             steamLogin,
             balance,
             promoCode,
@@ -149,6 +148,7 @@ export default function SteamBalance() {
             } else {
                 setErrors({ form: data.error || "Ошибка пополнения" });
             }
+            // eslint-disable-next-line @typescript-eslint/no-unused-vars
         } catch (err) {
             setErrors({ form: "Ошибка соединения с сервером" });
         }
