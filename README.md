@@ -51,7 +51,7 @@
     cd backend
     migrate -path migrations -database 'mysql://gamestore_user:your_secret_user_password@tcp(localhost:3307)/gamestore_db' up
     ```
-    *Замените `your_secret_user_password` и порт `3307` на значения из вашего `.env` файла.*
+    *Замените `your_secret_user_password` и порт `3308` на значения из вашего `.env` файла.*
 
 5.  **Запустить бэкенд-сервер:**
     Из папки `/backend` выполните:
