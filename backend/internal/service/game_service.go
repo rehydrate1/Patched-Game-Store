@@ -33,23 +33,41 @@ func NewGameService(repo repository.GameRepository, logger *zerolog.Logger) Game
 // Выполняет бизнес-логику по созданию игры
 func (s *gameService) Create(ctx context.Context, input domain.CreateGameRequest) (*domain.Game, error) {
 	s.logger.Info().Str("title", input.Title).Msg("Service: creating game")
+	releaseDate, err := time.Parse("2006-01-02", input.ReleaseDate)
+	if err != nil {
+		s.logger.Warn().Err(err).Str("release_date", input.ReleaseDate).Msg("Failed to parse release date")
+	}
 
 	newGame := &domain.Game{
 		ID:            uuid.New().String(),
 		Title:         input.Title,
 		Description:   input.Description,
 		Price:         input.Price,
-		ReleaseDate:   time.Now(), // пока так
+		ReleaseDate:   releaseDate, // пока так
 		CoverImageURL: input.CoverImageURL,
 		Developer:     input.Developer,
 		Publisher:     input.Publisher,
-		// Geners:        input.Geners,
-		// Platforms:     input.Platforms,
 		CreatedAt:     time.Now(),
 		UpdatedAt:     time.Now(),
 	}
 
-	err := s.repo.Create(ctx, newGame)
+	for _, id := range input.GenreIDs {
+		newGame.Genres = append(newGame.Genres, domain.Genre{ID: id})
+	}
+
+	for _, id := range input.PlatformIDs {
+		newGame.Platforms = append(newGame.Platforms, domain.Platform{ID: id})
+	}
+
+	for _, id := range input.ApplicationIDs {
+		newGame.Applications = append(newGame.Applications, domain.Application{ID: id})
+	}
+
+	for _, url := range input.GalleryImageURLs {
+		newGame.Gallery = append(newGame.Gallery, domain.GalleryImage{URL: url})
+	}
+
+	err = s.repo.Create(ctx, newGame)
 	if err != nil {
 		s.logger.Error().Err(err).Msg("Service: failed to create game in repository")
 		return nil, err
