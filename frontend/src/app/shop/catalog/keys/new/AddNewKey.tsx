@@ -6,6 +6,7 @@ import {useState} from "react";
 import TextAreaInput from "@/components/UI/Inputs/TextAreaInput/TextAreaInput";
 import MultiSelectDropdown, { SelectOption } from "@/components/UI/Inputs/MultiSelectDropdown/MultiSelectDropdown";
 import {useRouter} from "next/navigation";
+import {BackEndResponse} from "@/types/mainTypes";
 
 export default function AddNewKey() {
 
@@ -21,10 +22,6 @@ export default function AddNewKey() {
     const [platforms, setPlatforms] = useState<SelectOption[]>([]);
     const [errors, setErrors] = useState<{ [key: string]: string }>({});
     const router = useRouter();
-
-    interface BackEndResponse {
-        error?: string;
-    }
 
     const platformOptions: SelectOption[] = [
         { value: 'Windows', label: 'Windows' },

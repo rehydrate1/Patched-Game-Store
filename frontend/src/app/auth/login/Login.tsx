@@ -4,9 +4,10 @@ import styles from "./Login.module.scss";
 import {FormEvent, useState} from "react";
 import { useRouter } from 'next/navigation';
 import Link from "next/link";
-import {EyeIcon, EyeSlashIcon} from "@heroicons/react/24/outline";
 import MainInput from "@/components/UI/Inputs/MainInput/MainInput";
 import Particles from "@/components/UI/Modern/Particles";
+import {BackEndResponse} from "@/types/mainTypes";
+import HideInput from "@/components/UI/Inputs/HideInput/HideInput";
 
 
 
@@ -15,56 +16,78 @@ export default function Login(){
     const [email, setEmail] = useState<string>("");
     const [password, setPassword] = useState<string>("");
     const [rememberMe, setRememberMe] = useState<boolean>(false);
-    const [showPassword, setShowPassword] = useState<boolean>(false);
-    const [error, setError] = useState<string>('');
+    const [errors, setErrors] = useState<{ [key: string]: string }>({});
     const router = useRouter();
 
-    const payload = {
-        email: email,
-        password: password,
-        rememberMe: rememberMe,
-    }
 
-    interface LoginResponse {
-        error?: string;
-    }
 
-    const isValidPassword = (password: string):boolean => {
-        const passwordRegex = /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~])[A-Za-z\d!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]{8,25}$/;
-        return passwordRegex.test(password);
-    }
+    const validateEmail = (email: string): string | null => {
+        if (!email.trim()){
+            return ('Пожалуйста, введите ваш email');
+        }
 
-    const isValidEmail = (email: string): boolean => {
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        return emailRegex.test(email);
+        return null;
     };
+
+    const validatePassword = (password: string):string | null => {
+       if (!password.trim()){
+           return ('Пожалуйста, введите ваш пароль');
+       }
+
+        if (password.length < 8)  {
+            return (`Пароль должен содержать минимум 8 символов (сейчас ${password.length})`);
+        }
+
+        if (password.length > 25){
+            return (`Пароль может быть максимум 25 символов (сейчас ${password.length})`);
+        }
+
+        const passwordRegex = /^[a-zA-Z0-9!@#$%^&*.]$/;
+        if(!passwordRegex.test(password)) {
+            return ('Пароль может содержать только латинские буквы, цифры и некоторые спец.символы')
+        }
+        return null;
+    }
+
+
+    const validateForm = () => {
+        const newErrors: { [key: string]: string } = {};
+
+        const validateEmailErrors:string | null = validateEmail(email);
+        if (validateEmailErrors) {
+            newErrors.email = validateEmailErrors;
+        }
+
+        const validatePasswordErrors:string | null = validatePassword(password);
+        if (validatePasswordErrors) {
+            newErrors.password = validatePasswordErrors;
+        }
+
+        return newErrors;
+    }
+
+
 
 
     const handleSubmit = async (e:FormEvent<HTMLFormElement>):Promise<void> => {
         e.preventDefault();
-        setError('');
+        setErrors({});
 
-        if (!email.trim() || !password) {
-            setError("Пожалуйста, заполните все поля.");
+
+        const formErrors = validateForm();
+
+        if (Object.keys(formErrors).length > 0) {
+            setErrors(formErrors);
             return;
         }
 
-        if (!isValidPassword(password)) {
-            setError("Пароль должен содержать от 8 символов до 25 символов, включать латинские буквы, хотя бы одну заглавную букву и цифры.");
-            return;
+        const payload = {
+            email: email,
+            password: password,
+            rememberMe: rememberMe,
         }
-
-        if (!isValidEmail(email)) {
-            setError("Введите корректный email.");
-            return;
-        }
-
-
-
 
         try {
-            console.log([email, password, rememberMe]);
-
             const response = await fetch("http://localhost:8080/api/user/login", {
                 method: "POST",
                 headers: {
@@ -74,21 +97,18 @@ export default function Login(){
             });
 
             console.log("Sending payload:", JSON.stringify(payload));
-            const data = (await response.json()) as LoginResponse;
+            const data = (await response.json()) as BackEndResponse;
 
             if (response.ok) {
                 router.replace('/');
             } else {
-                setError(data.error || "Ошибка авторизации.");
+                setErrors({ form: data.error || "Ошибка авторизации" });
             }
             // eslint-disable-next-line @typescript-eslint/no-unused-vars
         } catch (err) {
-            setError("Ошибка соединения с сервером");
+            setErrors({ form: "Ошибка соединения с сервером" });
         }
     }
-
-
-
 
 
     return (
@@ -114,12 +134,6 @@ export default function Login(){
                         <h2 className="text-2xl font-semibold text-center text-white">
                             Авторизация
                         </h2>
-                        {error && (
-                            <div className={`${styles.errorMessage}`}>
-                                <p className={'text-l text-bold'}>{error}</p>
-                            </div>
-                        )}
-
                         <form className="space-y-6" onSubmit={handleSubmit}>
 
                             <MainInput
@@ -128,37 +142,16 @@ export default function Login(){
                                 value={email}
                                 onChange={setEmail}
                                 label={'Email'}
+                                error={errors.email}
                             />
 
-                            <div>
-                                <label htmlFor="password" className="block text-sm font-medium text-white">
-                                    Пароль
-                                </label>
-                                <div className="relative mt-1">
-                                    <input
-                                        id="password"
-                                        name="password"
-                                        type={showPassword ? 'text' : 'password'}
-                                        autoComplete="current-password"
-                                        required
-                                        className={`block w-full px-3 py-2 pr-10 border border-gray-300 rounded-md 
-                                        shadow-sm placeholder-gray-400 focus:outline-none  sm:text-sm mainInput `}
-                                        value={password}
-                                        onChange={(e) => setPassword(e.target.value)}
-                                    />
-
-                                    <div
-                                        className="absolute inset-y-0 right-0 pr-3 flex items-center cursor-pointer"
-                                        onClick={() => setShowPassword(!showPassword)}
-                                    >
-                                        {showPassword ? (
-                                            <EyeSlashIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
-                                        ) : (
-                                            <EyeIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
-                                        )}
-                                    </div>
-                                </div>
-                            </div>
+                            <HideInput
+                                label={'Пароль'}
+                                id={'password'}
+                                value={password}
+                                onChange={setPassword}
+                                error={errors.password}
+                            />
 
                             <div className="flex items-center justify-between">
                                 <div className="flex items-center">

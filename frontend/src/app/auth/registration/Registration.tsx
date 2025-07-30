@@ -1,4 +1,5 @@
 "use client"
+
 import styles from "./Registration.module.scss";
 import {FormEvent, useState} from "react";
 import { useRouter } from 'next/navigation';
@@ -6,6 +7,8 @@ import {EyeIcon, EyeSlashIcon} from "@heroicons/react/24/outline";
 import Link from "next/link";
 import MainInput from "@/components/UI/Inputs/MainInput/MainInput";
 import Particles from "@/components/UI/Modern/Particles";
+import {BackEndResponse} from "@/types/mainTypes";
+import HideInput from "@/components/UI/Inputs/HideInput/HideInput";
 
 
 export default function Registration(){
@@ -15,78 +18,123 @@ export default function Registration(){
     const [password, setPassword] = useState<string>("");
     const [confirmPassword, setConfirmPassword] = useState<string>("");
     const [showPassword, setShowPassword] = useState<boolean>(false);
-    const [error, setError] = useState<string>('');
+    const [errors, setErrors] = useState<{ [key: string]: string }>({});
     const router = useRouter();
 
-    const payload = {
-        userName: userName,
-        email: email,
-        password: password,
+
+    const validateUserName = (userName: string):string | null => {
+        if(!userName.trim()){
+            return ('Пожалуйста, введите имя для вашего аккаунта')
+        }
+
+        if(userName.length < 3){
+            return (`Имя аккаунта должно содержать минимум 3 символов (сейчас ${userName.length})`)
+        }
+
+        if(userName.length > 15){
+            return (`Имя аккаунта может содержать максимум 15 символов (сейчас ${userName.length})`)
+        }
+
+        const userNameRegex = /^[a-zA-Z0-9!@#$%^&*.]$/;
+        if(!userNameRegex.test(userName)) {
+            return ('Имя аккаунта может содержать только латинские буквы, цифры и некоторые спец.символы')
+        }
+
+        return null;
     }
 
-    interface LoginResponse {
-        error?: string;
-    }
 
-    const isValidPassword = (password: string):boolean => {
-        const passwordRegex = /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~])[A-Za-z\d!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]{8,25}$/;
-        return passwordRegex.test(password);
-    }
 
-    const isValidEmail = (email: string): boolean => {
+    const validateEmail = (email: string): string | null => {
+        if (!email.trim()){
+            return ('Пожалуйста, введите ваш email');
+        }
+
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        return emailRegex.test(email);
+        if (!emailRegex.test(email)) {
+            return ('Пожалуйста, введите корректный email')
+        }
+
+        return null;
     };
 
+    const validatePassword = (password: string):string | null => {
+        if (!password.trim()){
+            return ('Пожалуйста, введите пароль для входа в аккаунт');
+        }
+
+        if (password.length < 8)  {
+            return (`Пароль должен содержать минимум 8 символов (сейчас ${password.length})`);
+        }
+
+        if (password.length > 25){
+            return (`Пароль может быть максимум 25 символов (сейчас ${password.length})`);
+        }
+
+        const passwordRegex = /^[a-zA-Z0-9!@#$%^&*.]$/;
+        if(!passwordRegex.test(password)) {
+            return ('Пароль может содержать только латинские буквы, цифры и некоторые спец.символы')
+        }
+        return null;
+    }
+
+    const validateConfirmPassword = (password:string, confirmPassword:string):string | null => {
+        if (!password.trim()){
+            return ('Пожалуйста, подтвердите ваш пароль');
+        }
+
+        if (password != confirmPassword){
+            return ('Пароль не совпадает с тем, что вы ввели ранее')
+        }
+
+        return null;
+    }
+
+
+    const validateForm = () => {
+        const newErrors: { [key: string]: string } = {};
+
+        const validateUserNameErrors:string | null = validateUserName(userName);
+        if (validateUserNameErrors) {
+            newErrors.userName = validateUserNameErrors;
+        }
+
+        const validateEmailErrors:string | null = validateEmail(email);
+        if (validateEmailErrors) {
+            newErrors.email = validateEmailErrors;
+        }
+
+        const validatePasswordErrors:string | null = validatePassword(password);
+        if (validatePasswordErrors) {
+            newErrors.password = validatePasswordErrors;
+        }
+
+        const validateConfirmPasswordErrors:string | null = validateConfirmPassword(password, confirmPassword);
+        if (validateConfirmPasswordErrors) {
+            newErrors.confirmPassword = validateConfirmPasswordErrors;
+        }
+
+        return newErrors;
+    }
 
     const handleSubmit = async (e:FormEvent<HTMLFormElement>):Promise<void> => {
         e.preventDefault();
-        setError('');
+        setErrors({});
 
-        if (!email.trim() || !userName.trim() || !password ) {
-            setError("Пожалуйста, заполните все поля.");
+        const formErrors = validateForm();
+
+        if (Object.keys(formErrors).length > 0) {
+            setErrors(formErrors);
             return;
         }
 
-        if (!userName.trim() || !email.trim() || !password || !confirmPassword) {
-            setError("Пожалуйста, заполните все поля.");
-            return;
-        }
-
-        if (!isValidEmail(email)) {
-            setError("Введите корректный email.");
-            return;
-        }
-
-        if (password !== confirmPassword) {
-            setError("Пароли не совпадают!");
-            return;
-        }
-
-        if (!isValidPassword(password)) {
-            setError("Пароль должен содержать от 8 символов до 25 символов, включать латинские буквы, хотя бы одну заглавную букву и цифры.");
-            return;
-        }
-
-
-        if (userName.length < 2 || userName.length > 25) {
-            setError("Имя пользователя должно содержать от 2 до 25 символов.");
-            return;
-        }
-
-        if (userName !== userName.toLowerCase()) {
-            setError("Имя пользователя должно содержать только строчные буквы.");
-            return;
-        }
-
-        if (!/[a-z]/.test(userName)) {
-            setError("Имя пользователя должно содержать хотя бы одну букву.");
-            return;
+        const payload = {
+            userName: userName,
+            email: email,
+            password: password,
         }
 
         try {
-            console.log([userName, email, password, confirmPassword]);
-
             const response = await fetch("http://localhost:8080/api/user/registration", {
                 method: "POST",
                 headers: {
@@ -96,16 +144,16 @@ export default function Registration(){
             });
 
             console.log("Sending payload:", JSON.stringify(payload));
-            const data = (await response.json()) as LoginResponse;
+            const data = (await response.json()) as BackEndResponse;
 
             if (response.ok) {
                 router.replace('/');
             } else {
-                setError(data.error || "Ошибка регистрации.");
+                setErrors({ form: data.error || "Ошибка регистрации" });
             }
             // eslint-disable-next-line @typescript-eslint/no-unused-vars
         } catch (err) {
-            setError("Ошибка соединения с сервером");
+            setErrors({ form: "Ошибка соединения с сервером" });
         }
     }
 
@@ -131,11 +179,6 @@ export default function Registration(){
                     <h2 className="text-2xl font-semibold text-center text-white">
                         Регистрация
                     </h2>
-                    {error && (
-                        <div className={`${styles.errorMessage}`}>
-                            <p className={'text-l text-bold'}>{error}</p>
-                        </div>
-                    )}
 
                     <form className="space-y-6" onSubmit={handleSubmit}>
                         <MainInput
@@ -143,6 +186,7 @@ export default function Registration(){
                             value={userName}
                             onChange={setUserName}
                             label={'Имя пользователя'}
+                            error={errors.userName}
                         />
 
                         <MainInput
@@ -151,36 +195,16 @@ export default function Registration(){
                             value={email}
                             onChange={setEmail}
                             label={'Email'}
+                            error={errors.email}
                         />
 
-                        <div>
-                            <label htmlFor="password" className="block text-sm font-medium text-white">
-                                Пароль
-                            </label>
-                            <div className="relative mt-1">
-                                <input
-                                    id="password"
-                                    name="password"
-                                    type={showPassword ? 'text' : 'password'}
-                                    autoComplete="new-password"
-                                    required
-                                    className={`block mainInput w-full px-3 py-2 pr-10 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none  sm:text-sm `}
-                                    value={password}
-                                    onChange={(e) => setPassword(e.target.value)}
-                                />
-
-                                <div
-                                    className="absolute inset-y-0 right-0 pr-3 flex items-center cursor-pointer"
-                                    onClick={() => setShowPassword(!showPassword)}
-                                >
-                                    {showPassword ? (
-                                        <EyeSlashIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
-                                    ) : (
-                                        <EyeIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
-                                    )}
-                                </div>
-                            </div>
-                        </div>
+                        <HideInput
+                            label={'Пароль'}
+                            id={'password'}
+                            value={password}
+                            onChange={setPassword}
+                            error={errors.password}
+                        />
 
                         <MainInput
                             id={confirmPassword}
@@ -188,6 +212,7 @@ export default function Registration(){
                             value={confirmPassword}
                             onChange={setConfirmPassword}
                             label={'Повторите пароль'}
+                            error={errors.confirmPassword}
                         />
 
                         <div>

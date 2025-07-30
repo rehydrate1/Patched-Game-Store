@@ -31,13 +31,18 @@ export default function MainHeader() {
                         <ul className={'flex gap-20 items-center'}>
 
                             <PCHeaderItem
-                                text={'Магазин игр'}
+                                text={'Магазин ключей'}
                                 link={'/shop/catalog/keys'}
                             />
 
                             <PCHeaderItem
                                 text={'Пополнение Steam'}
                                 link={'/steam-balance'}
+                            />
+
+                            <PCHeaderItem
+                                text={'Консоли и сервисы'}
+                                link={'/services'}
                             />
 
                             <PCHeaderItem
@@ -48,11 +53,6 @@ export default function MainHeader() {
                             <PCHeaderItem
                                 text={'Поддержка'}
                                 link={'/support'}
-                            />
-
-                            <PCHeaderItem
-                                text={'О нас'}
-                                link={'/about'}
                             />
 
                         </ul>
