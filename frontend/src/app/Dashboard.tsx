@@ -1,5 +1,4 @@
-"use client";
-
+"use client"
 
 import {
     ShoppingCartIcon,
@@ -13,54 +12,43 @@ import {
     ChevronRightIcon,
 } from '@heroicons/react/24/outline';
 
-// компоненты Swiper
 import {Swiper, SwiperSlide} from 'swiper/react';
 import {Navigation} from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/navigation';
 
-import styles from './Dashboard.module.scss'
+
+import MainFAQ from "@/components/FAQ/MainFAQ";
 import TextPressure from "@/components/UI/Modern/TextPressure";
 import Image from "next/image";
 import MainPrivilegeCards from "@/components/PrivilegeCards/MainPrivilegeCard";
 import Link from "next/link";
 import Aurora from "@/components/UI/Modern/Aurora";
+import Feedback from "@/components/Feedback/Feedback";
+import {
+    DashboardFaqData,
+    DashboardArrayOfData,
+    DashboardTestimonialsData,
+    DashboardPrivileges
+} from "@/app/page";
 
+const icons = {
+    TagIcon: TagIcon,
+    GiftIcon: GiftIcon,
+    SparklesIcon: SparklesIcon,
+    RocketLaunchIcon: RocketLaunchIcon,
+    ClockIcon: ClockIcon,
+    ShieldCheckIcon: ShieldCheckIcon,
+}
 
-const privileges = [
-    {
-        icon: TagIcon,
-        title: 'Лучшие цены',
-        text: 'Экономьте на каждой покупке благодаря нашим эксклюзивным скидкам и регулярным распродажам'
-    },
-    {
-        icon: GiftIcon,
-        title: 'Моментальная доставка',
-        text: 'Не ждите ни секунды! Ключ от игры появится в вашем личном кабинете сразу после подтверждения оплаты'
-    },
-    {
-        icon: SparklesIcon,
-        title: 'Игры в день релиза',
-        text: 'Получайте доступ к самым ожидаемым новинкам в день их официального выхода и начинайте играть вместе со всем миром'
-    },
-    {
-        icon: RocketLaunchIcon,
-        title: 'Быстрое пополнение',
-        text: 'Пополняйте баланс вашего Steam аккаунта за считанные секунды с помощью удобных и безопасных платежных систем'
-    },
-    {
-        icon: ClockIcon,
-        title: 'Круглосуточная поддержка',
-        text: 'Наша команда поддержки доступна 24/7 и готова оперативно решить любой ваш вопрос в чате или по почте'
-    },
-    {
-        icon: ShieldCheckIcon,
-        title: 'Надежный сервис',
-        text: 'Мы работаем только с официальными издателями, гарантируя легальность и работоспособность каждого ключа'
-    },
-];
+interface DashboardProps {
+    arrayOfData: DashboardArrayOfData[];
+    faqData: DashboardFaqData[];
+    testimonialsData: DashboardTestimonialsData[];
+    privileges: DashboardPrivileges[];
+}
 
-export default function Dashboard({products}) {
+export default function Dashboard({arrayOfData, faqData, testimonialsData, privileges}:DashboardProps) {
     return (
         <div className="min-h-screen">
 
@@ -115,7 +103,7 @@ export default function Dashboard({products}) {
                             }}
                             className="!pb-10"
                         >
-                            {products.map(game => (
+                            {arrayOfData.map(game => (
                                 <SwiperSlide key={game.id}>
                                     <div className="group relative bg-[#1A1129] rounded-xl overflow-hidden
                                                      border border-transparent hover:border-[#aeb2ae] transition-all duration-300 h-full flex flex-col">
@@ -144,15 +132,15 @@ export default function Dashboard({products}) {
                         </Swiper>
                     </div>
 
-                    <div className="swiper-button-prev-custom absolute top-1/2 left-4 lg:left-12 transform
-                    z-10 cursor-pointer p-2 bg-[#212227] hover:bg-[#00FE92] hover:text-black rounded-full
-                    transition-colors duration-300">
-                        <ChevronLeftIcon className="h-12 w-12 text-white hover:text-black "/>
+                    <div className="swiper-button-prev-custom absolute top-1/2 left-4 xl:left-12 2xl:left-24 transform
+                                z-10 cursor-pointer p-2 bg-[#212227]/80  hover:bg-[#00FE92] hover:text-black rounded-full backdrop-blur-sm
+                                transition-all duration-300 hidden md:block">
+                        <ChevronLeftIcon className="h-10 w-10 text-white hover:text-black "/>
                     </div>
-                    <div className={`swiper-button-next-custom absolute top-1/2 right-4 lg:right-12 transform
-                        z-10 cursor-pointer p-2  bg-[#212227] hover:bg-[#00FE92] hover:text-black rounded-full
-                        transition-colors duration-300 `}>
-                        <ChevronRightIcon className="h-12 w-12 text-white hover:text-black"/>
+                    <div className={`swiper-button-next-custom absolute top-1/2 right-4 xl:right-12 2xl:right-24 transform
+                                z-10 cursor-pointer p-2 bg-[#212227]/80  hover:bg-[#00FE92] hover:text-black rounded-full backdrop-blur-sm
+                                transition-all duration-300 hidden md:block`}>
+                        <ChevronRightIcon className="h-10 w-10 text-white hover:text-black"/>
                     </div>
                 </section>
 
@@ -161,14 +149,31 @@ export default function Dashboard({products}) {
                     <div className="container mx-auto px-6">
                         <h2 className="text-4xl font-bold text-center mb-20 text-white">Почему Patched?</h2>
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                            {privileges.map(privilege => (
-                                <MainPrivilegeCards
-                                    key={privilege.title}
-                                    title={privilege.title}
-                                    icon={privilege.icon}
-                                    text={privilege.text}
-                                />
-                            ))}
+                            {privileges.map(privilege => {
+                                const IconComponent = icons[privilege.icon]
+                                return (
+                                    <MainPrivilegeCards
+                                        key={privilege.title}
+                                        title={privilege.title}
+                                        icon={IconComponent}
+                                        text={privilege.text}
+                                    />
+                                )
+                            })}
+                        </div>
+                    </div>
+                </section>
+
+                <Feedback testimonials={testimonialsData} />
+
+
+                <section className="py-20 mt-15 sm:py-20">
+                    <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+                        <div className="text-center max-w-3xl mx-auto">
+                            <h2 className="text-3xl font-bold text-white tracking-tight sm:text-4xl">Часто задаваемые вопросы</h2>
+                        </div>
+                        <div className="mt-14">
+                            <MainFAQ faqData = {faqData} />
                         </div>
                     </div>
                 </section>

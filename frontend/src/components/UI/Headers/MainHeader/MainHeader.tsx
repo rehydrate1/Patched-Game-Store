@@ -13,7 +13,6 @@ export default function MainHeader() {
         setIsMenuOpen(!isMenuOpen);
     };
 
-    // Функция, которая будет закрывать меню. Мы будем вызывать ее при клике на ссылку.
     const closeMenu = () => {
         setIsMenuOpen(false);
     }
@@ -33,7 +32,7 @@ export default function MainHeader() {
 
                             <PCHeaderItem
                                 text={'Магазин игр'}
-                                link={'/shop'}
+                                link={'/shop/catalog/keys'}
                             />
 
                             <PCHeaderItem
@@ -43,7 +42,7 @@ export default function MainHeader() {
 
                             <PCHeaderItem
                                 text={'Гарантии'}
-                                link={'/service-balance'}
+                                link={'/guarantees'}
                             />
 
                             <PCHeaderItem

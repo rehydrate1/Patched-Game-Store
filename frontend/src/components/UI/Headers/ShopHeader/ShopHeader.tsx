@@ -12,9 +12,8 @@ import {
 } from '@heroicons/react/24/outline';
 
 const catalogElements = [
-    { href: '/shop/catalog/keys', text: 'Ключи' },
-    { href: '/shop/catalog/accounts', text: 'Аккаунты' },
-    { href: '/shop/catalog/gifts', text: 'Гифты' },
+    { href: '/support', text: 'Поддержка' },
+    { href: '/profile', text: 'Профиль' },
 ];
 
 export default function ShopHeader() {

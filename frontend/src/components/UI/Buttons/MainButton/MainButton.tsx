@@ -1,4 +1,6 @@
 import styles from "./MainButton.module.scss";
+
+
 interface MainButtonProps {
 
 }

@@ -2,7 +2,7 @@ import Cert from './Cert'
 
 
 export const metadata = {
-    title: 'Корзина товаров',
+    title: 'Корзина товаров | Patched',
     description: 'Содержимое корзины пользователя магазина',
 }
 

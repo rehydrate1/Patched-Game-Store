@@ -81,6 +81,7 @@ export default function Login(){
             } else {
                 setError(data.error || "Ошибка авторизации.");
             }
+            // eslint-disable-next-line @typescript-eslint/no-unused-vars
         } catch (err) {
             setError("Ошибка соединения с сервером");
         }

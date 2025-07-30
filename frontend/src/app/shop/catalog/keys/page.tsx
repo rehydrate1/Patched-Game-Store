@@ -1,7 +1,7 @@
 import KeysCatalog from "./KeysCatalog"
 
 export const metadata = {
-    title: "Каталог ключей",
+    title: "Каталог ключей | Patched",
     description: 'Страница каталога с ключами'
 }
 

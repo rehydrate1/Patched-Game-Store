@@ -103,6 +103,7 @@ export default function Registration(){
             } else {
                 setError(data.error || "Ошибка регистрации.");
             }
+            // eslint-disable-next-line @typescript-eslint/no-unused-vars
         } catch (err) {
             setError("Ошибка соединения с сервером");
         }

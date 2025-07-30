@@ -9,10 +9,9 @@ interface MainInputProps {
     required?: boolean;
     error?: string;
 }
-import styles from "./MainInput.module.scss";
 
 export default function MainInput({id, label, value, onChange, placeholder = '',
-                                      className = '', type ='text', required = true, error}:MainInputProps ){
+                                      className = '', type ='text', required = false, error}:MainInputProps ){
 
 
 
