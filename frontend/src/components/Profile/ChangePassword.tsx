@@ -14,7 +14,6 @@ export default function ChangePassword() {
     const [newPassword, setNewPassword] = useState<string>("");
     const [confirmPassword, setConfirmPassword] = useState<string>("");
     const [errors, setErrors] = useState<{ [key: string]: string }>({});
-    const router = useRouter();
 
 
     const validateCurrentPassword = (currentPassword:string): string | null => {

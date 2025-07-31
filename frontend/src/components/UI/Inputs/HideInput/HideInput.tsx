@@ -51,9 +51,9 @@ export default function HideInput({label, id, required = false, value,
                     onClick={() => setShowPassword(!showPassword)}
                 >
                     {showPassword ? (
-                        <EyeSlashIcon className="h-5 w-5 mb-5 text-gray-400" aria-hidden="true" />
+                        <EyeSlashIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
                     ) : (
-                        <EyeIcon className="h-5 w-5 mb-5 text-gray-400" aria-hidden="true" />
+                        <EyeIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
                     )}
                 </div>
             </div>

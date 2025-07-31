@@ -3,7 +3,6 @@
 import styles from "./Registration.module.scss";
 import {FormEvent, useState} from "react";
 import { useRouter } from 'next/navigation';
-import {EyeIcon, EyeSlashIcon} from "@heroicons/react/24/outline";
 import Link from "next/link";
 import MainInput from "@/components/UI/Inputs/MainInput/MainInput";
 import Particles from "@/components/UI/Modern/Particles";
@@ -17,7 +16,6 @@ export default function Registration(){
     const [email, setEmail] = useState<string>("");
     const [password, setPassword] = useState<string>("");
     const [confirmPassword, setConfirmPassword] = useState<string>("");
-    const [showPassword, setShowPassword] = useState<boolean>(false);
     const [errors, setErrors] = useState<{ [key: string]: string }>({});
     const router = useRouter();
 
