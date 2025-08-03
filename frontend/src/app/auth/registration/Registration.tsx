@@ -8,6 +8,8 @@ import MainInput from "@/components/UI/Inputs/MainInput/MainInput";
 import Particles from "@/components/UI/Modern/Particles";
 import {BackEndResponse} from "@/types/mainTypes";
 import HideInput from "@/components/UI/Inputs/HideInput/HideInput";
+import {validateConfirmPassword, validateUserEmail, validateUserName, validateUserPassword} from "@/lib/validators";
+import ServerError from "@/components/UI/errors/ServerError";
 
 
 export default function Registration(){
@@ -16,77 +18,9 @@ export default function Registration(){
     const [email, setEmail] = useState<string>("");
     const [password, setPassword] = useState<string>("");
     const [confirmPassword, setConfirmPassword] = useState<string>("");
+    const [serverError, setServerError] = useState<string | null>(null);
     const [errors, setErrors] = useState<{ [key: string]: string }>({});
     const router = useRouter();
-
-
-    const validateUserName = (userName: string):string | null => {
-        if(!userName.trim()){
-            return ('Пожалуйста, введите имя для вашего аккаунта')
-        }
-
-        if(userName.length < 3){
-            return (`Имя аккаунта должно содержать минимум 3 символов (сейчас ${userName.length})`)
-        }
-
-        if(userName.length > 15){
-            return (`Имя аккаунта может содержать максимум 15 символов (сейчас ${userName.length})`)
-        }
-
-        const userNameRegex = /^[a-zA-Z0-9!@#$%^&*.]$/;
-        if(!userNameRegex.test(userName)) {
-            return ('Имя аккаунта может содержать только латинские буквы, цифры и некоторые спец.символы')
-        }
-
-        return null;
-    }
-
-
-
-    const validateEmail = (email: string): string | null => {
-        if (!email.trim()){
-            return ('Пожалуйста, введите ваш email');
-        }
-
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (!emailRegex.test(email)) {
-            return ('Пожалуйста, введите корректный email')
-        }
-
-        return null;
-    };
-
-    const validatePassword = (password: string):string | null => {
-        if (!password.trim()){
-            return ('Пожалуйста, введите пароль для входа в аккаунт');
-        }
-
-        if (password.length < 8)  {
-            return (`Пароль должен содержать минимум 8 символов (сейчас ${password.length})`);
-        }
-
-        if (password.length > 25){
-            return (`Пароль может быть максимум 25 символов (сейчас ${password.length})`);
-        }
-
-        const passwordRegex = /^[a-zA-Z0-9!@#$%^&*.]$/;
-        if(!passwordRegex.test(password)) {
-            return ('Пароль может содержать только латинские буквы, цифры и некоторые спец.символы')
-        }
-        return null;
-    }
-
-    const validateConfirmPassword = (password:string, confirmPassword:string):string | null => {
-        if (!password.trim()){
-            return ('Пожалуйста, подтвердите ваш пароль');
-        }
-
-        if (password != confirmPassword){
-            return ('Пароль не совпадает с тем, что вы ввели ранее')
-        }
-
-        return null;
-    }
 
 
     const validateForm = () => {
@@ -97,12 +31,12 @@ export default function Registration(){
             newErrors.userName = validateUserNameErrors;
         }
 
-        const validateEmailErrors:string | null = validateEmail(email);
+        const validateEmailErrors:string | null = validateUserEmail(email);
         if (validateEmailErrors) {
             newErrors.email = validateEmailErrors;
         }
 
-        const validatePasswordErrors:string | null = validatePassword(password);
+        const validatePasswordErrors:string | null = validateUserPassword(password);
         if (validatePasswordErrors) {
             newErrors.password = validatePasswordErrors;
         }
@@ -118,6 +52,7 @@ export default function Registration(){
     const handleSubmit = async (e:FormEvent<HTMLFormElement>):Promise<void> => {
         e.preventDefault();
         setErrors({});
+        setServerError(null);
 
         const formErrors = validateForm();
 
@@ -147,11 +82,11 @@ export default function Registration(){
             if (response.ok) {
                 router.replace('/');
             } else {
-                setErrors({ form: data.error || "Ошибка регистрации" });
+                setServerError(data.error || "Ошибка регистрации. Проверьте правильность введенных данных.");
             }
-            // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        } catch (err) {
-            setErrors({ form: "Ошибка соединения с сервером" });
+        }  catch (err) {
+            setServerError("Не удалось связаться с сервером. Пожалуйста, проверьте ваше интернет-соединение или попробуйте позже.");
+            console.error("Registration error:", err);
         }
     }
 
@@ -177,6 +112,8 @@ export default function Registration(){
                     <h2 className="text-2xl font-semibold text-center text-white">
                         Регистрация
                     </h2>
+
+                    <ServerError message={serverError} />
 
                     <form className="space-y-6" onSubmit={handleSubmit}>
                         <MainInput

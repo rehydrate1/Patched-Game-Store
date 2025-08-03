@@ -8,6 +8,8 @@ import MainInput from "@/components/UI/Inputs/MainInput/MainInput";
 import Particles from "@/components/UI/Modern/Particles";
 import {BackEndResponse} from "@/types/mainTypes";
 import HideInput from "@/components/UI/Inputs/HideInput/HideInput";
+import {validateUserEmail, validateUserPassword} from "@/lib/validators";
+import ServerError from "@/components/UI/errors/ServerError";
 
 
 
@@ -17,48 +19,20 @@ export default function Login(){
     const [password, setPassword] = useState<string>("");
     const [rememberMe, setRememberMe] = useState<boolean>(false);
     const [errors, setErrors] = useState<{ [key: string]: string }>({});
+    const [serverError, setServerError] = useState<string | null>(null);
     const router = useRouter();
 
-
-
-    const validateEmail = (email: string): string | null => {
-        if (!email.trim()){
-            return ('Пожалуйста, введите ваш email');
-        }
-
-        return null;
-    };
-
-    const validatePassword = (password: string):string | null => {
-       if (!password.trim()){
-           return ('Пожалуйста, введите ваш пароль');
-       }
-
-        if (password.length < 8)  {
-            return (`Пароль должен содержать минимум 8 символов (сейчас ${password.length})`);
-        }
-
-        if (password.length > 25){
-            return (`Пароль может быть максимум 25 символов (сейчас ${password.length})`);
-        }
-
-        const passwordRegex = /^[a-zA-Z0-9!@#$%^&*.]$/;
-        if(!passwordRegex.test(password)) {
-            return ('Пароль может содержать только латинские буквы, цифры и некоторые спец.символы')
-        }
-        return null;
-    }
 
 
     const validateForm = () => {
         const newErrors: { [key: string]: string } = {};
 
-        const validateEmailErrors:string | null = validateEmail(email);
+        const validateEmailErrors:string | null = validateUserEmail(email);
         if (validateEmailErrors) {
             newErrors.email = validateEmailErrors;
         }
 
-        const validatePasswordErrors:string | null = validatePassword(password);
+        const validatePasswordErrors:string | null = validateUserPassword(password);
         if (validatePasswordErrors) {
             newErrors.password = validatePasswordErrors;
         }
@@ -67,12 +41,10 @@ export default function Login(){
     }
 
 
-
-
     const handleSubmit = async (e:FormEvent<HTMLFormElement>):Promise<void> => {
         e.preventDefault();
         setErrors({});
-
+        setServerError(null);
 
         const formErrors = validateForm();
 
@@ -102,11 +74,11 @@ export default function Login(){
             if (response.ok) {
                 router.replace('/');
             } else {
-                setErrors({ form: data.error || "Ошибка авторизации" });
+                setServerError(data.error || "Ошибка авторизации. Проверьте правильность введенных данных.");
             }
-            // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        } catch (err) {
-            setErrors({ form: "Ошибка соединения с сервером" });
+        }  catch (err) {
+            setServerError("Не удалось связаться с сервером. Пожалуйста, проверьте ваше интернет-соединение или попробуйте позже.");
+            console.error("Login error:", err);
         }
     }
 
@@ -134,6 +106,9 @@ export default function Login(){
                         <h2 className="text-2xl font-semibold text-center text-white">
                             Авторизация
                         </h2>
+
+                        <ServerError message={serverError} />
+
                         <form className="space-y-6" onSubmit={handleSubmit}>
 
                             <MainInput
@@ -169,9 +144,9 @@ export default function Login(){
                                 </div>
 
                                 <div className="text-sm">
-                                    <a href="/auth/forgot-password" className={`font-medium text-white ${styles.links}`}>
+                                    <Link href="/auth/forgot-password" className={`font-medium text-white ${styles.links}`}>
                                         Забыли пароль?
-                                    </a>
+                                    </Link>
                                 </div>
                             </div>
 

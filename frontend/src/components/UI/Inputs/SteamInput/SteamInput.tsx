@@ -34,7 +34,7 @@ export default function SteamInput({ id, placeholder = '', value, label, onChang
             </label>
 
             {error && (
-                <p className="mt-2 text-xs text-red-400">{error}</p>
+                <p className="mt-2 ml-1 text-xs text-red-400">{error}</p>
             )}
         </>
     )

@@ -38,7 +38,7 @@ export default function MultiSelectDropdown({ label, options, value, onChange, p
             />
 
             {error && (
-                <p className="mt-1 pl-1 text-xs text-red-400">{error}</p>
+                <p className="mt-2 pl-1 text-xs text-red-400">{error}</p>
             )}
         </div>
     )

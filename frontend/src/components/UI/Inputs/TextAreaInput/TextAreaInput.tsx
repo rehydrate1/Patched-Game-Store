@@ -15,7 +15,7 @@ interface TextAreaInputProps {
 
 
 export default function TextAreaInput({id, label, value, onChange, placeholder = '',
-                                          rows = 4, required = true, className = '', error}:TextAreaInputProps ){
+                                          rows = 4, required = false, className = '', error}:TextAreaInputProps ){
 
 
     return (
