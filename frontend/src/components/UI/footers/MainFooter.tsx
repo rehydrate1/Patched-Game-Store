@@ -1,5 +1,5 @@
 import { FaDiscord, FaTelegramPlane, FaVk } from 'react-icons/fa';
-import FooterNavItem from "@/components/UI/navItems/FooterNavItem";
+import FooterNavItem from "@/components/navItems/FooterNavItem";
 
 export default function MainFooter() {
 

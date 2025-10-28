@@ -5,7 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import {addItem} from "@/store/slices/cartSlice";
 import {useAppDispatch} from "@/lib/hooks/useTypedRedux";
-
+import {applicationIcons, platformIcons} from "@/lib/data/indexData";
 
 interface MainProductCardProps {
     id: number,
@@ -17,21 +17,6 @@ interface MainProductCardProps {
     applications: string[],
     genres: string[],
 }
-
-const applicationIcons = {
-    'Steam': '/steamIcon.svg',
-    'Epic Games': '/epic.svg',
-    'GOG': '/gog.svg',
-    'Bethesda.net': '/bethesda.svg',
-    'EA': '/eaIcon.svg',
-    'Ubisoft Connect': "/ubisoftIcon.svg",
-};
-
-const platformIcons = {
-    'macOS': '/appleIcon.svg',
-    'Windows': '/windowsIcon.svg',
-    'Linux': '/linuxIcon.svg',
-};
 
 export default function MainProductCard({ id, name, price, picture, releaseData, platforms, applications, genres = [] }: MainProductCardProps) {
 

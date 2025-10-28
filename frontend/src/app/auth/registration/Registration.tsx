@@ -1,16 +1,15 @@
 "use client"
 
-import styles from "./Registration.module.scss";
 import {FormEvent, useState} from "react";
-import { useRouter } from 'next/navigation';
 import Link from "next/link";
-import MainInput from "@/components/UI/Inputs/MainInput";
+import MainInput from "@/components/Inputs/MainInput";
 import Particles from "@/components/UI/modern/Particles";
-import {BackEndResponse} from "@/types/mainTypes";
-import HideInput from "@/components/UI/Inputs/HideInput";
+import HideInput from "@/components/Inputs/HideInput";
 import {validateConfirmPassword, validateUserEmail, validateUserName, validateUserPassword} from "@/lib/validators";
-import ServerError from "@/components/UI/errors/ServerError";
-
+import ServerError from "@/components/errors/ServerError";
+import {BackEndResponse} from "@/types";
+import LightGreenSubmitBtn from "@/components/buttons/LightGreenSubmitBtn/LightGreenSubmitBtn";
+import {usePageUtils} from "@/lib/hooks/usePageUtils";
 
 export default function Registration(){
 
@@ -18,10 +17,8 @@ export default function Registration(){
     const [email, setEmail] = useState<string>("");
     const [password, setPassword] = useState<string>("");
     const [confirmPassword, setConfirmPassword] = useState<string>("");
-    const [serverError, setServerError] = useState<string | null>(null);
     const [errors, setErrors] = useState<{ [key: string]: string }>({});
-    const router = useRouter();
-
+    const {serverError, setServerError, isSubmitting, setIsSubmitting, router} = usePageUtils()
 
     const validateForm = () => {
         const newErrors: { [key: string]: string } = {};
@@ -53,18 +50,14 @@ export default function Registration(){
         e.preventDefault();
         setErrors({});
         setServerError(null);
+        setIsSubmitting(true)
 
         const formErrors = validateForm();
 
         if (Object.keys(formErrors).length > 0) {
             setErrors(formErrors);
+            setIsSubmitting(false);
             return;
-        }
-
-        const payload = {
-            userName: userName,
-            email: email,
-            password: password,
         }
 
         try {
@@ -73,20 +66,25 @@ export default function Registration(){
                 headers: {
                     "Content-Type": "application/json",
                 },
-                body: JSON.stringify(payload),
+                body: JSON.stringify({
+                    userName: userName,
+                    email: email,
+                    password: password,
+                }),
             });
 
-            console.log("Sending payload:", JSON.stringify(payload));
             const data = (await response.json()) as BackEndResponse;
 
             if (response.ok) {
                 router.replace('/');
             } else {
                 setServerError(data.error || "Ошибка регистрации. Проверьте правильность введенных данных.");
+                setIsSubmitting(false);
             }
         }  catch (err) {
             setServerError("Не удалось связаться с сервером. Пожалуйста, проверьте ваше интернет-соединение или попробуйте позже.");
             console.error("Registration error:", err);
+            setIsSubmitting(false);
         }
     }
 
@@ -108,7 +106,7 @@ export default function Registration(){
             </div>
 
             <div className="relative z-10 flex items-center justify-center min-h-screen">
-                <div className={`w-full max-w-md p-8 space-y-6 rounded-lg shadow-md ${styles.main}`}>
+                <div className={`w-full max-w-md p-8 space-y-6 rounded-lg shadow-md mainColor`}>
                     <h2 className="text-2xl font-semibold text-center text-white">
                         Регистрация
                     </h2>
@@ -150,19 +148,15 @@ export default function Registration(){
                             error={errors.confirmPassword}
                         />
 
-                        <div>
-                            <button
-                                type="submit"
-                                className={`w-full flex justify-center py-2 px-4 border border-transparent 
-                                rounded-md shadow-sm text-m cursor-pointer font-medium text-black ${styles.submitButton}`}
-                            >
-                                Зарегистрироваться
-                            </button>
-                        </div>
+                        <LightGreenSubmitBtn
+                            label={!isSubmitting ? 'Зарегистрироваться' : 'Регистрация...'}
+                            disabled={isSubmitting}
+                        />
+
                     </form>
 
                     <div className="mt-4 text-sm text-white text-center">
-                        Уже есть аккаунт? <Link href="/auth/login" className={`font-medium text-indigo-600 hover:text-indigo-500 ${styles.links}`}>Авторизоваться</Link>
+                        Уже есть аккаунт? <Link href="/auth/login" className={`font-medium text-indigo-600 hover:text-indigo-500 textLinks`}>Авторизоваться</Link>
                     </div>
                 </div>
             </div>

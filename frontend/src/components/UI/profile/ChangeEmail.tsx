@@ -1,9 +1,9 @@
 "use client"
 
 import {useState} from "react";
-import MainInput from "@/components/UI/Inputs/MainInput";
-import {BackEndResponse} from "@/types/mainTypes";
-import HideInput from "@/components/UI/Inputs/HideInput";
+import MainInput from "@/components/Inputs/MainInput";
+import HideInput from "@/components/Inputs/HideInput";
+import {BackEndResponse} from "@/types";
 
 export default function ChangePassword() {
 
@@ -64,23 +64,19 @@ export default function ChangePassword() {
             return;
         }
 
-        const payload = {
-            currentEmail: currentEmail,
-            newEmail: newEmail,
-            password: password,
-        }
-
-
         try {
             const response = await fetch("http://localhost:8080/api/user/registration", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
                 },
-                body: JSON.stringify(payload),
+                body: JSON.stringify({
+                    currentEmail: currentEmail,
+                    newEmail: newEmail,
+                    password: password,
+                }),
             });
 
-            console.log("Sending payload:", JSON.stringify(payload));
             const data = (await response.json()) as BackEndResponse;
 
             if (response.ok) {
@@ -88,9 +84,9 @@ export default function ChangePassword() {
             } else {
                 setErrors({ form: data.error || "Ошибка смены почты" });
             }
-            // eslint-disable-next-line @typescript-eslint/no-unused-vars
         } catch (err) {
-            setErrors({ form: "Ошибка соединения с сервером" });
+            setErrors({ form: "Ошибка соединения с сервером"});
+            console.error(err);
         }
     }
 

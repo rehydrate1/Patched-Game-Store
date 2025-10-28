@@ -4,20 +4,17 @@ import { useState } from "react";
 import styles from "./MainHeader.module.scss";
 import Link from "next/link";
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
-import PCHeaderItem from "@/components/UI/navItems/PCHeaderItem";
-import MobileHeaderItem from "@/components/UI/navItems/MobileHeaderItem";
+import PCHeaderItem from "@/components/navItems/PCHeaderItem";
+import MobileHeaderItem from "@/components/navItems/MobileHeaderItem";
+import {headerNavItems} from "@/lib/data/indexData";
 
 export default function MainHeader() {
 
-    const [isMenuOpen, setIsMenuOpen] =useState(false);
+    const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
 
     const toggleMenu = () => {
         setIsMenuOpen(!isMenuOpen);
     };
-
-    const closeMenu = () => {
-        setIsMenuOpen(false);
-    }
 
     return (
         <div className={`${styles.main} relative`}>
@@ -30,34 +27,16 @@ export default function MainHeader() {
 
                 <div className={'hidden md:block'}>
                     <ul className={'flex gap-20 items-center'}>
-
-                        <PCHeaderItem
-                            text={'Магазин ключей'}
-                            link={'/shop/catalog/keys'}
-                        />
-
-                        <PCHeaderItem
-                            text={'Пополнение Steam'}
-                            link={'/steam-balance'}
-                        />
-
-                        <PCHeaderItem
-                            text={'Консоли и сервисы'}
-                            link={'/services'}
-                        />
-
-                        <PCHeaderItem
-                            text={'Гарантии'}
-                            link={'/guarantees'}
-                        />
-
-                        <PCHeaderItem
-                            text={'Поддержка'}
-                            link={'/support'}
-                        />
-
+                        {headerNavItems.map((item) => (
+                            <PCHeaderItem
+                                key={item.link}
+                                text={item.text}
+                                link={item.link}
+                            />
+                        ))}
                     </ul>
                 </div>
+
 
                 <Link href={'/auth/login'} className={`hidden md:flex p-2 px-8 rounded-md text-center items-center myButtonColor `}>
                     <h3 className={`font-bold text-m`}>Войти</h3>
@@ -78,37 +57,14 @@ export default function MainHeader() {
             {isMenuOpen && (
                 <div className="md:hidden absolute top-full left-0 w-full bg-[#212227] z-20 shadow-lg text-white">
                     <ul className="flex flex-col items-center gap-2 p-4">
-
-                        <MobileHeaderItem
-                            text={'Магазин игр'}
-                            link={'/shop'}
-                            functionName={toggleMenu}
-                        />
-
-                        <MobileHeaderItem
-                            text={'Пополнение Steam'}
-                            link={'/steam-balance'}
-                            functionName={toggleMenu}
-                        />
-
-                        <MobileHeaderItem
-                            text={'Гарантии'}
-                            link={'/shop'}
-                            functionName={toggleMenu}
-                        />
-
-                        <MobileHeaderItem
-                            text={'Поддержка'}
-                            link={'/support'}
-                            functionName={toggleMenu}
-                        />
-
-                        <MobileHeaderItem
-                            text={'О нас'}
-                            link={'/about'}
-                            functionName={toggleMenu}
-                        />
-
+                        {headerNavItems.map((item) => (
+                            <MobileHeaderItem
+                                key={item.link}
+                                text={item.text}
+                                link={item.link}
+                                functionName={toggleMenu}
+                            />
+                        ))}
                     </ul>
                     <div className="p-4 border-t mb-5  border-gray-700">
                         <Link href={'/auth/login'} onClick={toggleMenu} className={`block w-full mt-5 p-3 rounded-md text-center myButtonColor`}>

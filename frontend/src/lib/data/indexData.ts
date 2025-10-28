@@ -1,4 +1,4 @@
-import {SelectOption} from "@/components/UI/Inputs/MultiSelectDropdown/MultiSelectDropdown";
+import {SelectOption} from "@/components/Inputs/MultiSelectDropdown/MultiSelectDropdown";
 
 export const platformOptions: SelectOption[] = [
     { value: 'Windows', label: 'Windows' },
@@ -24,4 +24,42 @@ export const genreOptions: SelectOption[] = [
     { value: 'simulator', label: 'Симулятор' },
     { value: 'horror', label: 'Хоррор' },
     { value: 'indie', label: 'Инди' },
+];
+
+export const applicationIcons = {
+    'Steam': '/steamIcon.svg',
+    'Epic Games': '/epic.svg',
+    'GOG': '/gog.svg',
+    'Bethesda.net': '/bethesda.svg',
+    'EA': '/eaIcon.svg',
+    'Ubisoft Connect': "/ubisoftIcon.svg",
+};
+
+export const platformIcons = {
+    'macOS': '/appleIcon.svg',
+    'Windows': '/windowsIcon.svg',
+    'Linux': '/linuxIcon.svg',
+};
+
+export const headerNavItems = [
+    {
+        text: 'Магазин ключей',
+        link: '/shop/catalog/keys',
+    },
+    {
+        text: 'Пополнение Steam',
+        link: '/steam-balance',
+    },
+    {
+        text: 'Консоли и сервисы',
+        link: '/services',
+    },
+    {
+        text: 'Гарантии',
+        link: '/guarantees',
+    },
+    {
+        text: 'Поддержка',
+        link: '/support',
+    },
 ];

@@ -1,15 +1,15 @@
 "use client"
 
-import styles from "./Login.module.scss";
 import {FormEvent, useState} from "react";
 import Link from "next/link";
-import MainInput from "@/components/UI/Inputs/MainInput";
+import MainInput from "@/components/Inputs/MainInput";
 import Particles from "@/components/UI/modern/Particles";
-import {BackEndResponse} from "@/types/mainTypes";
-import HideInput from "@/components/UI/Inputs/HideInput";
+import HideInput from "@/components/Inputs/HideInput";
 import {validateUserEmail, validateUserPassword} from "@/lib/validators";
-import ServerError from "@/components/UI/errors/ServerError";
+import ServerError from "@/components/errors/ServerError";
 import {usePageUtils} from "@/lib/hooks/usePageUtils";
+import {BackEndResponse} from "@/types";
+import LightGreenSubmitBtn from "@/components/buttons/LightGreenSubmitBtn/LightGreenSubmitBtn";
 
 export default function Login(){
 
@@ -35,23 +35,19 @@ export default function Login(){
         return newErrors;
     }
 
-
     const handleSubmit = async (e:FormEvent<HTMLFormElement>):Promise<void> => {
         e.preventDefault();
         setErrors({});
         setServerError(null);
 
+        setIsSubmitting(true);
+
         const formErrors = validateForm();
 
         if (Object.keys(formErrors).length > 0) {
             setErrors(formErrors);
+            setIsSubmitting(false);
             return;
-        }
-
-        const payload = {
-            email: email,
-            password: password,
-            rememberMe: rememberMe,
         }
 
         try {
@@ -60,23 +56,27 @@ export default function Login(){
                 headers: {
                     "Content-Type": "application/json",
                 },
-                body: JSON.stringify(payload),
+                body: JSON.stringify({
+                    email: email,
+                    password: password,
+                    rememberMe: rememberMe,
+                }),
             });
 
-            console.log("Sending payload:", JSON.stringify(payload));
             const data = (await response.json()) as BackEndResponse;
 
             if (response.ok) {
                 router.replace('/');
             } else {
                 setServerError(data.error || "Ошибка авторизации. Проверьте правильность введенных данных.");
+                setIsSubmitting(false);
             }
         }  catch (err) {
             setServerError("Не удалось связаться с сервером. Пожалуйста, проверьте ваше интернет-соединение или попробуйте позже.");
             console.error("Login error:", err);
+            setIsSubmitting(false);
         }
     }
-
 
     return (
         <div className="relative min-h-screen overflow-hidden">
@@ -95,7 +95,7 @@ export default function Login(){
             </div>
 
             <div className="relative z-10 flex items-center justify-center min-h-screen">
-                <div className={`w-full max-w-md p-8 space-y-6 rounded-lg shadow-md ${styles.main}`}>
+                <div className={`w-full max-w-md p-8 space-y-6 rounded-lg shadow-md mainColor`}>
                     <h2 className="text-2xl font-semibold text-center text-white">
                         Авторизация
                     </h2>
@@ -137,23 +137,21 @@ export default function Login(){
                             </div>
 
                             <div className="text-sm">
-                                <Link href="/auth/forgot-password" className={`font-medium text-white ${styles.links}`}>
+                                <Link href="/auth/forgot-password" className={`font-medium text-white textLinks`}>
                                     Забыли пароль?
                                 </Link>
                             </div>
                         </div>
 
-                        <button
-                            type="submit"
-                            className={`w-full flex justify-center py-2 px-4 border border-transparent 
-                                rounded-md shadow-sm text-m font-medium cursor-pointer text-black ${styles.submitButton}`}
-                        >
-                            Войти
-                        </button>
+                        <LightGreenSubmitBtn
+                            label={!isSubmitting ? 'Войти' : 'Вход...'}
+                            disabled={isSubmitting}
+                        />
+
                     </form>
 
                     <div className="mt-4 text-sm text-white text-center">
-                        Нет аккаунта? <Link href="/auth/registration" className={`font-medium text-indigo-600 hover:text-indigo-500 ${styles.links}`}>Зарегистрироваться</Link>
+                        Нет аккаунта? <Link href="/auth/registration" className={`font-medium text-indigo-600 hover:text-indigo-500 textLinks`}>Зарегистрироваться</Link>
                     </div>
                 </div>
             </div>

@@ -6,13 +6,13 @@ import {
 } from '@heroicons/react/24/outline';
 
 import React, { useState, useEffect } from "react";
-import SteamInput from "@/components/UI/Inputs/SteamInput";
-import SteamFAQ from "@/components/FAQ/SteamFAQ";
+import SteamInput from "@/components/Inputs/SteamInput";
+import SteamFAQ from "@/components/UI/FAQ/SteamFAQ";
 import Link from "next/link";
 import {useRouter} from "next/navigation";
 import {validatePromoCode, validateSteamBalance, validateSteamLogin} from "@/lib/validators";
 import {BackEndResponse} from "@/types/mainTypes";
-import ServerError from "@/components/UI/errors/ServerError";
+import ServerError from "@/components/errors/ServerError";
 
 export default function SteamBalance() {
 

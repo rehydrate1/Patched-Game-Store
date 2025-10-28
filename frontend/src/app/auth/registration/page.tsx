@@ -5,12 +5,9 @@ export const metadata = {
     description: 'Регистрация на сайте',
 }
 
-
 export default function RegistrationPage(){
 
     return (
-        <>
-            <Registration />
-        </>
+        <Registration />
     );
 }

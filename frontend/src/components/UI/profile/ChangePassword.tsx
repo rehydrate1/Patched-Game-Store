@@ -1,7 +1,7 @@
 "use client"
 
 import React, {useState} from "react";
-import MainInput from "@/components/UI/Inputs/MainInput";
+import MainInput from "@/components/Inputs/MainInput";
 import {BackEndResponse} from "@/types/mainTypes";
 
 export default function ChangePassword() {

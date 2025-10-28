@@ -1,28 +1,15 @@
 import Image from 'next/image';
-import { StarIcon } from '@heroicons/react/24/solid';
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/outline';
-
 import { Swiper, SwiperSlide,  } from 'swiper/react';
-
 import 'swiper/css';
 import 'swiper/css/navigation';
 import { Navigation, A11y, Pagination } from 'swiper/modules';
 import 'swiper/css/pagination';
+import StarRating from "@/components/elements/StarRating";
+import {DashboardTestimonialsDataStructure} from "@/lib/data/dashboardData";
 
-const StarRating = ({ rating }) => {
-    return (
-        <div className="flex items-center">
-            {[...Array(5)].map((_, index) => (
-                <StarIcon
-                    key={index}
-                    className={`h-5 w-5 ${index < rating ? 'text-green-400' : 'text-gray-600'}`}
-                />
-            ))}
-        </div>
-    );
-};
 
-export default function Feedback({ testimonials }) {
+export default function Feedback({ testimonials }: {testimonials: DashboardTestimonialsDataStructure[]}) {
     return (
         <section id="testimonials" className="mt-50 overflow-hidden">
             <div className="relative">

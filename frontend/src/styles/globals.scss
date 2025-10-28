@@ -8,12 +8,28 @@ html, body, #root {
   padding: 0;
 }
 
+.mainColor{
+  background: #212227 ;
+}
+
+
+
 .navItem{
   transition: background-color 0.25s ease-in-out, color 0.25s ease-in-out;
 
   &:hover{
     background-color: #00FE92;
     color: black;
+  }
+}
+
+.textLinks{
+  color: #00FE92;
+  transition: color 0.25s ease-in-out;
+
+  &:hover {
+    color: #09865a;
+
   }
 }
 

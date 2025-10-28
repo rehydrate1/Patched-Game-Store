@@ -16,13 +16,13 @@ import {Swiper, SwiperSlide} from 'swiper/react';
 import {Navigation} from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/navigation';
-import MainFAQ from "@/components/FAQ/MainFAQ";
+import MainFAQ from "@/components/UI/FAQ/MainFAQ";
 import TextPressure from "@/components/UI/modern/TextPressure";
 import Image from "next/image";
-import MainPrivilegeCards from "@/components/privilegeCards/MainPrivilegeCard";
+import MainPrivilegeCards from "@/components/UI/privilegeCards/MainPrivilegeCard";
 import Link from "next/link";
 import Aurora from "@/components/UI/modern/Aurora";
-import Feedback from "@/components/feedback/Feedback";
+import Feedback from "@/components/UI/feedback/Feedback";
 import {
     DashboardArrayOfData,
     DashboardFaqData,

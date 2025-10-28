@@ -8,10 +8,10 @@ import {
     ShoppingBagIcon,
     ArrowLeftOnRectangleIcon
 } from '@heroicons/react/24/outline';
-import AccountProfile from "@/components/profile/AccountProfile";
-import ChangePassword from '@/components/profile/ChangePassword';
-import PurchaseHistory from '@/components/profile/PurchaseHistory';
-import ChangeEmail from '@/components/profile/ChangeEmail';
+import AccountProfile from "@/components/UI/profile/AccountProfile";
+import ChangePassword from '@/components/UI/profile/ChangePassword';
+import PurchaseHistory from '@/components/UI/profile/PurchaseHistory';
+import ChangeEmail from '@/components/UI/profile/ChangeEmail';
 import {profileMenuItems} from "@/lib/data/profileData";
 
 export default function ProfileClient() {

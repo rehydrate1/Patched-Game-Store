@@ -1,10 +1,10 @@
 "use client"
 
 import styles from "./AddNewKey.module.scss";
-import MainInput from "@/components/UI/Inputs/MainInput";
+import MainInput from "@/components/Inputs/MainInput";
 import React, {useState} from "react";
-import TextAreaInput from "@/components/UI/Inputs/TextAreaInput/TextAreaInput";
-import MultiSelectDropdown, { SelectOption } from "@/components/UI/Inputs/MultiSelectDropdown/MultiSelectDropdown";
+import TextAreaInput from "@/components/Inputs/TextAreaInput/TextAreaInput";
+import MultiSelectDropdown, { SelectOption } from "@/components/Inputs/MultiSelectDropdown/MultiSelectDropdown";
 import {useRouter} from "next/navigation";
 import {BackEndResponse} from "@/types/mainTypes";
 import {
@@ -16,7 +16,7 @@ import {
     validateNewKeyPrice, validateNewKeyPublisher,
     validateNewKeyReleaseData
 } from "@/lib/validators";
-import ServerError from "@/components/UI/errors/ServerError";
+import ServerError from "@/components/errors/ServerError";
 import {applicationOptions, genreOptions, platformOptions} from "@/lib/data/indexData";
 
 export default function AddNewKey() {

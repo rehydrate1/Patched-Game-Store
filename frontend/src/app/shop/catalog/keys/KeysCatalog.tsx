@@ -3,7 +3,7 @@
 import styles from "./KeysCatalog.module.scss";
 import { useState, useEffect, useMemo } from 'react';
 import {useRouter} from "next/navigation";
-import MainProductCard from "@/components/productCards/MainProductCard/MainProductCard";
+import MainProductCard from "@/components/UI/productCards/MainProductCard/MainProductCard";
 import {keysCatalogDataItems} from "@/lib/data/keysCatalogData";
 
 
