@@ -3,54 +3,40 @@
 import styles from "./KeysCatalog.module.scss";
 import { useState, useEffect, useMemo } from 'react';
 import {useRouter} from "next/navigation";
-import MainProductCard from "@/components/ProductCards/MainProductCard/MainProductCard";
-
-interface KeysCatalogProps {
-    keysArray?: {
-        id: number;
-        name: string;
-        price: string;
-        picture: string;
-        releaseData: string;
-        platforms: string[];
-        applications: string[];
-        genres: string[];
-        developer: string;
-    }[];
-}
+import MainProductCard from "@/components/UI/productCards/MainProductCard/MainProductCard";
+import {keysCatalogDataItems} from "@/lib/data/keysCatalogData";
 
 
+export default function KeysCatalog() {
 
-
-export default function KeysCatalog({ keysArray = [] }: KeysCatalogProps) {
     const [priceFrom, setPriceFrom] = useState('');
     const [priceTo, setPriceTo] = useState('');
     const [selectedPlatforms, setSelectedPlatforms] = useState<string[]>([]);
     const [selectedGenres, setSelectedGenres] = useState<string[]>([]);
     const [selectedApplications, setSelectedApplications] = useState<string[]>([]);
-    const [filteredKeys, setFilteredKeys] = useState(keysArray);
+    const [filteredKeys, setFilteredKeys] = useState(keysCatalogDataItems);
     const router = useRouter();
 
     const allPlatforms = useMemo(() => {
         const platformsSet = new Set<string>();
-        keysArray.forEach(game => game.platforms.forEach(p => platformsSet.add(p)));
+        keysCatalogDataItems.forEach(game => game.platforms.forEach(p => platformsSet.add(p)));
         return Array.from(platformsSet).sort();
-    }, [keysArray]);
+    }, [keysCatalogDataItems]);
 
     const allGenres = useMemo(() => {
         const genresSet = new Set<string>();
-        keysArray.forEach(game => game.genres.forEach(g => genresSet.add(g)));
+        keysCatalogDataItems.forEach(game => game.genres.forEach(g => genresSet.add(g)));
         return Array.from(genresSet).sort();
-    }, [keysArray]);
+    }, [keysCatalogDataItems]);
 
     const allApplications = useMemo(() => {
         const applicationsSet = new Set<string>();
-        keysArray.forEach(game => game.applications.forEach(app => applicationsSet.add(app)));
+        keysCatalogDataItems.forEach(game => game.applications.forEach(app => applicationsSet.add(app)));
         return Array.from(applicationsSet).sort();
-    }, [keysArray]);
+    }, [keysCatalogDataItems]);
 
     useEffect(() => {
-        let tempKeys = [...keysArray];
+        let tempKeys = [...keysCatalogDataItems];
 
 
         const from = parseFloat(priceFrom);
@@ -90,7 +76,7 @@ export default function KeysCatalog({ keysArray = [] }: KeysCatalogProps) {
 
         setFilteredKeys(tempKeys);
 
-    }, [priceFrom, priceTo, selectedPlatforms, selectedGenres, selectedApplications, keysArray]);
+    }, [priceFrom, priceTo, selectedPlatforms, selectedGenres, selectedApplications, keysCatalogDataItems]);
 
     const handlePlatformChange = (platform: string) => {
         setSelectedPlatforms(prev =>
@@ -121,8 +107,6 @@ export default function KeysCatalog({ keysArray = [] }: KeysCatalogProps) {
     const addNewKeyPage = () => {
         router.push('/shop/catalog/keys/new');
     };
-
-
 
     return (
         <>

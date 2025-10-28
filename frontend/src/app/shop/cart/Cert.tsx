@@ -1,6 +1,6 @@
 "use client";
 
-import { useAppSelector, useAppDispatch } from '@/hooks/useTypedRedux';
+import { useAppSelector, useAppDispatch } from '@/lib/hooks/useTypedRedux';
 import { removeItem, clearCart } from '@/store/slices/cartSlice';
 import Image from 'next/image';
 import Link from 'next/link';

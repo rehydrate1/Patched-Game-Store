@@ -1,12 +1,15 @@
 "use client"
-import styles from "./Registration.module.scss";
-import {FormEvent, useState} from "react";
-import { useRouter } from 'next/navigation';
-import {EyeIcon, EyeSlashIcon} from "@heroicons/react/24/outline";
-import Link from "next/link";
-import MainInput from "@/components/UI/Inputs/MainInput/MainInput";
-import Particles from "@/components/UI/Modern/Particles";
 
+import {FormEvent, useState} from "react";
+import Link from "next/link";
+import MainInput from "@/components/Inputs/MainInput";
+import Particles from "@/components/UI/modern/Particles";
+import HideInput from "@/components/Inputs/HideInput";
+import {validateConfirmPassword, validateUserEmail, validateUserName, validateUserPassword} from "@/lib/validators";
+import ServerError from "@/components/errors/ServerError";
+import {BackEndResponse} from "@/types";
+import LightGreenSubmitBtn from "@/components/buttons/LightGreenSubmitBtn/LightGreenSubmitBtn";
+import {usePageUtils} from "@/lib/hooks/usePageUtils";
 
 export default function Registration(){
 
@@ -14,98 +17,74 @@ export default function Registration(){
     const [email, setEmail] = useState<string>("");
     const [password, setPassword] = useState<string>("");
     const [confirmPassword, setConfirmPassword] = useState<string>("");
-    const [showPassword, setShowPassword] = useState<boolean>(false);
-    const [error, setError] = useState<string>('');
-    const router = useRouter();
+    const [errors, setErrors] = useState<{ [key: string]: string }>({});
+    const {serverError, setServerError, isSubmitting, setIsSubmitting, router} = usePageUtils()
 
-    const payload = {
-        userName: userName,
-        email: email,
-        password: password,
+    const validateForm = () => {
+        const newErrors: { [key: string]: string } = {};
+
+        const validateUserNameErrors:string | null = validateUserName(userName);
+        if (validateUserNameErrors) {
+            newErrors.userName = validateUserNameErrors;
+        }
+
+        const validateEmailErrors:string | null = validateUserEmail(email);
+        if (validateEmailErrors) {
+            newErrors.email = validateEmailErrors;
+        }
+
+        const validatePasswordErrors:string | null = validateUserPassword(password);
+        if (validatePasswordErrors) {
+            newErrors.password = validatePasswordErrors;
+        }
+
+        const validateConfirmPasswordErrors:string | null = validateConfirmPassword(password, confirmPassword);
+        if (validateConfirmPasswordErrors) {
+            newErrors.confirmPassword = validateConfirmPasswordErrors;
+        }
+
+        return newErrors;
     }
-
-    interface LoginResponse {
-        error?: string;
-    }
-
-    const isValidPassword = (password: string):boolean => {
-        const passwordRegex = /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~])[A-Za-z\d!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]{8,25}$/;
-        return passwordRegex.test(password);
-    }
-
-    const isValidEmail = (email: string): boolean => {
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        return emailRegex.test(email);
-    };
-
 
     const handleSubmit = async (e:FormEvent<HTMLFormElement>):Promise<void> => {
         e.preventDefault();
-        setError('');
+        setErrors({});
+        setServerError(null);
+        setIsSubmitting(true)
 
-        if (!email.trim() || !userName.trim() || !password ) {
-            setError("Пожалуйста, заполните все поля.");
-            return;
-        }
+        const formErrors = validateForm();
 
-        if (!userName.trim() || !email.trim() || !password || !confirmPassword) {
-            setError("Пожалуйста, заполните все поля.");
-            return;
-        }
-
-        if (!isValidEmail(email)) {
-            setError("Введите корректный email.");
-            return;
-        }
-
-        if (password !== confirmPassword) {
-            setError("Пароли не совпадают!");
-            return;
-        }
-
-        if (!isValidPassword(password)) {
-            setError("Пароль должен содержать от 8 символов до 25 символов, включать латинские буквы, хотя бы одну заглавную букву и цифры.");
-            return;
-        }
-
-
-        if (userName.length < 2 || userName.length > 25) {
-            setError("Имя пользователя должно содержать от 2 до 25 символов.");
-            return;
-        }
-
-        if (userName !== userName.toLowerCase()) {
-            setError("Имя пользователя должно содержать только строчные буквы.");
-            return;
-        }
-
-        if (!/[a-z]/.test(userName)) {
-            setError("Имя пользователя должно содержать хотя бы одну букву.");
+        if (Object.keys(formErrors).length > 0) {
+            setErrors(formErrors);
+            setIsSubmitting(false);
             return;
         }
 
         try {
-            console.log([userName, email, password, confirmPassword]);
-
             const response = await fetch("http://localhost:8080/api/user/registration", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
                 },
-                body: JSON.stringify(payload),
+                body: JSON.stringify({
+                    userName: userName,
+                    email: email,
+                    password: password,
+                }),
             });
 
-            console.log("Sending payload:", JSON.stringify(payload));
-            const data = (await response.json()) as LoginResponse;
+            const data = (await response.json()) as BackEndResponse;
 
             if (response.ok) {
                 router.replace('/');
             } else {
-                setError(data.error || "Ошибка регистрации.");
+                setServerError(data.error || "Ошибка регистрации. Проверьте правильность введенных данных.");
+                setIsSubmitting(false);
             }
-            // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        } catch (err) {
-            setError("Ошибка соединения с сервером");
+        }  catch (err) {
+            setServerError("Не удалось связаться с сервером. Пожалуйста, проверьте ваше интернет-соединение или попробуйте позже.");
+            console.error("Registration error:", err);
+            setIsSubmitting(false);
         }
     }
 
@@ -127,15 +106,12 @@ export default function Registration(){
             </div>
 
             <div className="relative z-10 flex items-center justify-center min-h-screen">
-                <div className={`w-full max-w-md p-8 space-y-6 rounded-lg shadow-md ${styles.main}`}>
+                <div className={`w-full max-w-md p-8 space-y-6 rounded-lg shadow-md mainColor`}>
                     <h2 className="text-2xl font-semibold text-center text-white">
                         Регистрация
                     </h2>
-                    {error && (
-                        <div className={`${styles.errorMessage}`}>
-                            <p className={'text-l text-bold'}>{error}</p>
-                        </div>
-                    )}
+
+                    <ServerError message={serverError} />
 
                     <form className="space-y-6" onSubmit={handleSubmit}>
                         <MainInput
@@ -143,6 +119,7 @@ export default function Registration(){
                             value={userName}
                             onChange={setUserName}
                             label={'Имя пользователя'}
+                            error={errors.userName}
                         />
 
                         <MainInput
@@ -151,36 +128,16 @@ export default function Registration(){
                             value={email}
                             onChange={setEmail}
                             label={'Email'}
+                            error={errors.email}
                         />
 
-                        <div>
-                            <label htmlFor="password" className="block text-sm font-medium text-white">
-                                Пароль
-                            </label>
-                            <div className="relative mt-1">
-                                <input
-                                    id="password"
-                                    name="password"
-                                    type={showPassword ? 'text' : 'password'}
-                                    autoComplete="new-password"
-                                    required
-                                    className={`block mainInput w-full px-3 py-2 pr-10 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none  sm:text-sm `}
-                                    value={password}
-                                    onChange={(e) => setPassword(e.target.value)}
-                                />
-
-                                <div
-                                    className="absolute inset-y-0 right-0 pr-3 flex items-center cursor-pointer"
-                                    onClick={() => setShowPassword(!showPassword)}
-                                >
-                                    {showPassword ? (
-                                        <EyeSlashIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
-                                    ) : (
-                                        <EyeIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
-                                    )}
-                                </div>
-                            </div>
-                        </div>
+                        <HideInput
+                            label={'Пароль'}
+                            id={'password'}
+                            value={password}
+                            onChange={setPassword}
+                            error={errors.password}
+                        />
 
                         <MainInput
                             id={confirmPassword}
@@ -188,21 +145,18 @@ export default function Registration(){
                             value={confirmPassword}
                             onChange={setConfirmPassword}
                             label={'Повторите пароль'}
+                            error={errors.confirmPassword}
                         />
 
-                        <div>
-                            <button
-                                type="submit"
-                                className={`w-full flex justify-center py-2 px-4 border border-transparent 
-                                rounded-md shadow-sm text-m cursor-pointer font-medium text-black ${styles.submitButton}`}
-                            >
-                                Зарегистрироваться
-                            </button>
-                        </div>
+                        <LightGreenSubmitBtn
+                            label={!isSubmitting ? 'Зарегистрироваться' : 'Регистрация...'}
+                            disabled={isSubmitting}
+                        />
+
                     </form>
 
                     <div className="mt-4 text-sm text-white text-center">
-                        Уже есть аккаунт? <Link href="/auth/login" className={`font-medium text-indigo-600 hover:text-indigo-500 ${styles.links}`}>Авторизоваться</Link>
+                        Уже есть аккаунт? <Link href="/auth/login" className={`font-medium text-indigo-600 hover:text-indigo-500 textLinks`}>Авторизоваться</Link>
                     </div>
                 </div>
             </div>

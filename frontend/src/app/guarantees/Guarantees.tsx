@@ -8,10 +8,9 @@ import {
     Users,
     DownloadCloud
 } from 'lucide-react';
-import MainLinkButton from "@/components/UI/Buttons/MainLinkButton/MainLinkButton";
+import MainLinkButton from "@/components/buttons/MainLinkButton";
 
 export default function Guarantees() {
-
 
     return (
         <div className="text-white min-h-screen">

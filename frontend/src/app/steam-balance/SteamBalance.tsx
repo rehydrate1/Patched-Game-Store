@@ -6,25 +6,24 @@ import {
 } from '@heroicons/react/24/outline';
 
 import React, { useState, useEffect } from "react";
-import SteamInput from "@/components/UI/Inputs/SteamInput/SteamInput";
-import SteamFAQ from "@/components/FAQ/SteamFAQ";
+import SteamInput from "@/components/Inputs/SteamInput";
+import SteamFAQ from "@/components/UI/FAQ/SteamFAQ";
 import Link from "next/link";
 import {useRouter} from "next/navigation";
+import {validatePromoCode, validateSteamBalance, validateSteamLogin} from "@/lib/validators";
+import {BackEndResponse} from "@/types/mainTypes";
+import ServerError from "@/components/errors/ServerError";
 
 export default function SteamBalance() {
 
     const [steamLogin, setSteamLogin] = useState<string>('');
     const [balance, setBalance] = useState<string>('500');
     const [promoCode, setPromoCode] = useState<string>('');
-    const [errors, setErrors] = useState<{ [key: string]: string }>({});
     const [commission, setCommission] = useState<number>(0);
     const [endPrice, setEndPrice] = useState<number>(0);
+    const [errors, setErrors] = useState<{ [key: string]: string }>({});
+    const [serverError, setServerError] = useState<string | null>(null);
     const router = useRouter();
-
-
-    interface BackEndResponse {
-        error?: string;
-    }
 
     useEffect(() => {
         const balanceNumber = parseFloat(balance) || 0;
@@ -34,61 +33,6 @@ export default function SteamBalance() {
         setCommission(newCommission);
         setEndPrice(newEndPrice);
     }, [balance]);
-
-
-
-    const validateSteamLogin = (steamLogin:string): string | null => {
-        if (!steamLogin.trim()) {
-            return `Пожалуйста, введите логин от Steam аккаунта`;
-        }
-
-        const nameCheckRegex = /^[a-zA-Z0-9_]+$/;
-        if(!nameCheckRegex.test(steamLogin)) {
-            return (`Логин может содержать только латинские буквы, цифры и нижнее подчёркивание`)
-        }
-
-        if (steamLogin.length < 3 || steamLogin.length > 35) {
-            return (`Длинна логина может содержать от 3 до 35 символов (сейчас ${steamLogin.length})`)
-        }
-
-        return null;
-    }
-
-    const validateSteamBalance = (steamBalance:string): string | null => {
-        if (!steamBalance.trim()) {
-            return `Пожалуйста, введите желаемую сумму пополнения аккаунта`;
-        }
-
-        const balanceCheckRegex = /^[0-9]+$/;
-        if(!balanceCheckRegex.test(steamBalance)) {
-            return (`Сумма пополнения должна содержать только цифры`)
-        }
-
-
-        if (Number(steamBalance) < 100 ) {
-            return (`Минимальная сумма пополнения 100`)
-        }
-
-        if (Number(steamBalance) > 100000) {
-            return (`Максимальная сумма пополнения 100.000`)
-        }
-
-        return null;
-    }
-
-    const validatePromoCode = (promoCode:string): string | null => {
-        const promoCodeCheckRegex = /^[a-zA-Z0-9]*$/;
-        if(!promoCodeCheckRegex.test(promoCode)) {
-            return (`Промокод может содержать только латинские буквы и цифры`)
-        }
-
-        if( !(promoCode == '') ){
-            if (promoCode.length < 3 || promoCode.length > 35) {
-                return (`Промокод может содержать от 3 до 35 символов (сейчас ${promoCode.length})`)
-            }
-        }
-        return null;
-    }
 
 
     const validateForm = () => {
@@ -115,6 +59,7 @@ export default function SteamBalance() {
     const handleSubmit = async (event: React.FormEvent) => {
         event.preventDefault();
         setErrors({});
+        setServerError(null);
 
         const formErrors = validateForm();
 
@@ -146,11 +91,11 @@ export default function SteamBalance() {
             if (response.ok) {
                 router.push('/steam-balance/success');
             } else {
-                setErrors({ form: data.error || "Ошибка пополнения" });
+                setServerError(data.error || "Ошибка пополнения. Проверьте правильность введенных данных.");
             }
-            // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        } catch (err) {
-            setErrors({ form: "Ошибка соединения с сервером" });
+        }  catch (err) {
+            setServerError("Не удалось связаться с сервером. Пожалуйста, проверьте ваше интернет-соединение или попробуйте позже.");
+            console.error("Steam balance error:", err);
         }
 
     }
@@ -162,7 +107,6 @@ export default function SteamBalance() {
 
                     <SteamFAQ />
 
-                    {/* === ЦЕНТРАЛЬНАЯ КОЛОНКА: ФОРМА ПОПОЛНЕНИЯ === */}
                     <div className={`bg-[#212227] p-6 sm:p-8 rounded-xl w-full border border-white/10 lg:col-span-1`}>
                         <div className="text-center pb-5">
                             <h1 className="text-3xl font-bold text-white mb-2">
@@ -172,6 +116,8 @@ export default function SteamBalance() {
                                 Моментальное зачисление
                             </p>
                         </div>
+
+                        <ServerError message={serverError} />
 
                         <form className="space-y-8" onSubmit={handleSubmit}>
                             <div className="relative">

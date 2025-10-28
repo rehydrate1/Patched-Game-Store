@@ -1,12 +1,13 @@
 "use client"
 
 import { usePathname } from 'next/navigation';
-import MainHeader from "@/components/UI/Headers/MainHeader/MainHeader";
-import ShopHeader from "@/components/UI/Headers/ShopHeader/ShopHeader";
-import React from "react";
-import MainFooter from "@/components/UI/Footers/MainFooter/MainFooter";
+import MainHeader from "@/components/UI/headers/MainHeader/MainHeader";
+import ShopHeader from "@/components/UI/headers/ShopHeader/ShopHeader";
+import {ReactElement, ReactNode} from "react";
+import MainFooter from "@/components/UI/footers/MainFooter";
 
-export default function LayoutWrapper({ children }: { children: React.ReactNode }): React.ReactElement {
+export default function LayoutWrapper({ children }: { children: ReactNode }): ReactElement {
+
     const pathname: string = usePathname();
     const isAuthPage: boolean = pathname.startsWith('/auth');
 

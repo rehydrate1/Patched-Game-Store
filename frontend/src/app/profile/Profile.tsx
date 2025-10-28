@@ -1,4 +1,4 @@
-"use client";
+"use client"
 
 import { useState } from 'react';
 import {
@@ -8,17 +8,13 @@ import {
     ShoppingBagIcon,
     ArrowLeftOnRectangleIcon
 } from '@heroicons/react/24/outline';
-import AccountProfile from "@/components/Profile/AccountProfile";
-import ChangePassword from '@/components/Profile/ChangePassword';
-import PurchaseHistory from '@/components/Profile/PurchaseHistory';
-import ChangeEmail from '@/components/Profile/ChangeEmail';
-import {ProfileMenuItems} from "@/app/profile/page";
+import AccountProfile from "@/components/UI/profile/AccountProfile";
+import ChangePassword from '@/components/UI/profile/ChangePassword';
+import PurchaseHistory from '@/components/UI/profile/PurchaseHistory';
+import ChangeEmail from '@/components/UI/profile/ChangeEmail';
+import {profileMenuItems} from "@/lib/data/profileData";
 
-interface ProfileClientProps {
-    menuItems: ProfileMenuItems[],
-}
-
-export default function ProfileClient({menuItems}:ProfileClientProps) {
+export default function ProfileClient() {
 
     const [activeTab, setActiveTab] = useState('profile');
 
@@ -29,7 +25,6 @@ export default function ProfileClient({menuItems}:ProfileClientProps) {
         ShoppingBagIcon: ShoppingBagIcon,
         ArrowLeftOnRectangleIcon: ArrowLeftOnRectangleIcon,
     }
-
 
     const renderContent = () => {
         switch (activeTab) {
@@ -53,7 +48,7 @@ export default function ProfileClient({menuItems}:ProfileClientProps) {
                 {/* === БОКОВОЕ МЕНЮ (SIDEBAR) === */}
                 <aside className="w-full md:w-1/4 lg:w-1/5">
                     <nav className="space-y-2 bg-[#212227] p-4 rounded-xl border border-white/10">
-                        {menuItems.map((item) => {
+                        {profileMenuItems.map((item) => {
 
                             const IconComponent = icons[item.icon]
                             return (
