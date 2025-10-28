@@ -8,7 +8,7 @@ import {
     Users,
     DownloadCloud
 } from 'lucide-react';
-import MainLinkButton from "@/components/UI/Buttons/MainLinkButton/MainLinkButton";
+import MainLinkButton from "@/components/UI/buttons/MainLinkButton/MainLinkButton";
 
 export default function Guarantees() {
 

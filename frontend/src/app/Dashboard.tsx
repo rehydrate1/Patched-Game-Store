@@ -16,21 +16,19 @@ import {Swiper, SwiperSlide} from 'swiper/react';
 import {Navigation} from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/navigation';
-
-
 import MainFAQ from "@/components/FAQ/MainFAQ";
-import TextPressure from "@/components/UI/Modern/TextPressure";
+import TextPressure from "@/components/UI/modern/TextPressure";
 import Image from "next/image";
-import MainPrivilegeCards from "@/components/PrivilegeCards/MainPrivilegeCard";
+import MainPrivilegeCards from "@/components/privilegeCards/MainPrivilegeCard";
 import Link from "next/link";
-import Aurora from "@/components/UI/Modern/Aurora";
-import Feedback from "@/components/Feedback/Feedback";
+import Aurora from "@/components/UI/modern/Aurora";
+import Feedback from "@/components/feedback/Feedback";
 import {
-    DashboardFaqData,
     DashboardArrayOfData,
-    DashboardTestimonialsData,
-    DashboardPrivileges
-} from "@/app/page";
+    DashboardFaqData,
+    DashboardPrivileges,
+    DashboardTestimonialsData
+} from "@/lib/data/dashboardData";
 
 const icons = {
     TagIcon: TagIcon,
@@ -41,14 +39,8 @@ const icons = {
     ShieldCheckIcon: ShieldCheckIcon,
 }
 
-interface DashboardProps {
-    arrayOfData: DashboardArrayOfData[];
-    faqData: DashboardFaqData[];
-    testimonialsData: DashboardTestimonialsData[];
-    privileges: DashboardPrivileges[];
-}
+export default function Dashboard() {
 
-export default function Dashboard({arrayOfData, faqData, testimonialsData, privileges}:DashboardProps) {
     return (
         <div className="min-h-screen">
 
@@ -83,7 +75,6 @@ export default function Dashboard({arrayOfData, faqData, testimonialsData, privi
 
             <main className="py-20">
 
-
                 <section id="popular-games" className="mb-35 relative">
                     <div className="container mx-auto px-6">
                         <h2 className="text-4xl font-bold text-center mb-20 text-white">Сейчас в топе продаж</h2>
@@ -103,7 +94,7 @@ export default function Dashboard({arrayOfData, faqData, testimonialsData, privi
                             }}
                             className="!pb-10"
                         >
-                            {arrayOfData.map(game => (
+                            {DashboardArrayOfData.map(game => (
                                 <SwiperSlide key={game.id}>
                                     <div className="group relative bg-[#1A1129] rounded-xl overflow-hidden
                                                      border border-transparent hover:border-[#aeb2ae] transition-all duration-300 h-full flex flex-col">
@@ -144,12 +135,11 @@ export default function Dashboard({arrayOfData, faqData, testimonialsData, privi
                     </div>
                 </section>
 
-
                 <section id="why-us" className="mb-5">
                     <div className="container mx-auto px-6">
                         <h2 className="text-4xl font-bold text-center mb-20 text-white">Почему Patched?</h2>
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                            {privileges.map(privilege => {
+                            {DashboardPrivileges.map(privilege => {
                                 const IconComponent = icons[privilege.icon]
                                 return (
                                     <MainPrivilegeCards
@@ -164,8 +154,7 @@ export default function Dashboard({arrayOfData, faqData, testimonialsData, privi
                     </div>
                 </section>
 
-                <Feedback testimonials={testimonialsData} />
-
+                <Feedback testimonials={DashboardTestimonialsData} />
 
                 <section className="py-20 mt-15 sm:py-20">
                     <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -173,7 +162,7 @@ export default function Dashboard({arrayOfData, faqData, testimonialsData, privi
                             <h2 className="text-3xl font-bold text-white tracking-tight sm:text-4xl">Часто задаваемые вопросы</h2>
                         </div>
                         <div className="mt-14">
-                            <MainFAQ faqData = {faqData} />
+                            <MainFAQ faqData = {DashboardFaqData} />
                         </div>
                     </div>
                 </section>

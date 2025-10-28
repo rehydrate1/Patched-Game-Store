@@ -5,14 +5,9 @@ export const metadata = {
     description: "Страница пополнения консольных аккаунтов и сторонних сервисов",
 }
 
-
-
 export default function ServicesPage(){
 
-
     return (
-        <>
-            <Services />
-        </>
+        <Services />
     )
 }

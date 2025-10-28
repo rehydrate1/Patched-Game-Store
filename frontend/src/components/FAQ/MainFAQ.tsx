@@ -1,9 +1,7 @@
 "use client"
 
-
 import {useState} from "react";
 import {ChevronDownIcon} from '@heroicons/react/24/outline';
-
 
 export default function MainFAQ({faqData}) {
 

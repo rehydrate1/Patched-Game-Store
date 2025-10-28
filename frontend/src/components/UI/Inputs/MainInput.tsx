@@ -1,41 +1,37 @@
-import styles from "./TextAreaInput.module.scss"
-
-
-interface TextAreaInputProps {
+interface MainInputProps {
     id: string;
     label: string;
     value: string;
     onChange: (newValue: string) => void;
-    rows?: number;
     placeholder?: string;
     className?: string;
+    type?: string;
     required?: boolean;
     error?: string;
 }
 
-
-export default function TextAreaInput({id, label, value, onChange, placeholder = '',
-                                          rows = 4, required = false, className = '', error}:TextAreaInputProps ){
+export default function MainInput({id, label, value, onChange, placeholder = '',
+                                      className = '', type ='text', required = false, error}:MainInputProps ){
 
     return (
         <div>
             <label htmlFor={id} className="block text-sm font-medium text-white">
                 {label}
             </label>
-            <textarea
+            <input
+                type={type}
                 id={id}
                 name={id}
-                rows={rows}
                 value={value}
                 onChange={(e) => onChange(e.target.value)}
                 required={required}
-                className={`w-full mt-1 px-4 py-2 border rounded-lg focus:outline-none ${styles.descriptionTextarea} 
-                ${error ? 'border-red-500' : 'border-gray-600'} ${className}`}
+                className={`mt-2 block w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none 
+                sm:text-sm ${error ? 'border-red-500' : 'border-gray-600'} mainInput ${className}`}
                 placeholder={placeholder}
             />
 
             {error && (
-                <p className="mt-1 pl-1 text-xs text-red-400">{error}</p>
+                <p className="mt-2 pl-1 text-xs text-red-400">{error}</p>
             )}
         </div>
     )

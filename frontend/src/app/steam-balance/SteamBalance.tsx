@@ -6,7 +6,7 @@ import {
 } from '@heroicons/react/24/outline';
 
 import React, { useState, useEffect } from "react";
-import SteamInput from "@/components/UI/Inputs/SteamInput/SteamInput";
+import SteamInput from "@/components/UI/Inputs/SteamInput";
 import SteamFAQ from "@/components/FAQ/SteamFAQ";
 import Link from "next/link";
 import {useRouter} from "next/navigation";

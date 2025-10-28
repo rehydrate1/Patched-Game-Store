@@ -8,8 +8,6 @@ export const metadata = {
 export default function AddNewKeyPage(){
 
     return (
-        <>
-            <AddNewKey/>
-        </>
+        <AddNewKey/>
     )
 }

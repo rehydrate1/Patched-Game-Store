@@ -4,10 +4,10 @@ import styles from "./Registration.module.scss";
 import {FormEvent, useState} from "react";
 import { useRouter } from 'next/navigation';
 import Link from "next/link";
-import MainInput from "@/components/UI/Inputs/MainInput/MainInput";
-import Particles from "@/components/UI/Modern/Particles";
+import MainInput from "@/components/UI/Inputs/MainInput";
+import Particles from "@/components/UI/modern/Particles";
 import {BackEndResponse} from "@/types/mainTypes";
-import HideInput from "@/components/UI/Inputs/HideInput/HideInput";
+import HideInput from "@/components/UI/Inputs/HideInput";
 import {validateConfirmPassword, validateUserEmail, validateUserName, validateUserPassword} from "@/lib/validators";
 import ServerError from "@/components/UI/errors/ServerError";
 

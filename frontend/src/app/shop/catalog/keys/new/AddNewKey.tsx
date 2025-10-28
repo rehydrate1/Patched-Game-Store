@@ -1,7 +1,7 @@
 "use client"
 
 import styles from "./AddNewKey.module.scss";
-import MainInput from "@/components/UI/Inputs/MainInput/MainInput";
+import MainInput from "@/components/UI/Inputs/MainInput";
 import React, {useState} from "react";
 import TextAreaInput from "@/components/UI/Inputs/TextAreaInput/TextAreaInput";
 import MultiSelectDropdown, { SelectOption } from "@/components/UI/Inputs/MultiSelectDropdown/MultiSelectDropdown";
@@ -17,6 +17,7 @@ import {
     validateNewKeyReleaseData
 } from "@/lib/validators";
 import ServerError from "@/components/UI/errors/ServerError";
+import {applicationOptions, genreOptions, platformOptions} from "@/lib/data/indexData";
 
 export default function AddNewKey() {
 
@@ -33,33 +34,6 @@ export default function AddNewKey() {
     const [errors, setErrors] = useState<{ [key: string]: string }>({});
     const [serverError, setServerError] = useState<string | null>(null);
     const router = useRouter();
-
-    const platformOptions: SelectOption[] = [
-        { value: 'Windows', label: 'Windows' },
-        { value: 'macOS', label: 'macOS' },
-        { value: 'Linux', label: 'Linux' },
-    ];
-
-    const applicationOptions: SelectOption[] = [
-        { value: 'Steam', label: 'Steam' },
-        { value: 'Epic Games', label: 'Epic Games' },
-        { value: 'EA', label: 'EA' },
-        { value: 'GOG', label: 'GOG' },
-        { value: 'Bethesda.net', label: 'Bethesda.net' },
-        { value: 'Ubisoft', label: 'Ubisoft' },
-    ];
-
-    const genreOptions: SelectOption[] = [
-        { value: 'action', label: 'Экшен' },
-        { value: 'rpg', label: 'RPG' },
-        { value: 'strategy', label: 'Стратегия' },
-        { value: 'shooter', label: 'Шутер' },
-        { value: 'adventure', label: 'Приключение' },
-        { value: 'simulator', label: 'Симулятор' },
-        { value: 'horror', label: 'Хоррор' },
-        { value: 'indie', label: 'Инди' },
-    ];
-
 
     const validateForm = () => {
         const newErrors: { [key: string]: string } = {};

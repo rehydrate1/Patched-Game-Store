@@ -18,8 +18,6 @@ interface MultiSelectProps {
     error?: string;
 }
 
-
-
 export default function MultiSelectDropdown({ label, options, value, onChange, placeholder = "", error }: MultiSelectProps) {
     return (
         <div>

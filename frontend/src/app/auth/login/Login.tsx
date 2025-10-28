@@ -2,16 +2,14 @@
 
 import styles from "./Login.module.scss";
 import {FormEvent, useState} from "react";
-import { useRouter } from 'next/navigation';
 import Link from "next/link";
-import MainInput from "@/components/UI/Inputs/MainInput/MainInput";
-import Particles from "@/components/UI/Modern/Particles";
+import MainInput from "@/components/UI/Inputs/MainInput";
+import Particles from "@/components/UI/modern/Particles";
 import {BackEndResponse} from "@/types/mainTypes";
-import HideInput from "@/components/UI/Inputs/HideInput/HideInput";
+import HideInput from "@/components/UI/Inputs/HideInput";
 import {validateUserEmail, validateUserPassword} from "@/lib/validators";
 import ServerError from "@/components/UI/errors/ServerError";
-
-
+import {usePageUtils} from "@/lib/hooks/usePageUtils";
 
 export default function Login(){
 
@@ -19,10 +17,7 @@ export default function Login(){
     const [password, setPassword] = useState<string>("");
     const [rememberMe, setRememberMe] = useState<boolean>(false);
     const [errors, setErrors] = useState<{ [key: string]: string }>({});
-    const [serverError, setServerError] = useState<string | null>(null);
-    const router = useRouter();
-
-
+    const {serverError, setServerError, isSubmitting, setIsSubmitting, router} = usePageUtils()
 
     const validateForm = () => {
         const newErrors: { [key: string]: string } = {};
@@ -84,89 +79,84 @@ export default function Login(){
 
 
     return (
-        <>
+        <div className="relative min-h-screen overflow-hidden">
 
-            <div className="relative min-h-screen overflow-hidden">
+            <div className="absolute inset-0 z-0">
+                <Particles
+                    particleColors={['#00FE92', '#ffffff']}
+                    particleCount={300}
+                    particleSpread={10}
+                    speed={0.1}
+                    particleBaseSize={200}
+                    moveParticlesOnHover={true}
+                    alphaParticles={false}
+                    disableRotation={false}
+                />
+            </div>
 
-                <div className="absolute inset-0 z-0">
-                    <Particles
-                        particleColors={['#00FE92', '#ffffff']}
-                        particleCount={300}
-                        particleSpread={10}
-                        speed={0.1}
-                        particleBaseSize={200}
-                        moveParticlesOnHover={true}
-                        alphaParticles={false}
-                        disableRotation={false}
-                    />
-                </div>
+            <div className="relative z-10 flex items-center justify-center min-h-screen">
+                <div className={`w-full max-w-md p-8 space-y-6 rounded-lg shadow-md ${styles.main}`}>
+                    <h2 className="text-2xl font-semibold text-center text-white">
+                        Авторизация
+                    </h2>
 
-                <div className="relative z-10 flex items-center justify-center min-h-screen">
-                    <div className={`w-full max-w-md p-8 space-y-6 rounded-lg shadow-md ${styles.main}`}>
-                        <h2 className="text-2xl font-semibold text-center text-white">
-                            Авторизация
-                        </h2>
+                    <ServerError message={serverError} />
 
-                        <ServerError message={serverError} />
+                    <form className="space-y-6" onSubmit={handleSubmit}>
 
-                        <form className="space-y-6" onSubmit={handleSubmit}>
+                        <MainInput
+                            id={email}
+                            type={'email'}
+                            value={email}
+                            onChange={setEmail}
+                            label={'Email'}
+                            error={errors.email}
+                        />
 
-                            <MainInput
-                                id={email}
-                                type={'email'}
-                                value={email}
-                                onChange={setEmail}
-                                label={'Email'}
-                                error={errors.email}
-                            />
+                        <HideInput
+                            label={'Пароль'}
+                            id={'password'}
+                            value={password}
+                            onChange={setPassword}
+                            error={errors.password}
+                        />
 
-                            <HideInput
-                                label={'Пароль'}
-                                id={'password'}
-                                value={password}
-                                onChange={setPassword}
-                                error={errors.password}
-                            />
-
-                            <div className="flex items-center justify-between">
-                                <div className="flex items-center">
-                                    <input
-                                        id="remember-me"
-                                        name="remember-me"
-                                        type="checkbox"
-                                        className="w-4 h-4 cursor-pointer border-gray-300 rounded"
-                                        checked={rememberMe}
-                                        onChange={(e) => setRememberMe(e.target.checked)}
-                                    />
-                                    <label htmlFor="remember-me" className="block ml-2 cursor-pointer text-sm text-white">
-                                        Запомнить меня
-                                    </label>
-                                </div>
-
-                                <div className="text-sm">
-                                    <Link href="/auth/forgot-password" className={`font-medium text-white ${styles.links}`}>
-                                        Забыли пароль?
-                                    </Link>
-                                </div>
+                        <div className="flex items-center justify-between">
+                            <div className="flex items-center">
+                                <input
+                                    id="remember-me"
+                                    name="remember-me"
+                                    type="checkbox"
+                                    className="w-4 h-4 cursor-pointer border-gray-300 rounded"
+                                    checked={rememberMe}
+                                    onChange={(e) => setRememberMe(e.target.checked)}
+                                />
+                                <label htmlFor="remember-me" className="block ml-2 cursor-pointer text-sm text-white">
+                                    Запомнить меня
+                                </label>
                             </div>
 
-                            <div>
-                                <button
-                                    type="submit"
-                                    className={`w-full flex justify-center py-2 px-4 border border-transparent 
-                                rounded-md shadow-sm text-m font-medium cursor-pointer text-black ${styles.submitButton}`}
-                                >
-                                    Войти
-                                </button>
+                            <div className="text-sm">
+                                <Link href="/auth/forgot-password" className={`font-medium text-white ${styles.links}`}>
+                                    Забыли пароль?
+                                </Link>
                             </div>
-                        </form>
-
-                        <div className="mt-4 text-sm text-white text-center">
-                            Нет аккаунта? <Link href="/auth/registration" className={`font-medium text-indigo-600 hover:text-indigo-500 ${styles.links}`}>Зарегистрироваться</Link>
                         </div>
+
+                        <button
+                            type="submit"
+                            className={`w-full flex justify-center py-2 px-4 border border-transparent 
+                                rounded-md shadow-sm text-m font-medium cursor-pointer text-black ${styles.submitButton}`}
+                        >
+                            Войти
+                        </button>
+                    </form>
+
+                    <div className="mt-4 text-sm text-white text-center">
+                        Нет аккаунта? <Link href="/auth/registration" className={`font-medium text-indigo-600 hover:text-indigo-500 ${styles.links}`}>Зарегистрироваться</Link>
                     </div>
                 </div>
             </div>
-        </>
+        </div>
     );
 }
