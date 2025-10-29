@@ -1,6 +1,5 @@
 "use client"
 
-
 import {
     CheckIcon
 } from '@heroicons/react/24/outline';
@@ -9,24 +8,24 @@ import React, { useState, useEffect } from "react";
 import SteamInput from "@/components/Inputs/SteamInput";
 import SteamFAQ from "@/components/UI/FAQ/SteamFAQ";
 import Link from "next/link";
-import {useRouter} from "next/navigation";
 import {validatePromoCode, validateSteamBalance, validateSteamLogin} from "@/lib/validators";
-import {BackEndResponse} from "@/types/mainTypes";
 import ServerError from "@/components/errors/ServerError";
+import {usePageUtils} from "@/lib/hooks/usePageUtils";
+import {useInputField} from "@/lib/hooks/useInputField";
+import {BackEndResponse} from "@/types";
 
 export default function SteamBalance() {
 
-    const [steamLogin, setSteamLogin] = useState<string>('');
-    const [balance, setBalance] = useState<string>('500');
-    const [promoCode, setPromoCode] = useState<string>('');
+    const steamLogin = useInputField('');
+    const balance = useInputField('');
+    const promoCode = useInputField('');
     const [commission, setCommission] = useState<number>(0);
     const [endPrice, setEndPrice] = useState<number>(0);
-    const [errors, setErrors] = useState<{ [key: string]: string }>({});
-    const [serverError, setServerError] = useState<string | null>(null);
-    const router = useRouter();
+
+    const {serverError, setServerError, isSubmitting, setIsSubmitting, router} = usePageUtils()
 
     useEffect(() => {
-        const balanceNumber = parseFloat(balance) || 0;
+        const balanceNumber = parseFloat(balance.inputState.value) || 0;
         const newCommission = balanceNumber / 10;
         const newEndPrice = balanceNumber + newCommission;
 
@@ -36,44 +35,27 @@ export default function SteamBalance() {
 
 
     const validateForm = () => {
-        const newErrors: { [key: string]: string } = {};
+        const steamLoginError:string | null = validateSteamLogin(steamLogin.inputState.value);
+        steamLogin.setError(steamLoginError);
 
-        const steamLoginError:string | null = validateSteamLogin(steamLogin);
-        if (steamLoginError) {
-            newErrors.steamLogin = steamLoginError;
-        }
+        const steamBalanceError:string | null = validateSteamBalance(balance.inputState.value);
+        balance.setError(steamBalanceError);
 
-        const steamBalanceError:string | null = validateSteamBalance(balance);
-        if (steamBalanceError) {
-            newErrors.balance = steamBalanceError;
-        }
+        const promoCodeError:string | null = validatePromoCode(promoCode.inputState.value);
+        promoCode.setError(promoCodeError);
 
-        const promoCodeError:string | null = validatePromoCode(promoCode);
-        if (promoCodeError) {
-            newErrors.promoCode = promoCodeError;
-        }
-
-        return newErrors;
+        return !(steamBalanceError || promoCodeError || steamLoginError);
     };
 
     const handleSubmit = async (event: React.FormEvent) => {
         event.preventDefault();
-        setErrors({});
         setServerError(null);
 
-        const formErrors = validateForm();
-
-        // Если есть хотя бы одна ошибка, обновляем состояние и прерываем выполнение
-        if (Object.keys(formErrors).length > 0) {
-            setErrors(formErrors);
+        if (!validateForm()) {
             return;
         }
 
-        const payload = {
-            steamLogin,
-            balance,
-            promoCode,
-        }
+        setIsSubmitting(true);
 
         try {
             const response = await fetch("http://localhost:8082/api/create/key", {
@@ -82,20 +64,25 @@ export default function SteamBalance() {
                     "Content-Type": "application/json",
                 },
                 credentials: "include",
-                body: JSON.stringify(payload),
+                body: JSON.stringify({
+                    steamLogin: steamLogin.inputState.value,
+                    balance: balance.inputState.value,
+                    promoCode: promoCode.inputState.value,
+                }),
             });
 
-            console.log('Валидация пройдена, пошла отправка на бек');
             const data = (await response.json()) as BackEndResponse;
 
             if (response.ok) {
                 router.push('/steam-balance/success');
             } else {
                 setServerError(data.error || "Ошибка пополнения. Проверьте правильность введенных данных.");
+                setIsSubmitting(false);
             }
         }  catch (err) {
             setServerError("Не удалось связаться с сервером. Пожалуйста, проверьте ваше интернет-соединение или попробуйте позже.");
             console.error("Steam balance error:", err);
+            setIsSubmitting(false);
         }
 
     }

@@ -3,52 +3,42 @@
 import {FormEvent, useState} from "react";
 import Link from "next/link";
 import MainInput from "@/components/Inputs/MainInput";
-import Particles from "@/components/UI/modern/Particles";
 import HideInput from "@/components/Inputs/HideInput";
 import {validateUserEmail, validateUserPassword} from "@/lib/validators";
 import ServerError from "@/components/errors/ServerError";
 import {usePageUtils} from "@/lib/hooks/usePageUtils";
 import {BackEndResponse} from "@/types";
 import LightGreenSubmitBtn from "@/components/buttons/LightGreenSubmitBtn/LightGreenSubmitBtn";
+import {useInputField} from "@/lib/hooks/useInputField";
+import Aurora from "@/components/UI/modern/Aurora";
+import {XMarkIcon} from "@heroicons/react/24/outline";
 
 export default function Login(){
 
-    const [email, setEmail] = useState<string>("");
-    const [password, setPassword] = useState<string>("");
+    const email = useInputField('');
+    const password = useInputField('');
     const [rememberMe, setRememberMe] = useState<boolean>(false);
-    const [errors, setErrors] = useState<{ [key: string]: string }>({});
     const {serverError, setServerError, isSubmitting, setIsSubmitting, router} = usePageUtils()
 
     const validateForm = () => {
-        const newErrors: { [key: string]: string } = {};
+        const emailError = validateUserEmail(email.inputState.value);
+        email.setError(emailError);
 
-        const validateEmailErrors:string | null = validateUserEmail(email);
-        if (validateEmailErrors) {
-            newErrors.email = validateEmailErrors;
-        }
+        const passwordError = validateUserPassword(password.inputState.value);
+        password.setError(passwordError);
 
-        const validatePasswordErrors:string | null = validateUserPassword(password);
-        if (validatePasswordErrors) {
-            newErrors.password = validatePasswordErrors;
-        }
-
-        return newErrors;
+        return !(emailError || passwordError);
     }
 
     const handleSubmit = async (e:FormEvent<HTMLFormElement>):Promise<void> => {
         e.preventDefault();
-        setErrors({});
         setServerError(null);
 
-        setIsSubmitting(true);
-
-        const formErrors = validateForm();
-
-        if (Object.keys(formErrors).length > 0) {
-            setErrors(formErrors);
-            setIsSubmitting(false);
+        if (!validateForm()) {
             return;
         }
+
+        setIsSubmitting(true);
 
         try {
             const response = await fetch("http://localhost:8080/api/user/login", {
@@ -57,8 +47,8 @@ export default function Login(){
                     "Content-Type": "application/json",
                 },
                 body: JSON.stringify({
-                    email: email,
-                    password: password,
+                    email: email.inputState.value,
+                    password: password.inputState.value,
                     rememberMe: rememberMe,
                 }),
             });
@@ -82,43 +72,51 @@ export default function Login(){
         <div className="relative min-h-screen overflow-hidden">
 
             <div className="absolute inset-0 z-0">
-                <Particles
-                    particleColors={['#00FE92', '#ffffff']}
-                    particleCount={300}
-                    particleSpread={10}
-                    speed={0.1}
-                    particleBaseSize={200}
-                    moveParticlesOnHover={true}
-                    alphaParticles={false}
-                    disableRotation={false}
+                <Aurora
+                    colorStops={["#099f5f", "#00FE92", "#00d17a"]}
+                    amplitude={0.6}
+                    speed={0.4}
+                    blend={0.45}
                 />
             </div>
 
             <div className="relative z-10 flex items-center justify-center min-h-screen">
-                <div className={`w-full max-w-md p-8 space-y-6 rounded-lg shadow-md mainColor`}>
-                    <h2 className="text-2xl font-semibold text-center text-white">
-                        Авторизация
-                    </h2>
+                <div className={`w-full max-w-lg p-8 space-y-6 rounded-lg shadow-md mainColor`}>
+                    <div className="">
+                        <div className="flex items-center justify-between">
+                            <h2 className="text-2xl pb-2 font-bold text-center text-white">
+                                Patched Game Store
+                            </h2>
+                            <Link href={'/'} className={`p-2 rounded-full border border-[#212227] 
+                            hover:border-white/40 duration-300 easy-in-out`}>
+                                <XMarkIcon className={`h-7 w-7 text-white`} />
+                            </Link>
+                        </div>
+
+                        <h2 className="text-xl font-semibold text-left text-white/40">
+                            Войдите в свой аккаунт
+                        </h2>
+                    </div>
 
                     <ServerError message={serverError} />
 
                     <form className="space-y-6" onSubmit={handleSubmit}>
 
                         <MainInput
-                            id={email}
+                            id={'email'}
                             type={'email'}
-                            value={email}
-                            onChange={setEmail}
+                            value={email.inputState.value}
+                            onChange={email.setValue}
                             label={'Email'}
-                            error={errors.email}
+                            error={email.inputState.error || undefined}
                         />
 
                         <HideInput
                             label={'Пароль'}
                             id={'password'}
-                            value={password}
-                            onChange={setPassword}
-                            error={errors.password}
+                            value={password.inputState.value}
+                            onChange={password.setValue}
+                            error={password.inputState.error || undefined}
                         />
 
                         <div className="flex items-center justify-between">
