@@ -14,7 +14,7 @@ export async function generateMetadata({ params }: PageProps<{ keyId: string }>)
     if (!product) {
         return {
             title: `Товар не найден | Patched`,
-            description: `Страница не найдена`,
+            description: `Страница не найдена 404`,
         };
     }
 
