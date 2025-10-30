@@ -33,13 +33,17 @@ export const applicationIcons = {
     'Bethesda.net': '/bethesda.svg',
     'EA': '/eaIcon.svg',
     'Ubisoft Connect': "/ubisoftIcon.svg",
-};
+} as const;
+
 
 export const platformIcons = {
     'macOS': '/appleIcon.svg',
     'Windows': '/windowsIcon.svg',
     'Linux': '/linuxIcon.svg',
-};
+} as const;
+
+export type ApplicationKey = keyof typeof applicationIcons;
+export type PlatformKey = keyof typeof platformIcons;
 
 export const headerNavItems = [
     {
@@ -63,3 +67,14 @@ export const headerNavItems = [
         link: '/support',
     },
 ];
+
+export const screenshots_placeholder = [
+    "https://cdn.akamai.steamstatic.com/steam/apps/271590/header.jpg",
+    "https://cdn.akamai.steamstatic.com/steam/apps/12210/header.jpg",
+    "https://cdn.akamai.steamstatic.com/steam/apps/292030/header.jpg",
+];
+
+export const requirements_placeholder = {
+    minimum: { "ОС": "Windows 10 64-bit", "Процессор": "Core i7-6700 / Ryzen 5 1600", "Память": "12 GB RAM", "Видеокарта": "GeForce GTX 1060 6GB", "Место на диске": "70 GB SSD" },
+    recommended: { "ОС": "Windows 10 64-bit", "Процессор": "Core i7-12700 / Ryzen 7 7800X3D", "Память": "16 GB RAM", "Видеокарта": "GeForce RTX 2060 SUPER", "Место на диске": "70 GB SSD" }
+};

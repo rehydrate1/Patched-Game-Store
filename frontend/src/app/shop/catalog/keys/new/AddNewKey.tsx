@@ -1,7 +1,6 @@
 "use client"
 
 import MainInput from "@/components/Inputs/MainInput";
-import {useState} from "react";
 import TextAreaInput from "@/components/Inputs/TextAreaInput/TextAreaInput";
 import MultiSelectDropdown, { SelectOption } from "@/components/Inputs/MultiSelectDropdown/MultiSelectDropdown";
 import {
@@ -18,7 +17,9 @@ import {applicationOptions, genreOptions, platformOptions} from "@/lib/data/inde
 import {BackEndResponse} from "@/types";
 import LightGreenSubmitBtn from "@/components/buttons/LightGreenBtn/LightGreenSubmitBtn";
 import {useInputField} from "@/lib/hooks/useInputField";
+import {useSelectField} from "@/lib/hooks/useSelectField";
 import {usePageUtils} from "@/lib/hooks/usePageUtils";
+import {FormEvent} from "react";
 
 export default function AddNewKey() {
 
@@ -30,9 +31,9 @@ export default function AddNewKey() {
     const publisher = useInputField('');
     const description = useInputField('');
 
-    const [applications, setApplications] = useState<SelectOption[]>([]);
-    const [genres, setGenres] = useState<SelectOption[]>([]);
-    const [platforms, setPlatforms] = useState<SelectOption[]>([]);
+    const applications = useSelectField<SelectOption>([]);
+    const genres = useSelectField<SelectOption>([]);
+    const platforms = useSelectField<SelectOption>([]);
 
     const {serverError, setServerError, isSubmitting, setIsSubmitting, router} = usePageUtils()
 
@@ -59,27 +60,21 @@ export default function AddNewKey() {
         const descriptionError = validateNewKeyDescription(description.inputState.value);
         description.setError(descriptionError);
 
-        const genresError = validateNewKeyGenres(genres);
-        if (genresError) {
-            newErrors.genres = genresError;
-        }
+        const genresError = validateNewKeyGenres(genres.inputState.value);
+        genres.setError(genresError);
 
-        const applicationsError = validateNewKeyApplications(applications);
-        if (applicationsError) {
-            newErrors.applications = applicationsError;
-        }
+        const applicationsError = validateNewKeyApplications(applications.inputState.value);
+        applications.setError(applicationsError);
 
-        const platformsError = validateNewKeyPlatforms(platforms);
-        if (platformsError) {
-            newErrors.platforms = platformsError;
-        }
+        const platformsError = validateNewKeyPlatforms(platforms.inputState.value);
+        platforms.setError(platformsError);
 
         return !(gameNameError || gamePriceError || releaseDateError || imageUrlError ||
-            developerError || publisherError || descriptionError );
+            developerError || publisherError || descriptionError || genresError || applicationsError || platformsError);
     };
 
 
-    const handleSubmit = async (event: React.FormEvent) => {
+    const handleSubmit = async (event: FormEvent) => {
         event.preventDefault();
         setServerError(null);
 
@@ -97,9 +92,9 @@ export default function AddNewKey() {
             developer : developer.inputState.value,
             publisher: publisher.inputState.value,
             description: description.inputState.value,
-            applications: applications.map(a => a.value), // Отправляем только значения
-            genres: genres.map(g => g.value),
-            platforms: platforms.map(p => p.value),
+            applications: applications.inputState.value.map(a => a.value),
+            genres: genres.inputState.value.map(g => g.value),
+            platforms: platforms.inputState.value.map(p => p.value),
         };
 
 
@@ -194,9 +189,9 @@ export default function AddNewKey() {
                             <MultiSelectDropdown
                                 label="Жанры"
                                 options={genreOptions}
-                                value={genres}
-                                onChange={setGenres}
-                                error={errors.genres}
+                                value={genres.inputState.value}
+                                onChange={genres.setValue}
+                                error={genres.inputState.error || undefined}
                             />
                         </div>
 
@@ -204,10 +199,9 @@ export default function AddNewKey() {
                             <MultiSelectDropdown
                                 label="Платформы"
                                 options={platformOptions}
-                                value={platforms}
-                                onChange={setPlatforms}
-                                error={errors.platforms}
-
+                                value={platforms.inputState.value}
+                                onChange={platforms.setValue}
+                                error={platforms.inputState.error || undefined}
                             />
                         </div>
 
@@ -215,9 +209,9 @@ export default function AddNewKey() {
                             <MultiSelectDropdown
                                 label="Способы активации"
                                 options={applicationOptions}
-                                value={applications}
-                                onChange={setApplications}
-                                error={errors.applications}
+                                value={applications.inputState.value}
+                                onChange={applications.setValue}
+                                error={applications.inputState.error || undefined}
                             />
                         </div>
 

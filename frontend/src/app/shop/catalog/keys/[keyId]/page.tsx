@@ -1,16 +1,21 @@
 import AboutKey from "@/app/shop/catalog/keys/[keyId]/AboutKey";
 import {keysCatalogDataItems} from "@/lib/data/keysCatalogData";
-import NotFound from "@/app/not-found";
-
+import { notFound } from 'next/navigation';
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-expect-error
-export async function generateMetadata({ params }) {
-    const { keyId } = params;
+import type { PageProps, Metadata } from 'next';
+
+export async function generateMetadata({ params }: PageProps<{ keyId: string }>): Promise<Metadata> {
+
+    const { keyId } = await params;
     const product = keysCatalogDataItems.find(item => item.id === parseInt(keyId));
 
     if (!product) {
-        NotFound();
+        return {
+            title: `Товар не найден | Patched`,
+            description: `Страница не найдена`,
+        };
     }
 
     return {
@@ -19,16 +24,17 @@ export async function generateMetadata({ params }) {
     };
 }
 
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-expect-error
-export default function AboutKeyPage({ params }) {
 
-    const { keyId } = params;
+export default async function AboutKeyPage({ params }: PageProps<{ keyId: string }>) {
+
+    const { keyId } = await params;
     const product = keysCatalogDataItems.find(item => item.id === parseInt(keyId));
 
+    if (!product) {
+        notFound();
+    }
+
     return (
-        <>
-            <AboutKey product={product} />
-        </>
+        <AboutKey product={product} />
     );
 }

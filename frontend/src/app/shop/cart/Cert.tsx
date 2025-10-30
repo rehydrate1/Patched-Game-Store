@@ -1,13 +1,14 @@
-"use client";
+"use client"
 
 import { useAppSelector, useAppDispatch } from '@/lib/hooks/useTypedRedux';
 import { removeItem, clearCart } from '@/store/slices/cartSlice';
 import Image from 'next/image';
 import Link from 'next/link';
 import { XCircleIcon, XMarkIcon } from '@heroicons/react/24/outline';
-import styles from './cart.module.scss';
+import styles from './Cart.module.scss';
 
 export default function Cart() {
+
     const dispatch = useAppDispatch();
     const { items: cartItems } = useAppSelector(state => state.cart);
 
