@@ -8,7 +8,7 @@ import {validateUserEmail, validateUserPassword} from "@/lib/validators";
 import ServerError from "@/components/errors/ServerError";
 import {usePageUtils} from "@/lib/hooks/usePageUtils";
 import {BackEndResponse} from "@/types";
-import LightGreenSubmitBtn from "@/components/buttons/LightGreenSubmitBtn/LightGreenSubmitBtn";
+import LightGreenSubmitBtn from "@/components/buttons/LightGreenBtn/LightGreenSubmitBtn";
 import {useInputField} from "@/lib/hooks/useInputField";
 import Aurora from "@/components/UI/modern/Aurora";
 import {XMarkIcon} from "@heroicons/react/24/outline";

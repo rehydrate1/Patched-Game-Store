@@ -1,12 +1,9 @@
 "use client"
 
-import styles from "./AddNewKey.module.scss";
 import MainInput from "@/components/Inputs/MainInput";
-import React, {useState} from "react";
+import {useState} from "react";
 import TextAreaInput from "@/components/Inputs/TextAreaInput/TextAreaInput";
 import MultiSelectDropdown, { SelectOption } from "@/components/Inputs/MultiSelectDropdown/MultiSelectDropdown";
-import {useRouter} from "next/navigation";
-import {BackEndResponse} from "@/types/mainTypes";
 import {
     validateNewKeyApplications,
     validateNewKeyDescription,
@@ -18,60 +15,49 @@ import {
 } from "@/lib/validators";
 import ServerError from "@/components/errors/ServerError";
 import {applicationOptions, genreOptions, platformOptions} from "@/lib/data/indexData";
+import {BackEndResponse} from "@/types";
+import LightGreenSubmitBtn from "@/components/buttons/LightGreenBtn/LightGreenSubmitBtn";
+import {useInputField} from "@/lib/hooks/useInputField";
+import {usePageUtils} from "@/lib/hooks/usePageUtils";
 
 export default function AddNewKey() {
 
-    const [gameName, setGameName] = useState<string>('');
-    const [gamePrice, setGamePrice] = useState<string>('');
-    const [releaseDate, setReleaseDate] = useState<string>('');
-    const [imageUrl, setImageUrl] = useState<string>('');
-    const [developer, setDeveloper] = useState<string>('');
-    const [publisher, setPublisher] = useState<string>('');
-    const [description, setDescription] = useState<string>('');
+    const gameName = useInputField('');
+    const gamePrice = useInputField('');
+    const releaseDate = useInputField('');
+    const imageUrl = useInputField('');
+    const developer = useInputField('');
+    const publisher = useInputField('');
+    const description = useInputField('');
+
     const [applications, setApplications] = useState<SelectOption[]>([]);
     const [genres, setGenres] = useState<SelectOption[]>([]);
     const [platforms, setPlatforms] = useState<SelectOption[]>([]);
-    const [errors, setErrors] = useState<{ [key: string]: string }>({});
-    const [serverError, setServerError] = useState<string | null>(null);
-    const router = useRouter();
+
+    const {serverError, setServerError, isSubmitting, setIsSubmitting, router} = usePageUtils()
 
     const validateForm = () => {
-        const newErrors: { [key: string]: string } = {};
 
-        const gameNameError = validateNewKeyName(gameName);
-        if (gameNameError) {
-            newErrors.gameName = gameNameError;
-        }
+        const gameNameError = validateNewKeyName(gameName.inputState.value);
+        gameName.setError(gameNameError);
 
-        const gamePriceError = validateNewKeyPrice(gamePrice);
-        if (gamePriceError) {
-            newErrors.gamePrice = gamePriceError;
-        }
+        const gamePriceError = validateNewKeyPrice(gamePrice.inputState.value);
+        gamePrice.setError(gamePriceError);
 
-        const releaseDateError = validateNewKeyReleaseData(releaseDate);
-        if (releaseDateError) {
-            newErrors.releaseDate = releaseDateError;
-        }
+        const releaseDateError = validateNewKeyReleaseData(releaseDate.inputState.value);
+        releaseDate.setError(releaseDateError);
 
-        const imageUrlError = validateNewKeyImageUrl(imageUrl);
-        if (imageUrlError) {
-            newErrors.imageUrl = imageUrlError;
-        }
+        const imageUrlError = validateNewKeyImageUrl(imageUrl.inputState.value);
+        imageUrl.setError(imageUrlError);
 
-        const developerError = validateNewKeyDeveloper(developer);
-        if (developerError) {
-            newErrors.developer = developerError;
-        }
+        const developerError = validateNewKeyDeveloper(developer.inputState.value);
+        developer.setError(developerError);
 
-        const publisherError = validateNewKeyPublisher(publisher);
-        if (publisherError) {
-            newErrors.publisher = publisherError;
-        }
+        const publisherError = validateNewKeyPublisher(publisher.inputState.value);
+        publisher.setError(publisherError);
 
-        const descriptionError = validateNewKeyDescription(description);
-        if (descriptionError) {
-            newErrors.description = descriptionError;
-        }
+        const descriptionError = validateNewKeyDescription(description.inputState.value);
+        description.setError(descriptionError);
 
         const genresError = validateNewKeyGenres(genres);
         if (genresError) {
@@ -88,31 +74,29 @@ export default function AddNewKey() {
             newErrors.platforms = platformsError;
         }
 
-        return newErrors;
+        return !(gameNameError || gamePriceError || releaseDateError || imageUrlError ||
+            developerError || publisherError || descriptionError );
     };
 
 
     const handleSubmit = async (event: React.FormEvent) => {
         event.preventDefault();
-        setErrors({});
         setServerError(null);
 
-        const formErrors = validateForm();
-
-        // Если есть хотя бы одна ошибка, обновляем состояние и прерываем выполнение
-        if (Object.keys(formErrors).length > 0) {
-            setErrors(formErrors);
+        if (!validateForm()) {
             return;
         }
 
+        setIsSubmitting(true);
+
         const payload = {
-            gameName,
-            gamePrice,
-            releaseDate,
-            imageUrl,
-            developer,
-            publisher,
-            description,
+            gameName: gameName.inputState.value,
+            gamePrice: gamePrice.inputState.value,
+            releaseDate: releaseDate.inputState.value,
+            imageUrl: imageUrl.inputState.value,
+            developer : developer.inputState.value,
+            publisher: publisher.inputState.value,
+            description: description.inputState.value,
             applications: applications.map(a => a.value), // Отправляем только значения
             genres: genres.map(g => g.value),
             platforms: platforms.map(p => p.value),
@@ -135,17 +119,19 @@ export default function AddNewKey() {
                 router.push('/catalog/keys');
             } else {
                 setServerError(data.error || "Ошибка добавления. Проверьте правильность введенных данных.");
+                setIsSubmitting(false);
             }
         }  catch (err) {
             setServerError("Не удалось связаться с сервером. Пожалуйста, проверьте ваше интернет-соединение или попробуйте позже.");
             console.error("Add new key error:", err);
+            setIsSubmitting(false);
         }
     }
 
     return (
         <div className="flex items-center justify-center min-h-screen p-4 mt-8">
 
-            <div className={`w-full max-w-3xl p-6 space-y-6 rounded-lg ${styles.mainCard}`}>
+            <div className={`w-full max-w-3xl p-6 space-y-6 rounded-lg mainColor`}>
                 <h1 className="text-2xl text-white font-semibold text-center">
                     Добавить новый ключ
                 </h1>
@@ -155,53 +141,53 @@ export default function AddNewKey() {
                 <form onSubmit={handleSubmit}>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <MainInput
-                            id="gameName"
+                            id={"gameName"}
                             label={'Название игры'}
-                            value={gameName}
-                            onChange={setGameName}
-                            error={errors.gameName}
+                            value={gameName.inputState.value}
+                            onChange={gameName.setValue}
+                            error={gameName.inputState.error || undefined}
                         />
 
                         <MainInput
-                            id="gamePrice"
+                            id={"gamePrice"}
                             label={'Цена ключа'}
-                            value={gamePrice}
-                            onChange={setGamePrice}
-                            error={errors.gamePrice}
+                            value={gamePrice.inputState.value}
+                            onChange={gamePrice.setValue}
+                            error={gamePrice.inputState.error || undefined}
 
                         />
 
                         <MainInput
-                            id="releaseDate"
+                            id={"releaseDate"}
                             label={'Дата релиза'}
-                            value={releaseDate}
-                            onChange={setReleaseDate}
+                            value={releaseDate.inputState.value}
+                            onChange={releaseDate.setValue}
                             type="date"
-                            error={errors.releaseDate}
+                            error={releaseDate.inputState.error || undefined}
                         />
 
                         <MainInput
-                            id="imageUrl"
+                            id={"imageUrl"}
                             label={'Ссылка на фото для карточки'}
-                            value={imageUrl}
-                            onChange={setImageUrl}
-                            error={errors.imageUrl}
+                            value={imageUrl.inputState.value}
+                            onChange={imageUrl.setValue}
+                            error={imageUrl.inputState.error || undefined}
                         />
 
                         <MainInput
-                            id="developer"
+                            id={"developer"}
                             label={'Разработчик'}
-                            value={developer}
-                            onChange={setDeveloper}
-                            error={errors.developer}
+                            value={developer.inputState.value}
+                            onChange={developer.setValue}
+                            error={developer.inputState.error || undefined}
                         />
 
                         <MainInput
-                            id="publisher"
+                            id={"publisher"}
                             label={'Издатель'}
-                            value={publisher}
-                            onChange={setPublisher}
-                            error={errors.publisher}
+                            value={publisher.inputState.value}
+                            onChange={publisher.setValue}
+                            error={publisher.inputState.error || undefined}
                         />
 
                         <div className="md:col-span-2">
@@ -237,20 +223,20 @@ export default function AddNewKey() {
 
                         <div className="md:col-span-2">
                             <TextAreaInput
-                                id={description}
+                                id={'description'}
                                 label={'Описание'}
-                                value={description}
-                                onChange={setDescription}
-                                error={errors.description}
+                                value={description.inputState.value}
+                                onChange={description.setValue}
+                                error={description.inputState.error || undefined}
                             />
                         </div>
                     </div>
 
-                    <div className="flex justify-сenter mt-6">
-                        <button type="submit" className={`text-black cursor-pointer w-full font-semibold p-2 rounded-md ${styles.addButton}`}>
-                            Добавить новый ключ
-                        </button>
-                    </div>
+                    <LightGreenSubmitBtn
+                        label={!isSubmitting ? 'Добавить новый ключ' : 'Добавление...'}
+                        className={'mt-6'}
+                        disabled={isSubmitting}
+                    />
                 </form>
             </div>
         </div>

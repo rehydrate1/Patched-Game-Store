@@ -13,6 +13,7 @@ import ServerError from "@/components/errors/ServerError";
 import {usePageUtils} from "@/lib/hooks/usePageUtils";
 import {useInputField} from "@/lib/hooks/useInputField";
 import {BackEndResponse} from "@/types";
+import LightGreenSubmitBtn from "@/components/buttons/LightGreenBtn/LightGreenSubmitBtn";
 
 export default function SteamBalance() {
 
@@ -99,42 +100,42 @@ export default function SteamBalance() {
                             <h1 className="text-3xl font-bold text-white mb-2">
                                 Пополнение Steam
                             </h1>
-                            <p className="text-gray-400 mb-8">
+                            <p className="text-gray-400 mb-2">
                                 Моментальное зачисление
                             </p>
                         </div>
 
                         <ServerError message={serverError} />
 
-                        <form className="space-y-8" onSubmit={handleSubmit}>
+                        <form className="space-y-8 pt-4" onSubmit={handleSubmit}>
                             <div className="relative">
                                 <SteamInput
-                                    id={'steam_login'}
+                                    id={'steamLogin'}
                                     placeholder={'Логин Steam'}
-                                    value={steamLogin}
-                                    onChange={setSteamLogin}
+                                    value={steamLogin.inputState.value}
+                                    onChange={steamLogin.setValue}
                                     label={'Логин Steam'}
-                                    error={errors.steamLogin}
+                                    error={steamLogin.inputState.error || undefined}
                                 />
                             </div>
                             <div className="relative">
                                 <SteamInput
-                                    id={'amount'}
+                                    id={'balance'}
                                     placeholder={'Сумма пополнения (₽)'}
-                                    value={balance}
-                                    onChange={setBalance}
+                                    value={balance.inputState.value}
+                                    onChange={balance.setValue}
                                     label={'Сумма пополнения (₽)'}
-                                    error={errors.balance}
+                                    error={balance.inputState.error || undefined}
                                 />
                             </div>
                             <div className="relative">
                                 <SteamInput
                                     id={'promoCode'}
                                     placeholder={'Промокод'}
-                                    value={promoCode}
-                                    onChange={setPromoCode}
+                                    value={promoCode.inputState.value}
+                                    onChange={promoCode.setValue}
                                     label={'Промокод'}
-                                    error={errors.promoCode}
+                                    error={promoCode.inputState.error || undefined}
                                 />
                             </div>
                             <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-2">
@@ -142,7 +143,7 @@ export default function SteamBalance() {
                                     <button
                                         key={amount}
                                         type="button"
-                                        onClick={() => setBalance(amount)}
+                                        onClick={() => balance.setValue(amount)}
                                         className="bg-gray-700 text-white font-medium p-2.5 rounded-lg
                                     border border-transparent hover:bg-gray-600 hover:border-[#aeb2ae]
                                     hover:text-green-400 focus:outline-none focus:ring-2 focus:ring-green-400
@@ -156,9 +157,11 @@ export default function SteamBalance() {
                                 <div className="flex justify-between items-center"><span className="text-gray-400">Комиссия сервиса:</span><span className="font-medium text-green-400">{commission} ₽</span></div>
                                 <div className="flex justify-between items-center text-xl"><span className="font-bold">К оплате:</span><span className="font-bold text-green-400">{endPrice} ₽ </span></div>
                             </div>
-                            <button type="submit"  className={`myButtonColor w-full py-3 text-base font-bold text-white bg-purple-500 rounded-lg transition-all duration-300 relative overflow-hidden`}>
-                                Перейти к оплате
-                            </button>
+
+                            <LightGreenSubmitBtn
+                                label={!isSubmitting ? 'Перейти к оплате' : 'Процесс...'}
+                                disabled={isSubmitting}
+                            />
                         </form>
                     </div>
 

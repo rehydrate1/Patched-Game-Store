@@ -7,7 +7,7 @@ import HideInput from "@/components/Inputs/HideInput";
 import {validateConfirmPassword, validateUserEmail, validateUserName, validateUserPassword} from "@/lib/validators";
 import ServerError from "@/components/errors/ServerError";
 import {BackEndResponse} from "@/types";
-import LightGreenSubmitBtn from "@/components/buttons/LightGreenSubmitBtn/LightGreenSubmitBtn";
+import LightGreenSubmitBtn from "@/components/buttons/LightGreenBtn/LightGreenSubmitBtn";
 import {usePageUtils} from "@/lib/hooks/usePageUtils";
 import {useInputField} from "@/lib/hooks/useInputField";
 import Aurora from "@/components/UI/modern/Aurora";
