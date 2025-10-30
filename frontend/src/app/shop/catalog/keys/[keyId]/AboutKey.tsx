@@ -1,38 +1,20 @@
 "use client"
 
-import styles from "./AboutKey.module.scss";
 import Image from "next/image";
+import {applicationIcons, platformIcons, requirements_placeholder, screenshots_placeholder} from "@/lib/data/indexData";
+import {ProductStructure} from "@/lib/data/keysCatalogData";
+import LightGreenBtn from "@/components/buttons/LightGreenBtn/LightGreenBtn";
 
-const applicationIcons = {
-    'Steam': '/steamIcon.svg',
-    'Epic Games': '/epic.svg',
-    'GOG': '/gog.svg',
-    'Bethesda.net': '/bethesda.svg',
-    'EA': '/eaIcon.svg',
-    'Ubisoft Connect': "/ubisoftIcon.svg",
-};
 
-const platformIcons = { 'macOS': '/appleIcon.svg', 'Windows': '/windowsIcon.svg', 'Linux': '/linuxIcon.svg' };
+export default function AboutKey({ product }:{ product: ProductStructure}) {
 
-export default function AboutKey({ product }) {
     if (!product) {
         return <div className="text-white text-center p-10">Загрузка...</div>;
     }
 
-    const screenshots_placeholder = [
-        "https://cdn.akamai.steamstatic.com/steam/apps/271590/header.jpg",
-        "https://cdn.akamai.steamstatic.com/steam/apps/12210/header.jpg",
-        "https://cdn.akamai.steamstatic.com/steam/apps/292030/header.jpg",
-    ];
-
-    const requirements_placeholder = {
-        minimum: { "ОС": "Windows 10 64-bit", "Процессор": "Core i7-6700 / Ryzen 5 1600", "Память": "12 GB RAM", "Видеокарта": "GeForce GTX 1060 6GB", "Место на диске": "70 GB SSD" },
-        recommended: { "ОС": "Windows 10 64-bit", "Процессор": "Core i7-12700 / Ryzen 7 7800X3D", "Память": "16 GB RAM", "Видеокарта": "GeForce RTX 2060 SUPER", "Место на диске": "70 GB SSD" }
-    };
-
     return (
         <div className="container mx-auto py-8 md:py-12">
-            <main className={`rounded-xl shadow-2xl overflow-hidden ${styles.mainCard}`}>
+            <main className={`rounded-xl shadow-2xl overflow-hidden mainColor`}>
                 <div className="relative w-full aspect-video md:aspect-[2.5/0.8]">
                     <Image src={product.picture} alt={`${product.name} cover art`} fill priority className="object-cover" />
                 </div>
@@ -110,9 +92,9 @@ export default function AboutKey({ product }) {
                                     </p>
                                 </div>
 
-                                <button className={`w-full text-black cursor-pointer font-bold py-3 px-4 rounded-lg text-lg ${styles.buyButton}`}>
-                                    Добавить в корзину
-                                </button>
+                                <LightGreenBtn
+                                    label={'Добавить в корзину'}
+                                />
 
                                 <div className="pt-5 border-t border-white/10 space-y-3">
                                     <dl>

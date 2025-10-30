@@ -74,7 +74,6 @@ export default function Dashboard() {
 
 
             <main className="py-20">
-
                 <section id="popular-games" className="mb-35 relative">
                     <div className="container mx-auto px-6">
                         <h2 className="text-4xl font-bold text-center mb-20 text-white">Сейчас в топе продаж</h2>

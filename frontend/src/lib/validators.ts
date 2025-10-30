@@ -13,7 +13,7 @@ export const validateUserName = (userName: string):string | null => {
         return (`Имя аккаунта может содержать максимум 15 символов (сейчас ${userName.length})`)
     }
 
-    const userNameRegex = /^[a-zA-Z0-9!@#$%^&*.]$/;
+    const userNameRegex = /^[a-zA-Z0-9!@#$%^&*.]+$/;
     if(!userNameRegex.test(userName)) {
         return ('Имя аккаунта может содержать только латинские буквы, цифры и некоторые спец.символы')
     }

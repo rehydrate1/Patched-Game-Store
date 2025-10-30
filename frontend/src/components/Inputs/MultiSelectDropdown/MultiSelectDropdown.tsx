@@ -1,6 +1,6 @@
 "use client"
 
-import Select, { StylesConfig } from 'react-select';
+import Select from 'react-select';
 import styles from './MultiSelectDropdown.module.scss';
 
 // Тип для опций, react-select требует формат { value: '...', label: '...' }

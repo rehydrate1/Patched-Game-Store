@@ -1,0 +1,10 @@
+.searchInput{
+  background-color: #38393D;
+  color: white;
+  border: solid 1px #38393D;
+  transition: border-color 0.5s ease;
+
+  &:hover{
+    border-color: #aeb2ae;
+  }
+}

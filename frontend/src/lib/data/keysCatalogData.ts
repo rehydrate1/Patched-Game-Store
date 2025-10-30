@@ -1,6 +1,19 @@
+import type { ApplicationKey, PlatformKey } from "@/lib/data/indexData";
 
+export interface ProductStructure {
+    id: number;
+    name: string;
+    price: string;
+    picture: string;
+    releaseData: string;
+    platforms: PlatformKey[];
+    publisher: string;
+    applications: ApplicationKey[];
+    genres: string[];
+    developer: string;
+}
 
-export const keysCatalogDataItems = [
+export const keysCatalogDataItems: ProductStructure[] = [
     {
         id: 1,
         name: "Grand Theft Auto V",
@@ -8,6 +21,7 @@ export const keysCatalogDataItems = [
         picture: "https://cdn.akamai.steamstatic.com/steam/apps/271590/header.jpg",
         releaseData: "14.04.2015",
         platforms: ['Windows'],
+        publisher: 'Rockstar North',
         applications: ['Steam' ],
         genres: ['Экшен', 'Открытый мир'],
         developer: 'Rockstar Games'
@@ -19,6 +33,7 @@ export const keysCatalogDataItems = [
         picture: "https://cdn.akamai.steamstatic.com/steam/apps/12210/header.jpg",
         releaseData: "02.12.2008",
         platforms: ['Windows'],
+        publisher: 'Rockstar North',
         applications: ['Steam'],
         genres: ['Экшен', 'Открытый мир'],
         developer: 'Rockstar Games'
@@ -30,6 +45,7 @@ export const keysCatalogDataItems = [
         picture: "https://cdn.akamai.steamstatic.com/steam/apps/292030/header.jpg",
         releaseData: "19.05.2015",
         platforms: ['Windows'],
+        publisher: 'Rockstar North',
         applications: ['Steam', 'GOG', 'Epic Games'],
         genres: ['RPG', 'Открытый мир', 'Фэнтези'],
         developer: 'CD PROJEKT RED'
@@ -41,6 +57,7 @@ export const keysCatalogDataItems = [
         picture: "https://cdn.akamai.steamstatic.com/steam/apps/1091500/header.jpg",
         releaseData: "10.12.2020",
         platforms: ['Windows'],
+        publisher: 'Rockstar North',
         applications: ['GOG', 'Steam'],
         genres: ['RPG', 'Экшен', 'Открытый мир', 'Киберпанк'],
         developer: 'CD PROJEKT RED'
@@ -52,6 +69,7 @@ export const keysCatalogDataItems = [
         picture: "https://cdn.akamai.steamstatic.com/steam/apps/1174180/header.jpg",
         releaseData: "05.11.2019",
         platforms: ['Windows'],
+        publisher: 'Rockstar North',
         applications: ['Steam', 'Epic Games'],
         genres: ['Экшен', 'Приключения', 'Вестерн'],
         developer: 'Rockstar Games'
@@ -64,6 +82,7 @@ export const keysCatalogDataItems = [
         releaseData: "25.02.2022",
         platforms: ['Windows'],
         applications: ['Steam'],
+        publisher: 'Rockstar North',
         genres: ['RPG', 'Экшен', 'Хардкор', 'Фэнтези', 'Открытый мир'],
         developer: 'FromSoftware Inc.'
     },
@@ -75,6 +94,7 @@ export const keysCatalogDataItems = [
         releaseData: "24.02.2017",
         platforms: ['Windows', 'macOS', 'Linux'],
         applications: ['Steam'],
+        publisher: 'Rockstar North',
         genres: ['Метроидвания', 'Платформер', 'Инди'],
         developer: 'Team Cherry'
     },
@@ -84,6 +104,7 @@ export const keysCatalogDataItems = [
         price: "349",
         picture: "https://cdn.akamai.steamstatic.com/steam/apps/413150/header.jpg",
         releaseData: "26.02.2016",
+        publisher: 'Rockstar North',
         platforms: ['Windows', 'macOS', 'Linux'],
         applications: ['Steam', 'GOG'],
         genres: ['Симулятор', 'RPG', 'Инди'],
@@ -96,6 +117,7 @@ export const keysCatalogDataItems = [
         picture: "https://cdn.akamai.steamstatic.com/steam/apps/1086940/header.jpg",
         releaseData: "03.08.2023",
         platforms: ['Windows', 'macOS'],
+        publisher: 'Rockstar North',
         applications: ['Steam', 'GOG', 'EA'],
         genres: ['RPG', 'Пошаговая', 'Фэнтези', 'Приключения'],
         developer: 'Larian Studios'
@@ -107,6 +129,7 @@ export const keysCatalogDataItems = [
         picture: "https://cdn.akamai.steamstatic.com/steam/apps/489830/header.jpg",
         releaseData: "28.10.2016",
         platforms: ['Windows'],
+        publisher: 'Rockstar North',
         applications: ['Steam', 'Ubisoft Connect'],
         genres: ['RPG', 'Открытый мир', 'Фэнтези'],
         developer: 'Bethesda Game Studios'
@@ -118,6 +141,7 @@ export const keysCatalogDataItems = [
         picture: "https://cdn.akamai.steamstatic.com/steam/apps/782330/header.jpg",
         releaseData: "20.03.2020",
         platforms: ['Windows'],
+        publisher: 'Rockstar North',
         applications: ['Steam', 'EA'],
         genres: ['Шутер', 'Экшен'],
         developer: 'id Software'
@@ -129,6 +153,7 @@ export const keysCatalogDataItems = [
         picture: "https://cdn.akamai.steamstatic.com/steam/apps/1145360/header.jpg",
         releaseData: "17.09.2020",
         platforms: ['Windows', 'macOS'],
+        publisher: 'Rockstar North',
         applications: ['Steam', 'Epic Games'],
         genres: ['Экшен', 'Roguelike', 'Инди'],
         developer: 'Supergiant Games'
@@ -140,6 +165,7 @@ export const keysCatalogDataItems = [
         picture: "https://cdn.akamai.steamstatic.com/steam/apps/427520/header.jpg",
         releaseData: "14.08.2020",
         platforms: ['Windows', 'macOS', 'Linux'],
+        publisher: 'Rockstar North',
         applications: ['Steam'],
         genres: ['Стратегия', 'Симулятор', 'Выживание', 'Автоматизация'],
         developer: 'Wube Software LTD'
@@ -150,6 +176,7 @@ export const keysCatalogDataItems = [
         price: "249",
         picture: "https://cdn.akamai.steamstatic.com/steam/apps/105600/header.jpg",
         releaseData: "16.05.2011",
+        publisher: 'Rockstar North',
         platforms: ['Windows', 'macOS', 'Linux'],
         applications: ['Steam', 'GOG'],
         genres: ['Песочница', 'Приключения', 'Выживание'],
@@ -161,6 +188,7 @@ export const keysCatalogDataItems = [
         price: "1999",
         picture: "https://cdn.akamai.steamstatic.com/steam/apps/289070/header.jpg",
         releaseData: "21.10.2016",
+        publisher: 'Rockstar North',
         platforms: ['Windows', 'macOS', 'Linux'],
         applications: ['Steam', 'Epic Games'],
         genres: ['Глобальная стратегия', 'Пошаговая стратегия'],

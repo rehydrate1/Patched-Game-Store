@@ -1,6 +1,5 @@
 "use client"
 
-
 import {
     CheckIcon
 } from '@heroicons/react/24/outline';
@@ -9,24 +8,25 @@ import React, { useState, useEffect } from "react";
 import SteamInput from "@/components/Inputs/SteamInput";
 import SteamFAQ from "@/components/UI/FAQ/SteamFAQ";
 import Link from "next/link";
-import {useRouter} from "next/navigation";
 import {validatePromoCode, validateSteamBalance, validateSteamLogin} from "@/lib/validators";
-import {BackEndResponse} from "@/types/mainTypes";
 import ServerError from "@/components/errors/ServerError";
+import {usePageUtils} from "@/lib/hooks/usePageUtils";
+import {useInputField} from "@/lib/hooks/useInputField";
+import {BackEndResponse} from "@/types";
+import LightGreenSubmitBtn from "@/components/buttons/LightGreenBtn/LightGreenSubmitBtn";
 
 export default function SteamBalance() {
 
-    const [steamLogin, setSteamLogin] = useState<string>('');
-    const [balance, setBalance] = useState<string>('500');
-    const [promoCode, setPromoCode] = useState<string>('');
+    const steamLogin = useInputField('');
+    const balance = useInputField('');
+    const promoCode = useInputField('');
     const [commission, setCommission] = useState<number>(0);
     const [endPrice, setEndPrice] = useState<number>(0);
-    const [errors, setErrors] = useState<{ [key: string]: string }>({});
-    const [serverError, setServerError] = useState<string | null>(null);
-    const router = useRouter();
+
+    const {serverError, setServerError, isSubmitting, setIsSubmitting, router} = usePageUtils()
 
     useEffect(() => {
-        const balanceNumber = parseFloat(balance) || 0;
+        const balanceNumber = parseFloat(balance.inputState.value) || 0;
         const newCommission = balanceNumber / 10;
         const newEndPrice = balanceNumber + newCommission;
 
@@ -36,44 +36,27 @@ export default function SteamBalance() {
 
 
     const validateForm = () => {
-        const newErrors: { [key: string]: string } = {};
+        const steamLoginError:string | null = validateSteamLogin(steamLogin.inputState.value);
+        steamLogin.setError(steamLoginError);
 
-        const steamLoginError:string | null = validateSteamLogin(steamLogin);
-        if (steamLoginError) {
-            newErrors.steamLogin = steamLoginError;
-        }
+        const steamBalanceError:string | null = validateSteamBalance(balance.inputState.value);
+        balance.setError(steamBalanceError);
 
-        const steamBalanceError:string | null = validateSteamBalance(balance);
-        if (steamBalanceError) {
-            newErrors.balance = steamBalanceError;
-        }
+        const promoCodeError:string | null = validatePromoCode(promoCode.inputState.value);
+        promoCode.setError(promoCodeError);
 
-        const promoCodeError:string | null = validatePromoCode(promoCode);
-        if (promoCodeError) {
-            newErrors.promoCode = promoCodeError;
-        }
-
-        return newErrors;
+        return !(steamBalanceError || promoCodeError || steamLoginError);
     };
 
     const handleSubmit = async (event: React.FormEvent) => {
         event.preventDefault();
-        setErrors({});
         setServerError(null);
 
-        const formErrors = validateForm();
-
-        // Если есть хотя бы одна ошибка, обновляем состояние и прерываем выполнение
-        if (Object.keys(formErrors).length > 0) {
-            setErrors(formErrors);
+        if (!validateForm()) {
             return;
         }
 
-        const payload = {
-            steamLogin,
-            balance,
-            promoCode,
-        }
+        setIsSubmitting(true);
 
         try {
             const response = await fetch("http://localhost:8082/api/create/key", {
@@ -82,20 +65,25 @@ export default function SteamBalance() {
                     "Content-Type": "application/json",
                 },
                 credentials: "include",
-                body: JSON.stringify(payload),
+                body: JSON.stringify({
+                    steamLogin: steamLogin.inputState.value,
+                    balance: balance.inputState.value,
+                    promoCode: promoCode.inputState.value,
+                }),
             });
 
-            console.log('Валидация пройдена, пошла отправка на бек');
             const data = (await response.json()) as BackEndResponse;
 
             if (response.ok) {
                 router.push('/steam-balance/success');
             } else {
                 setServerError(data.error || "Ошибка пополнения. Проверьте правильность введенных данных.");
+                setIsSubmitting(false);
             }
         }  catch (err) {
             setServerError("Не удалось связаться с сервером. Пожалуйста, проверьте ваше интернет-соединение или попробуйте позже.");
             console.error("Steam balance error:", err);
+            setIsSubmitting(false);
         }
 
     }
@@ -112,42 +100,42 @@ export default function SteamBalance() {
                             <h1 className="text-3xl font-bold text-white mb-2">
                                 Пополнение Steam
                             </h1>
-                            <p className="text-gray-400 mb-8">
+                            <p className="text-gray-400 mb-2">
                                 Моментальное зачисление
                             </p>
                         </div>
 
                         <ServerError message={serverError} />
 
-                        <form className="space-y-8" onSubmit={handleSubmit}>
+                        <form className="space-y-8 pt-4" onSubmit={handleSubmit}>
                             <div className="relative">
                                 <SteamInput
-                                    id={'steam_login'}
+                                    id={'steamLogin'}
                                     placeholder={'Логин Steam'}
-                                    value={steamLogin}
-                                    onChange={setSteamLogin}
+                                    value={steamLogin.inputState.value}
+                                    onChange={steamLogin.setValue}
                                     label={'Логин Steam'}
-                                    error={errors.steamLogin}
+                                    error={steamLogin.inputState.error || undefined}
                                 />
                             </div>
                             <div className="relative">
                                 <SteamInput
-                                    id={'amount'}
+                                    id={'balance'}
                                     placeholder={'Сумма пополнения (₽)'}
-                                    value={balance}
-                                    onChange={setBalance}
+                                    value={balance.inputState.value}
+                                    onChange={balance.setValue}
                                     label={'Сумма пополнения (₽)'}
-                                    error={errors.balance}
+                                    error={balance.inputState.error || undefined}
                                 />
                             </div>
                             <div className="relative">
                                 <SteamInput
                                     id={'promoCode'}
                                     placeholder={'Промокод'}
-                                    value={promoCode}
-                                    onChange={setPromoCode}
+                                    value={promoCode.inputState.value}
+                                    onChange={promoCode.setValue}
                                     label={'Промокод'}
-                                    error={errors.promoCode}
+                                    error={promoCode.inputState.error || undefined}
                                 />
                             </div>
                             <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-2">
@@ -155,7 +143,7 @@ export default function SteamBalance() {
                                     <button
                                         key={amount}
                                         type="button"
-                                        onClick={() => setBalance(amount)}
+                                        onClick={() => balance.setValue(amount)}
                                         className="bg-gray-700 text-white font-medium p-2.5 rounded-lg
                                     border border-transparent hover:bg-gray-600 hover:border-[#aeb2ae]
                                     hover:text-green-400 focus:outline-none focus:ring-2 focus:ring-green-400
@@ -169,9 +157,11 @@ export default function SteamBalance() {
                                 <div className="flex justify-between items-center"><span className="text-gray-400">Комиссия сервиса:</span><span className="font-medium text-green-400">{commission} ₽</span></div>
                                 <div className="flex justify-between items-center text-xl"><span className="font-bold">К оплате:</span><span className="font-bold text-green-400">{endPrice} ₽ </span></div>
                             </div>
-                            <button type="submit"  className={`myButtonColor w-full py-3 text-base font-bold text-white bg-purple-500 rounded-lg transition-all duration-300 relative overflow-hidden`}>
-                                Перейти к оплате
-                            </button>
+
+                            <LightGreenSubmitBtn
+                                label={!isSubmitting ? 'Перейти к оплате' : 'Процесс...'}
+                                disabled={isSubmitting}
+                            />
                         </form>
                     </div>
 
