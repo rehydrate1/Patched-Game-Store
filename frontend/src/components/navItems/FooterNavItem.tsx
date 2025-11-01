@@ -1,6 +1,5 @@
 import Link from "next/link";
 
-
 interface FooterNavItemProps {
     text: string,
     link: string,

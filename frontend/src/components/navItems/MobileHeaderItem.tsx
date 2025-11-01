@@ -10,7 +10,6 @@ interface MobileHeaderItemProps {
 
 export default function MobileHeaderItem({text, link, functionName, className = ''}: MobileHeaderItemProps) {
 
-
     return (
         <li className="w-full">
             <Link href={link} onClick={functionName}>

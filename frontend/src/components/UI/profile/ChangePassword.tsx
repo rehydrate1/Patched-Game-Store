@@ -2,7 +2,7 @@
 
 import React, {useState} from "react";
 import MainInput from "@/components/Inputs/MainInput";
-import {BackEndResponse} from "@/types/mainTypes";
+import {BackEndResponse} from "@/types";
 
 export default function ChangePassword() {
 
@@ -11,12 +11,10 @@ export default function ChangePassword() {
     const [confirmPassword, setConfirmPassword] = useState<string>("");
     const [errors, setErrors] = useState<{ [key: string]: string }>({});
 
-
     const validateCurrentPassword = (currentPassword:string): string | null => {
         if (!currentPassword.trim())  {
             return ('Пожалуйста введите ваш текущий пароль');
         }
-
 
         return null;
     }
@@ -112,11 +110,11 @@ export default function ChangePassword() {
             }
         } catch (err) {
             setErrors({ form: "Ошибка соединения с сервером" });
+            console.error(err);
         }
     }
 
     return (
-
         <>
             <h1 className="text-3xl font-bold text-white mb-2">
                 Смена пароля

@@ -43,7 +43,6 @@ export default function Dashboard() {
 
     return (
         <div className="min-h-screen">
-
             <header className="relative min-h-screen flex items-center justify-center overflow-hidden">
 
                 <div className="absolute inset-0 z-0">
@@ -71,7 +70,6 @@ export default function Dashboard() {
                     </div>
                 </div>
             </header>
-
 
             <main className="py-20">
                 <section id="popular-games" className="mb-35 relative">
