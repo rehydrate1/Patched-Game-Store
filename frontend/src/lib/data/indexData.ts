@@ -1,4 +1,5 @@
 import {SelectOption} from "@/components/Inputs/MultiSelectDropdown/MultiSelectDropdown";
+import {FaqDataStructure} from "@/types";
 
 export const platformOptions: SelectOption[] = [
     { value: 'Windows', label: 'Windows' },
@@ -66,6 +67,25 @@ export const headerNavItems = [
         text: 'Поддержка',
         link: '/support',
     },
+];
+
+export const steamFaqData: FaqDataStructure[] = [
+    {
+        question: "Как узнать свой логин Steam?",
+        answer: "Ваш логин Steam — это имя, которое вы используете для входа в приложение Steam, а не ваш никнейм в профиле. Его можно посмотреть в правом верхнем углу клиента Steam."
+    },
+    {
+        question: "Как быстро придут деньги?",
+        answer: "Обычно пополнение происходит моментально, в течение 1-2 минут после успешной оплаты. В редких случаях из-за нагрузки на серверы Steam возможны задержки до 15 минут."
+    },
+    {
+        question: "Какая у вас комиссия?",
+        answer: "Наша комиссия составляет 10% от суммы пополнения. Она уже включена в итоговую сумму 'К оплате', вы видите конечную цену."
+    },
+    {
+        question: "Что делать, если я ошибся логином?",
+        answer: "К сожалению, мы не можем отменить платеж, отправленный на неверный логин. Пожалуйста, будьте предельно внимательны при вводе данных."
+    }
 ];
 
 export const screenshots_placeholder = [

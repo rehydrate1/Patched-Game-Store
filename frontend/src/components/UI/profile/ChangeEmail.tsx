@@ -1,6 +1,6 @@
 "use client"
 
-import {useState} from "react";
+import {FormEvent, useState} from "react";
 import MainInput from "@/components/Inputs/MainInput";
 import HideInput from "@/components/Inputs/HideInput";
 import {BackEndResponse} from "@/types";
@@ -53,7 +53,7 @@ export default function ChangePassword() {
         return newErrors;
     }
 
-    const handleSubmit = async (event) => {
+    const handleSubmit = async (event: FormEvent) => {
         event.preventDefault();
         setErrors({});
 

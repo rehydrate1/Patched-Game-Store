@@ -1,13 +1,10 @@
+import {FaqDataStructure} from "@/types";
+
 export interface DashboardArrayOfDataStructure {
     id: number;
     name: string;
     price: string;
     picture: string;
-}
-
-export interface DashboardFaqDataStructure {
-    question: string;
-    answer: string;
 }
 
 export interface DashboardTestimonialsDataStructure {
@@ -112,7 +109,7 @@ export const DashboardArrayOfData: DashboardArrayOfDataStructure[] = [
     },
 ];
 
-export const DashboardFaqData: DashboardFaqDataStructure[] = [
+export const DashboardFaqData: FaqDataStructure[] = [
     {
         question: "Как быстро я получу свой ключ после оплаты?",
         answer: "Моментально! Сразу после подтверждения оплаты цифровой ключ от игры автоматически отправляется на вашу электронную почту. Также он будет доступен в вашем личном кабинете на сайте."

@@ -6,6 +6,7 @@ import Image from "next/image";
 import {addItem} from "@/store/slices/cartSlice";
 import {useAppDispatch} from "@/lib/hooks/useTypedRedux";
 import {applicationIcons, platformIcons} from "@/lib/data/indexData";
+import type { ApplicationKey, PlatformKey } from "@/lib/data/indexData";
 
 interface MainProductCardProps {
     id: number,
@@ -13,8 +14,8 @@ interface MainProductCardProps {
     price: string,
     picture: string,
     releaseData: string,
-    platforms: string[],
-    applications: string[],
+    platforms: PlatformKey[],
+    applications: ApplicationKey[],
     genres: string[],
 }
 
