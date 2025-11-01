@@ -1,5 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit';
-import cartReducer, { hydrate } from './slices/cartSlice';
+import cartReducer from './slices/cartSlice';
 import { localStorageMiddleware } from './middleware/localStorage';
 
 // Функция для загрузки начального состояния
@@ -10,7 +10,7 @@ const loadState = () => {
             return undefined; 
         }
         return { cart: JSON.parse(serializedState) }; // Возвращаем в формате всего store
-    } catch (err) {
+    } catch {
         return undefined;
     }
 };

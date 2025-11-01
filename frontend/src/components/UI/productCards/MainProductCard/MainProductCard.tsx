@@ -6,6 +6,7 @@ import Image from "next/image";
 import {addItem} from "@/store/slices/cartSlice";
 import {useAppDispatch} from "@/lib/hooks/useTypedRedux";
 import {applicationIcons, platformIcons} from "@/lib/data/indexData";
+import type { ApplicationKey, PlatformKey } from "@/lib/data/indexData";
 
 interface MainProductCardProps {
     id: number,
@@ -13,8 +14,8 @@ interface MainProductCardProps {
     price: string,
     picture: string,
     releaseData: string,
-    platforms: string[],
-    applications: string[],
+    platforms: PlatformKey[],
+    applications: ApplicationKey[],
     genres: string[],
 }
 
@@ -31,7 +32,6 @@ export default function MainProductCard({ id, name, price, picture, releaseData,
 
     return (
         <div key={id} className={`flex flex-col md:flex-row items-center p-4 md:p-6 rounded-lg ${styles.mainCard} gap-4 md:gap-6`}>
-
             <Link href={`/shop/catalog/keys/${id}`} className="w-full md:w-48 lg:w-56 flex-shrink-0">
                 <Image
                     className="rounded-md w-full object-cover aspect-video"
@@ -43,7 +43,6 @@ export default function MainProductCard({ id, name, price, picture, releaseData,
             </Link>
 
             <div className="flex flex-col lg:flex-row flex-grow items-center justify-between w-full gap-4">
-
                 <div className="flex flex-col items-center lg:items-start text-center lg:text-left w-full">
                     <Link href={`/shop/catalog/keys/${id}`}>
                         <h1 className="text-white text-lg md:text-xl font-semibold hover:text-green-400 transition-colors">
@@ -88,7 +87,6 @@ export default function MainProductCard({ id, name, price, picture, releaseData,
                     <button onClick={handleAddToCart} className={`w-full lg:w-auto myButtonColor text-black cursor-pointer font-semibold py-2 px-4 rounded-md ${styles.addButton}`}>
                         Добавить в корзину
                     </button>
-
                 </div>
             </div>
         </div>

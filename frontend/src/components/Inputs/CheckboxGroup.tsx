@@ -1,7 +1,5 @@
-"use client"
-
 type CheckboxGroupProps = {
-    label: string; // Заголовок группы
+    label: string;
     options: string[]; // Массив доступных вариантов (['Windows', 'macOS', 'Linux'])
     selectedOptions: string[]; // Массив уже выбранных вариантов
     onChange: (selected: string[]) => void; // Функция, которая вызывается при изменении выбора
@@ -29,12 +27,10 @@ export default function CheckboxGroup({ label, options, selectedOptions, onChang
 
     return (
         <div>
-            {/* Заголовок для группы чекбоксов */}
             <label className="block text-sm font-medium text-gray-300 mb-2">
                 {label}
             </label>
 
-            {/* Контейнер для самих чекбоксов, используем flex для расположения */}
             <div className="flex flex-wrap gap-x-4 gap-y-2">
                 {/* Проходимся по всем доступным опциям и создаем для каждой свой чекбокс */}
                 {options.map((option) => (

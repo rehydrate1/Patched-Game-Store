@@ -1,4 +1,5 @@
-"use client";
+"use client"
+
 import styles from "./ShopHeader.module.scss";
 import Link from "next/link";
 import { useState, useRef, useEffect } from "react";
@@ -17,6 +18,7 @@ const catalogElements = [
 ];
 
 export default function ShopHeader() {
+
     const [isOpenCatalog, setIsOpenCatalog] = useState<boolean>(false);
     const [search, setSearch] = useState<string>('');
     const cartItems = useAppSelector(state => state.cart.items);

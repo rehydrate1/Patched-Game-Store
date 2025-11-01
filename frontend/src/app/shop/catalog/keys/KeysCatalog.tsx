@@ -4,6 +4,7 @@ import { useState, useEffect, useMemo } from 'react';
 import {useRouter} from "next/navigation";
 import MainProductCard from "@/components/UI/productCards/MainProductCard/MainProductCard";
 import {keysCatalogDataItems} from "@/lib/data/keysCatalogData";
+import type { ApplicationKey, PlatformKey } from "@/lib/data/indexData";
 import {useInputField} from "@/lib/hooks/useInputField";
 import FilterInput from "@/components/Inputs/FilterInput/FilterInput";
 import LightGreenBtn from "@/components/buttons/LightGreenBtn/LightGreenBtn";
@@ -12,29 +13,29 @@ export default function KeysCatalog() {
 
     const priceFrom = useInputField();
     const priceTo = useInputField();
-    const [selectedPlatforms, setSelectedPlatforms] = useState<string[]>([]);
+    const [selectedPlatforms, setSelectedPlatforms] = useState<PlatformKey[]>([]);
     const [selectedGenres, setSelectedGenres] = useState<string[]>([]);
-    const [selectedApplications, setSelectedApplications] = useState<string[]>([]);
+    const [selectedApplications, setSelectedApplications] = useState<ApplicationKey[]>([]);
     const [filteredKeys, setFilteredKeys] = useState(keysCatalogDataItems);
     const router = useRouter();
 
     const allPlatforms = useMemo(() => {
-        const platformsSet = new Set<string>();
+        const platformsSet = new Set<PlatformKey>();
         keysCatalogDataItems.forEach(game => game.platforms.forEach(p => platformsSet.add(p)));
         return Array.from(platformsSet).sort();
-    }, [keysCatalogDataItems]);
+    }, []);
 
     const allGenres = useMemo(() => {
         const genresSet = new Set<string>();
         keysCatalogDataItems.forEach(game => game.genres.forEach(g => genresSet.add(g)));
         return Array.from(genresSet).sort();
-    }, [keysCatalogDataItems]);
+    }, []);
 
     const allApplications = useMemo(() => {
-        const applicationsSet = new Set<string>();
+        const applicationsSet = new Set<ApplicationKey>();
         keysCatalogDataItems.forEach(game => game.applications.forEach(app => applicationsSet.add(app)));
         return Array.from(applicationsSet).sort();
-    }, [keysCatalogDataItems]);
+    }, []);
 
     useEffect(() => {
         let tempKeys = [...keysCatalogDataItems];
@@ -77,9 +78,9 @@ export default function KeysCatalog() {
 
         setFilteredKeys(tempKeys);
 
-    }, [priceFrom.inputState.value, priceTo.inputState.value, selectedPlatforms, selectedGenres, selectedApplications, keysCatalogDataItems]);
+    }, [priceFrom.inputState.value, priceTo.inputState.value, selectedPlatforms, selectedGenres, selectedApplications]);
 
-    const handlePlatformChange = (platform: string) => {
+    const handlePlatformChange = (platform: PlatformKey) => {
         setSelectedPlatforms(prev =>
             prev.includes(platform) ? prev.filter(p => p !== platform) : [...prev, platform]
         );
@@ -91,7 +92,7 @@ export default function KeysCatalog() {
         );
     };
 
-    const handleApplicationChange = (app: string) => {
+    const handleApplicationChange = (app: ApplicationKey) => {
         setSelectedApplications(prev =>
             prev.includes(app) ? prev.filter(a => a !== app) : [...prev, app]
         );

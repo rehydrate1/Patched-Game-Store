@@ -19,6 +19,7 @@ interface MultiSelectProps {
 }
 
 export default function MultiSelectDropdown({ label, options, value, onChange, placeholder = "", error }: MultiSelectProps) {
+
     return (
         <div>
             <label className="block text-sm font-medium text-white mb-1">

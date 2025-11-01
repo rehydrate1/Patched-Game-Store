@@ -1,5 +1,7 @@
 /// USER VALIDATOR
 
+import {SelectOption} from "@/components/Inputs/MultiSelectDropdown/MultiSelectDropdown";
+
 export const validateUserName = (userName: string):string | null => {
     if(!userName.trim()){
         return ('Пожалуйста, введите имя для вашего аккаунта')
@@ -166,7 +168,7 @@ export const validateNewKeyDescription = (description: string): string | null =>
     return null;
 };
 
-export const validateNewKeyGenres = (genres: any): string | null => {
+export const validateNewKeyGenres = (genres: SelectOption[]): string | null => {
     if (genres.length < 3 || genres.length > 6) {
         return `Количество выбранных жанров должно быть от 3 до 6.`;
     }
@@ -174,7 +176,7 @@ export const validateNewKeyGenres = (genres: any): string | null => {
     return null;
 };
 
-export const validateNewKeyApplications = (applications: any): string | null => {
+export const validateNewKeyApplications = (applications: SelectOption[]): string | null => {
     if (applications.length === 0) {
         return `Выберете хотя бы один способ активации.`;
     }
@@ -182,7 +184,7 @@ export const validateNewKeyApplications = (applications: any): string | null => 
     return null;
 };
 
-export const validateNewKeyPlatforms = (platforms: any): string | null => {
+export const validateNewKeyPlatforms = (platforms: SelectOption[]): string | null => {
     if (platforms.length === 0) {
         return `Выберете хотя бы одну платформу.`;
     }

@@ -1,4 +1,3 @@
-
 interface SteamInputProps {
     placeholder?: string,
     id: string,
@@ -7,7 +6,6 @@ interface SteamInputProps {
     label: string
     error?: string;
 }
-
 
 export default function SteamInput({ id, placeholder = '', value, label, onChange, error }: SteamInputProps) {
 

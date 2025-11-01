@@ -1,6 +1,5 @@
 import styles from "./TextAreaInput.module.scss"
 
-
 interface TextAreaInputProps {
     id: string;
     label: string;
@@ -12,7 +11,6 @@ interface TextAreaInputProps {
     required?: boolean;
     error?: string;
 }
-
 
 export default function TextAreaInput({id, label, value, onChange, placeholder = '',
                                           rows = 4, required = false, className = '', error}:TextAreaInputProps ){

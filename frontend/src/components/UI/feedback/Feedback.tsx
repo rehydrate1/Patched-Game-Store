@@ -10,6 +10,7 @@ import {DashboardTestimonialsDataStructure} from "@/lib/data/dashboardData";
 
 
 export default function Feedback({ testimonials }: {testimonials: DashboardTestimonialsDataStructure[]}) {
+
     return (
         <section id="testimonials" className="mt-50 overflow-hidden">
             <div className="relative">

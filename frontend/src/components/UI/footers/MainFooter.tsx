@@ -3,7 +3,6 @@ import FooterNavItem from "@/components/navItems/FooterNavItem";
 
 export default function MainFooter() {
 
-
     return (
         <footer className="text-gray-300 mt-30">
             <div className="container mx-auto py-20 px-4 sm:px-4 ">
@@ -62,7 +61,6 @@ export default function MainFooter() {
                     <p>© {new Date().getFullYear()} Patched. Все права защищены.</p>
                 </div>
             </div>
-
         </footer>
     );
 }

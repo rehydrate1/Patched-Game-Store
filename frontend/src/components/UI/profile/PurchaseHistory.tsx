@@ -1,5 +1,6 @@
 
 export default function PurchaseHistory() {
+
     const purchases = [
         { id: 1, game: 'Cyberpunk 2077', date: '15 июня 2024', price: '2999 ₽' },
         { id: 2, game: 'The Witcher 3: Wild Hunt', date: '22 мая 2024', price: '1199 ₽' },
