@@ -10,8 +10,7 @@ import {usePageUtils} from "@/lib/hooks/usePageUtils";
 import {BackEndResponse} from "@/types";
 import LightGreenSubmitBtn from "@/components/buttons/LightGreenBtn/LightGreenSubmitBtn";
 import {useInputField} from "@/lib/hooks/useInputField";
-import Aurora from "@/components/UI/modern/Aurora";
-import {XMarkIcon} from "@heroicons/react/24/outline";
+import AuthContext from "@/components/UI/UiContext/AuthContext";
 
 export default function Login(){
 
@@ -31,8 +30,8 @@ export default function Login(){
         return !(emailError || passwordError);
     }
 
-    const handleSubmit = async (e:FormEvent):Promise<void> => {
-        e.preventDefault();
+    const handleSubmit = async (event: FormEvent):Promise<void> => {
+        event.preventDefault();
         setServerError(null);
 
         if (!validateForm()) {
@@ -70,30 +69,15 @@ export default function Login(){
     }
 
     return (
-        <div className="relative min-h-screen overflow-hidden">
-            <div className="absolute inset-0 z-0">
-                <Aurora
-                    colorStops={["#099f5f", "#00FE92", "#00d17a"]}
-                    amplitude={0.6}
-                    speed={0.4}
-                    blend={0.45}
-                />
-            </div>
-
+        <AuthContext>
             <div className="relative z-10 flex items-center justify-center min-h-screen">
-                <div className={`w-full max-w-lg p-8 space-y-6 rounded-lg shadow-md bg-[#212227]/70`}>
+                <div className={`w-full max-w-lg p-8 space-y-6 rounded-lg shadow-md mainColor`}>
                     <div className="">
-                        <div className="flex items-center justify-between">
-                            <h2 className="text-2xl pb-2 font-bold text-center text-white">
-                                Patched Game Store
-                            </h2>
-                            <Link href={'/'} className={`p-2 rounded-full border border-[#212227] 
-                            hover:border-white/40 duration-300 easy-in-out`}>
-                                <XMarkIcon className={`h-7 w-7 text-white`} />
-                            </Link>
-                        </div>
+                        <h2 className="text-2xl pb-3 font-bold text-center text-white">
+                            Patched Game Store
+                        </h2>
 
-                        <h2 className="text-xl font-semibold text-left text-white/40">
+                        <h2 className="text-xl font-semibold text-center text-white/40">
                             Войдите в свой аккаунт
                         </h2>
                     </div>
@@ -145,14 +129,13 @@ export default function Login(){
                             label={!isSubmitting ? 'Войти' : 'Вход...'}
                             disabled={isSubmitting}
                         />
-
                     </form>
 
                     <div className="mt-4 text-sm text-white text-center">
-                        Нет аккаунта? <Link href="/auth/registration" className={`font-medium text-indigo-600 hover:text-indigo-500 textLinks`}>Зарегистрироваться</Link>
+                        Нет аккаунта? <Link href="/auth/registration" className={`font-medium textLinks`}>Зарегистрироваться</Link>
                     </div>
                 </div>
             </div>
-        </div>
+        </AuthContext>
     );
 }

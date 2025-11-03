@@ -1,7 +1,6 @@
 "use client"
 
 import { useState } from "react";
-import styles from "./MainHeader.module.scss";
 import Link from "next/link";
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
 import PCHeaderItem from "@/components/navItems/PCHeaderItem";
@@ -17,7 +16,7 @@ export default function MainHeader() {
     };
 
     return (
-        <div className={`${styles.main} relative`}>
+        <div className={`mainColor  relative`}>
             <div className={`container mx-auto flex justify-between items-center text-white py-2.5`}>
                 <Link href={'/'}>
                     <div className={'p-3'}>
