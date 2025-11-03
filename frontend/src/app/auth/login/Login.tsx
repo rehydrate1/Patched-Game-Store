@@ -18,7 +18,8 @@ export default function Login(){
     const email = useInputField('');
     const password = useInputField('');
     const [rememberMe, setRememberMe] = useState<boolean>(false);
-    const {serverError, setServerError, isSubmitting, setIsSubmitting, router} = usePageUtils()
+
+    const {serverError, setServerError, isSubmitting, setIsSubmitting, router} = usePageUtils();
 
     const validateForm = () => {
         const emailError = validateUserEmail(email.inputState.value);
@@ -30,7 +31,7 @@ export default function Login(){
         return !(emailError || passwordError);
     }
 
-    const handleSubmit = async (e:FormEvent<HTMLFormElement>):Promise<void> => {
+    const handleSubmit = async (e:FormEvent):Promise<void> => {
         e.preventDefault();
         setServerError(null);
 
@@ -70,7 +71,6 @@ export default function Login(){
 
     return (
         <div className="relative min-h-screen overflow-hidden">
-
             <div className="absolute inset-0 z-0">
                 <Aurora
                     colorStops={["#099f5f", "#00FE92", "#00d17a"]}
@@ -81,7 +81,7 @@ export default function Login(){
             </div>
 
             <div className="relative z-10 flex items-center justify-center min-h-screen">
-                <div className={`w-full max-w-lg p-8 space-y-6 rounded-lg shadow-md mainColor`}>
+                <div className={`w-full max-w-lg p-8 space-y-6 rounded-lg shadow-md bg-[#212227]/70`}>
                     <div className="">
                         <div className="flex items-center justify-between">
                             <h2 className="text-2xl pb-2 font-bold text-center text-white">
