@@ -2,10 +2,6 @@
 
 import { useState } from 'react';
 import {
-    UserCircleIcon,
-    EnvelopeIcon,
-    LockClosedIcon,
-    ShoppingBagIcon,
     ArrowLeftOnRectangleIcon
 } from '@heroicons/react/24/outline';
 import AccountProfile from "@/components/UI/profile/AccountProfile";
@@ -17,14 +13,6 @@ import {profileMenuItems} from "@/lib/data/profileData";
 export default function ProfileClient() {
 
     const [activeTab, setActiveTab] = useState('profile');
-
-    const icons = {
-        UserCircleIcon: UserCircleIcon,
-        EnvelopeIcon: EnvelopeIcon,
-        LockClosedIcon: LockClosedIcon,
-        ShoppingBagIcon: ShoppingBagIcon,
-        ArrowLeftOnRectangleIcon: ArrowLeftOnRectangleIcon,
-    }
 
     const renderContent = () => {
         switch (activeTab) {
@@ -47,10 +35,9 @@ export default function ProfileClient() {
 
                 {/* === БОКОВОЕ МЕНЮ (SIDEBAR) === */}
                 <aside className="w-full md:w-1/4 lg:w-1/5">
-                    <nav className="space-y-2 bg-[#212227] p-4 rounded-xl border border-white/10">
+                    <nav className="space-y-2 mainColor p-4 rounded-xl border border-white/10">
                         {profileMenuItems.map((item) => {
-
-                            const IconComponent = icons[item.icon]
+                            const IconComponent = item.icon;
                             return (
                                 <button
                                     key={item.id}
@@ -77,7 +64,7 @@ export default function ProfileClient() {
                 </aside>
 
                 {/* === ОСНОВНОЙ КОНТЕНТ === */}
-                <main className="w-full md:w-3/4 lg:w-4/5 bg-[#212227] p-6 sm:p-8 rounded-xl border border-white/10">
+                <main className="w-full md:w-3/4 lg:w-4/5 mainColor p-6 sm:p-8 rounded-xl border border-white/10">
                     {renderContent()}
                 </main>
             </div>

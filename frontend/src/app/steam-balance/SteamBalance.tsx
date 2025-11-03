@@ -94,7 +94,7 @@ export default function SteamBalance() {
 
                 <MainFAQ faqData={steamFaqData} />
 
-                <div className={`bg-[#212227] p-6 sm:p-8 rounded-xl w-full border border-white/10 lg:col-span-1`}>
+                <div className={`mainColor p-6 sm:p-8 rounded-xl w-full border border-white/10 lg:col-span-1`}>
                     <div className="text-center pb-5">
                         <h1 className="text-3xl font-bold text-white mb-2">
                             Пополнение Steam
@@ -166,7 +166,7 @@ export default function SteamBalance() {
 
                 {/* === ПРАВАЯ КОЛОНКА: ПРЕИМУЩЕСТВА И БАННЕР === */}
                 <div className="space-y-8 lg:col-span-1">
-                    <div className="bg-[#212227] p-6 rounded-xl border border-white/10">
+                    <div className="mainColor p-6 rounded-xl border border-white/10">
                         <h3 className="text-xl font-bold mb-4">Почему выбирают Patched?</h3>
                         <ul className="space-y-3 text-gray-300">
                             <li className="flex items-center gap-3"><CheckIcon className={`text-green-400 h-6 w-6 font-bold`}/> Моментальное пополнение</li>
