@@ -1,30 +1,25 @@
 "use client"
 
-import { useAppSelector, useAppDispatch } from '@/lib/hooks/useTypedRedux';
-import { removeItem, clearCart } from '@/store/slices/cartSlice';
 import Image from 'next/image';
 import Link from 'next/link';
 import { XCircleIcon, XMarkIcon } from '@heroicons/react/24/outline';
 import styles from './Cart.module.scss';
+import {useCartStore} from "@/lib/store/cartStore";
 
 export default function Cart() {
 
-    const dispatch = useAppDispatch();
-    const { items: cartItems } = useAppSelector(state => state.cart);
+    const cartItems = useCartStore(state => state.cartItems);
+    const removeItemFromCart = useCartStore(state => state.deleteCartItem);
+    const clearCart = useCartStore(state => state.deleteAllCartItems);
 
-    // Расчеты и хендлеры остаются без изменений
     const totalPrice = cartItems.reduce((total, item) => {
         const price = parseFloat(item.price.replace(/[^0-9.]/g, '')) || 0;
         return total + price * item.quantity;
     }, 0).toFixed(2);
 
-    const handleRemoveItem = (id: number) => {
-        dispatch(removeItem(id));
-    };
-
     const handleClearCart = () => {
         if (window.confirm('Вы уверены, что хотите очистить корзину?')) {
-            dispatch(clearCart());
+            clearCart();
         }
     };
 
@@ -79,7 +74,7 @@ export default function Cart() {
                                         </h2>
                                         <button
                                             type="button"
-                                            onClick={() => handleRemoveItem(item.id)}
+                                            onClick={() => removeItemFromCart(item.id)}
                                             className={`p-1.5 rounded-md flex-shrink-0 ${styles.removeButton}`}
                                             title="Удалить товар"
                                         >
@@ -105,7 +100,9 @@ export default function Cart() {
                     <div className="flex justify-between items-center border-b border-gray-700 pb-4">
                         <h2 className="text-lg font-medium text-white">Итоги заказа</h2>
                         {cartItems.length > 0 && (
-                            <button onClick={handleClearCart} className={`py-1 px-2 text-sm text-gray-300 hover:text-white rounded-lg ${styles.clearButton}`}>
+                            <button
+                                onClick={handleClearCart}
+                                className={`py-1 px-2 text-sm text-gray-300 hover:text-white rounded-lg ${styles.clearButton}`}>
                                 Очистить
                             </button>
                         )}

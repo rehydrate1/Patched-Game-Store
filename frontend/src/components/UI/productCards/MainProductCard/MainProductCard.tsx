@@ -3,13 +3,12 @@
 import styles from "./MainProductCard.module.scss";
 import Link from "next/link";
 import Image from "next/image";
-import {addItem} from "@/store/slices/cartSlice";
-import {useAppDispatch} from "@/lib/hooks/useTypedRedux";
+import { useCartStore } from "@/lib/store/cartStore";
 import {applicationIcons, platformIcons} from "@/lib/data/indexData";
 import type { ApplicationKey, PlatformKey } from "@/lib/data/indexData";
 
 interface MainProductCardProps {
-    id: number,
+    id: string,
     name: string,
     price: string,
     picture: string,
@@ -21,13 +20,11 @@ interface MainProductCardProps {
 
 export default function MainProductCard({ id, name, price, picture, releaseData, platforms, applications, genres = [] }: MainProductCardProps) {
 
-    const dispatch = useAppDispatch(); // Получаем функцию dispatch
+    const addItem = useCartStore(state => state.addItemToCart);
 
     const handleAddToCart = () => {
-        // Создаем объект товара (без quantity)
         const itemToAdd = { id, name, price, picture };
-        // Отправляем action с данными товара
-        dispatch(addItem(itemToAdd));
+        addItem(itemToAdd);
     };
 
     return (

@@ -1,6 +1,5 @@
 import { Geist, Geist_Mono } from "next/font/google";
 import "../styles/globals.scss";
-import StoreProvider from "@/store/StoreProvider";
 import LayoutWrapper from "@/components/LayoutWrapper";
 import {ReactNode} from "react";
 
@@ -21,11 +20,9 @@ export default function RootLayout({children}: Readonly<{ children: ReactNode }>
         <body
             className={`${geistSans.variable} ${geistMono.variable} antialiased`}
         >
-        <StoreProvider>
-            <LayoutWrapper>
-                {children}
-            </LayoutWrapper>
-        </StoreProvider>
+        <LayoutWrapper>
+            {children}
+        </LayoutWrapper>
         </body>
         </html>
     );

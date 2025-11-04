@@ -2,15 +2,14 @@
 
 import styles from "./ShopHeader.module.scss";
 import Link from "next/link";
-import { useState, useRef, useEffect } from "react";
-import { useAppSelector } from '@/lib/hooks/useTypedRedux';
-
+import {useState, useRef, useEffect} from "react";
 
 import {
     Bars3Icon,
     ShoppingCartIcon,
     MagnifyingGlassIcon,
 } from '@heroicons/react/24/outline';
+import {useCartStore} from "@/lib/store/cartStore";
 
 const catalogElements = [
     { href: '/support', text: 'Поддержка' },
@@ -21,11 +20,9 @@ export default function ShopHeader() {
 
     const [isOpenCatalog, setIsOpenCatalog] = useState<boolean>(false);
     const [search, setSearch] = useState<string>('');
-    const cartItems = useAppSelector(state => state.cart.items);
     const catalogButtonRef = useRef<HTMLDivElement>(null);
     const catalogDropdownRef = useRef<HTMLDivElement>(null);
-
-    const totalItems = cartItems.reduce((total, item) => total + item.quantity, 0);
+    const totalItems = useCartStore(s => s.getCartCount())
 
 
     // Ваш useEffect для закрытия каталога остается без изменений
