@@ -18,7 +18,7 @@ export default function MainHeader() {
     return (
         <div className={`mainColor  relative`}>
             <div className={`container mx-auto flex justify-between items-center text-white py-2.5`}>
-                <Link href={'/frontend/public'}>
+                <Link href={'/'}>
                     <div className={'p-3'}>
                         <h1 className='font-semibold text-2xl'>Patched</h1>
                     </div>

@@ -13,7 +13,6 @@ interface AuthState{
     isLoading: boolean;
 
     initialize: () => Promise<void>;
-    clear: () => void;
     logout: () => Promise<boolean>;
 }
 
@@ -54,7 +53,6 @@ export const useAuthStore = create<AuthState>()(
                 }
             },
 
-            clear: () => set({ isAuthenticated: false, userData: null }),
 
             logout: async () => {
                 try {

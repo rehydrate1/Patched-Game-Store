@@ -2,7 +2,6 @@ import {create} from "zustand";
 import {CartItem, CartItemPayload} from "@/types";
 import { persist } from "zustand/middleware";
 
-
 interface CertState {
     cartItems: CartItem[];
 
