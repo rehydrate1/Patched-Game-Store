@@ -21,7 +21,8 @@
     "react-select": "^5.10.1",
     "sass": "^1.87.0",
     "swiper": "^11.2.10",
-    "tailwind-scrollbar-hide": "^4.0.0"
+    "tailwind-scrollbar-hide": "^4.0.0",
+    "zustand": "^5.0.8"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
