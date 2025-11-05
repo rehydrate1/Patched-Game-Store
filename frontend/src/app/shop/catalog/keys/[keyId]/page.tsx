@@ -9,7 +9,7 @@ import type { PageProps, Metadata } from 'next';
 export async function generateMetadata({ params }: PageProps<{ keyId: string }>): Promise<Metadata> {
 
     const { keyId } = await params;
-    const product = keysCatalogDataItems.find(item => item.id === parseInt(keyId));
+    const product = keysCatalogDataItems.find(item => item.id === keyId);
 
     if (!product) {
         return {
@@ -28,7 +28,7 @@ export async function generateMetadata({ params }: PageProps<{ keyId: string }>)
 export default async function AboutKeyPage({ params }: PageProps<{ keyId: string }>) {
 
     const { keyId } = await params;
-    const product = keysCatalogDataItems.find(item => item.id === parseInt(keyId));
+    const product = keysCatalogDataItems.find(item => item.id === keyId);
 
     if (!product) {
         notFound();

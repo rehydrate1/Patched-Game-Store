@@ -1,7 +1,7 @@
 import type { ApplicationKey, PlatformKey } from "@/lib/data/indexData";
 
 export interface ProductStructure {
-    id: number;
+    id: string;
     name: string;
     price: string;
     picture: string;
@@ -15,7 +15,7 @@ export interface ProductStructure {
 
 export const keysCatalogDataItems: ProductStructure[] = [
     {
-        id: 1,
+        id: '1',
         name: "Grand Theft Auto V",
         price: "899",
         picture: "https://cdn.akamai.steamstatic.com/steam/apps/271590/header.jpg",
@@ -27,7 +27,7 @@ export const keysCatalogDataItems: ProductStructure[] = [
         developer: 'Rockstar Games'
     },
     {
-        id: 2,
+        id: '2',
         name: "Grand Theft Auto IV: The Complete Edition",
         price: "599",
         picture: "https://cdn.akamai.steamstatic.com/steam/apps/12210/header.jpg",
@@ -39,7 +39,7 @@ export const keysCatalogDataItems: ProductStructure[] = [
         developer: 'Rockstar Games'
     },
     {
-        id: 3,
+        id: '3',
         name: "The Witcher 3: Wild Hunt",
         price: "1199",
         picture: "https://cdn.akamai.steamstatic.com/steam/apps/292030/header.jpg",
@@ -51,7 +51,7 @@ export const keysCatalogDataItems: ProductStructure[] = [
         developer: 'CD PROJEKT RED'
     },
     {
-        id: 4,
+        id: '4',
         name: "Cyberpunk 2077",
         price: "1999",
         picture: "https://cdn.akamai.steamstatic.com/steam/apps/1091500/header.jpg",
@@ -63,7 +63,7 @@ export const keysCatalogDataItems: ProductStructure[] = [
         developer: 'CD PROJEKT RED'
     },
     {
-        id: 5,
+        id: '5',
         name: "Red Dead Redemption 2",
         price: "2499",
         picture: "https://cdn.akamai.steamstatic.com/steam/apps/1174180/header.jpg",
@@ -75,7 +75,7 @@ export const keysCatalogDataItems: ProductStructure[] = [
         developer: 'Rockstar Games'
     },
     {
-        id: 6,
+        id: '6',
         name: "Elden Ring",
         price: "3999",
         picture: "https://cdn.akamai.steamstatic.com/steam/apps/1245620/header.jpg",
@@ -87,7 +87,7 @@ export const keysCatalogDataItems: ProductStructure[] = [
         developer: 'FromSoftware Inc.'
     },
     {
-        id: 7,
+        id: '7',
         name: "Hollow Knight",
         price: "360",
         picture: "https://cdn.akamai.steamstatic.com/steam/apps/367520/header.jpg",
@@ -99,7 +99,7 @@ export const keysCatalogDataItems: ProductStructure[] = [
         developer: 'Team Cherry'
     },
     {
-        id: 8,
+        id: '8',
         name: "Stardew Valley",
         price: "349",
         picture: "https://cdn.akamai.steamstatic.com/steam/apps/413150/header.jpg",
@@ -111,7 +111,7 @@ export const keysCatalogDataItems: ProductStructure[] = [
         developer: 'ConcernedApe'
     },
     {
-        id: 9,
+        id: '9',
         name: "Baldur's Gate 3",
         price: "1999",
         picture: "https://cdn.akamai.steamstatic.com/steam/apps/1086940/header.jpg",
@@ -123,7 +123,7 @@ export const keysCatalogDataItems: ProductStructure[] = [
         developer: 'Larian Studios'
     },
     {
-        id: 10,
+        id: '10',
         name: "The Elder Scrolls V: Skyrim Special Edition",
         price: "1599",
         picture: "https://cdn.akamai.steamstatic.com/steam/apps/489830/header.jpg",
@@ -135,7 +135,7 @@ export const keysCatalogDataItems: ProductStructure[] = [
         developer: 'Bethesda Game Studios'
     },
     {
-        id: 11,
+        id: '11',
         name: "DOOM Eternal",
         price: "1999",
         picture: "https://cdn.akamai.steamstatic.com/steam/apps/782330/header.jpg",
@@ -147,7 +147,7 @@ export const keysCatalogDataItems: ProductStructure[] = [
         developer: 'id Software'
     },
     {
-        id: 12,
+        id: '12',
         name: "Hades",
         price: "899",
         picture: "https://cdn.akamai.steamstatic.com/steam/apps/1145360/header.jpg",
@@ -159,7 +159,7 @@ export const keysCatalogDataItems: ProductStructure[] = [
         developer: 'Supergiant Games'
     },
     {
-        id: 13,
+        id: '13',
         name: "Factorio",
         price: "1000",
         picture: "https://cdn.akamai.steamstatic.com/steam/apps/427520/header.jpg",
@@ -171,7 +171,7 @@ export const keysCatalogDataItems: ProductStructure[] = [
         developer: 'Wube Software LTD'
     },
     {
-        id: 14,
+        id: '14',
         name: "Terraria",
         price: "249",
         picture: "https://cdn.akamai.steamstatic.com/steam/apps/105600/header.jpg",
@@ -183,7 +183,7 @@ export const keysCatalogDataItems: ProductStructure[] = [
         developer: 'Re-Logic'
     },
     {
-        id: 15,
+        id: '15',
         name: "Sid Meier's Civilization VI",
         price: "1999",
         picture: "https://cdn.akamai.steamstatic.com/steam/apps/289070/header.jpg",

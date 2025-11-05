@@ -11,9 +11,9 @@ export default function PCHeaderItem({text, link, className = ''}: PCCHeaderItem
     return (
         <li>
             <Link href={link}>
-                <div className={`flex text-center justify-center items-center 
-                    p-1 rounded-md ${className} navItem`}>
-                    <h3 className={`p-1 px-2 `}>{text}</h3>
+                <div className={`flex text-center justify-center border mainHeaderNavItemsStyles items-center 
+                    p-1 rounded-lg ${className} `}>
+                    <h3 className={`p-1 px-3 `}>{text}</h3>
                 </div>
             </Link>
         </li>

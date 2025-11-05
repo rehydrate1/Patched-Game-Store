@@ -1,4 +1,14 @@
 import {FaqDataStructure} from "@/types";
+import {ElementType} from "react";
+import {
+    TagIcon,
+    ShieldCheckIcon,
+    GiftIcon,
+    RocketLaunchIcon,
+    ClockIcon,
+    SparklesIcon,
+} from '@heroicons/react/24/outline';
+
 
 export interface DashboardArrayOfDataStructure {
     id: number;
@@ -17,7 +27,7 @@ export interface DashboardTestimonialsDataStructure {
 }
 
 export interface DashboardPrivilegesStructure {
-    icon: 'TagIcon' | 'GiftIcon' | 'SparklesIcon' | 'RocketLaunchIcon' | 'ClockIcon' | 'ShieldCheckIcon' ;
+    icon: ElementType ;
     title: string;
     text: string;
 }
@@ -205,32 +215,32 @@ export const DashboardTestimonialsData: DashboardTestimonialsDataStructure[] = [
 
 export const DashboardPrivileges:DashboardPrivilegesStructure[] = [
     {
-        icon: 'TagIcon',
+        icon: TagIcon,
         title: 'Лучшие цены',
         text: 'Экономьте на каждой покупке благодаря нашим эксклюзивным скидкам и регулярным распродажам'
     },
     {
-        icon: 'GiftIcon',
+        icon: GiftIcon,
         title: 'Моментальная доставка',
         text: 'Не ждите ни секунды! Ключ от игры появится в вашем личном кабинете сразу после подтверждения оплаты'
     },
     {
-        icon: 'SparklesIcon',
+        icon: SparklesIcon,
         title: 'Игры в день релиза',
         text: 'Получайте доступ к самым ожидаемым новинкам в день их официального выхода и начинайте играть вместе со всем миром'
     },
     {
-        icon: 'RocketLaunchIcon',
+        icon: RocketLaunchIcon,
         title: 'Быстрое пополнение',
         text: 'Пополняйте баланс вашего Steam аккаунта за считанные секунды с помощью удобных и безопасных платежных систем'
     },
     {
-        icon: 'ClockIcon',
+        icon: ClockIcon,
         title: 'Круглосуточная поддержка',
         text: 'Наша команда поддержки доступна 24/7 и готова оперативно решить любой ваш вопрос в чате или по почте'
     },
     {
-        icon: 'ShieldCheckIcon',
+        icon: ShieldCheckIcon,
         title: 'Надежный сервис',
         text: 'Мы работаем только с официальными издателями, гарантируя легальность и работоспособность каждого ключа'
     },

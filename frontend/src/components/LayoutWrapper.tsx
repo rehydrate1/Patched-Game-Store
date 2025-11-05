@@ -1,7 +1,7 @@
 "use client"
 
 import { usePathname } from 'next/navigation';
-import MainHeader from "@/components/UI/headers/MainHeader/MainHeader";
+import MainHeader from "@/components/UI/headers/MainHeader";
 import ShopHeader from "@/components/UI/headers/ShopHeader/ShopHeader";
 import {ReactElement, ReactNode} from "react";
 import MainFooter from "@/components/UI/footers/MainFooter";

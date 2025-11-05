@@ -2,16 +2,9 @@
 
 import {
     ShoppingCartIcon,
-    TagIcon,
-    ShieldCheckIcon,
-    GiftIcon,
-    RocketLaunchIcon,
-    ClockIcon,
-    SparklesIcon,
     ChevronLeftIcon,
     ChevronRightIcon,
 } from '@heroicons/react/24/outline';
-
 import {Swiper, SwiperSlide} from 'swiper/react';
 import {Navigation} from 'swiper/modules';
 import 'swiper/css';
@@ -30,14 +23,6 @@ import {
     DashboardTestimonialsData
 } from "@/lib/data/dashboardData";
 
-const icons = {
-    TagIcon: TagIcon,
-    GiftIcon: GiftIcon,
-    SparklesIcon: SparklesIcon,
-    RocketLaunchIcon: RocketLaunchIcon,
-    ClockIcon: ClockIcon,
-    ShieldCheckIcon: ShieldCheckIcon,
-}
 
 export default function Dashboard() {
 
@@ -136,17 +121,14 @@ export default function Dashboard() {
                     <div className="container mx-auto px-6">
                         <h2 className="text-4xl font-bold text-center mb-20 text-white">Почему Patched?</h2>
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                            {DashboardPrivileges.map(privilege => {
-                                const IconComponent = icons[privilege.icon]
-                                return (
-                                    <MainPrivilegeCards
-                                        key={privilege.title}
-                                        title={privilege.title}
-                                        icon={IconComponent}
-                                        text={privilege.text}
-                                    />
-                                )
-                            })}
+                            {DashboardPrivileges.map(privilege => (
+                                <MainPrivilegeCards
+                                    key={privilege.title}
+                                    title={privilege.title}
+                                    icon={privilege.icon}
+                                    text={privilege.text}
+                                />
+                        ))}
                         </div>
                     </div>
                 </section>

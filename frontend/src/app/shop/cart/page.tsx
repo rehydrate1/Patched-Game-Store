@@ -1,13 +1,13 @@
-import Cert from './Cert'
+import Cart from './Cart'
 
 export const metadata = {
     title: 'Корзина товаров | Patched',
     description: 'Содержимое корзины пользователя магазина',
 }
 
-export default function CertPage(){
+export default function CartPage(){
 
     return (
-        <Cert />
+        <Cart />
     )
 }

@@ -5,7 +5,6 @@ export const metadata = {
     description: 'Страница пользовательского профиля магазина Patched',
 }
 
-
 export default function ProfilePage() {
 
     return (
