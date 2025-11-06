@@ -1,12 +1,9 @@
 import Link from "next/link";
+import {HeaderItemProps} from "@/types";
+import {memo} from "react";
 
-interface PCCHeaderItemProps {
-    text: string;
-    link: string;
-    className?: string;
-}
 
-export default function PCHeaderItem({text, link, className = ''}: PCCHeaderItemProps) {
+function PCHeaderItem({text, link, className = ''}: HeaderItemProps) {
 
     return (
         <li>
@@ -19,3 +16,5 @@ export default function PCHeaderItem({text, link, className = ''}: PCCHeaderItem
         </li>
     )
 }
+
+export default memo(PCHeaderItem);

@@ -1,28 +1,26 @@
 "use client"
 
-import { useState } from "react";
-import Link from "next/link";
+import {useCallback, memo, useState} from "react";
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
 import PCHeaderItem from "@/components/navItems/PCHeaderItem";
 import MobileHeaderItem from "@/components/navItems/MobileHeaderItem";
 import {headerNavItems} from "@/lib/data/indexData";
+import HeaderLoginBtn from "@/components/UI/headers/MainHeader/HeaderLoginBtn";
+import MainHeaderLogo from "@/components/UI/headers/MainHeader/MainHeaderLogo";
 
-export default function MainHeader() {
+function MainHeader() {
 
     const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
 
-    const toggleMenu = () => {
+    const toggleMenu = useCallback(() => {
         setIsMenuOpen(!isMenuOpen);
-    };
+    }, []);
 
     return (
-        <div className={`mainColor  relative`}>
+        <div className={`mainColor relative`}>
             <div className={`container mx-auto flex justify-between items-center text-white py-2.5`}>
-                <Link href={'/'}>
-                    <div className={'p-3'}>
-                        <h1 className='font-semibold text-2xl'>Patched</h1>
-                    </div>
-                </Link>
+
+                <MainHeaderLogo />
 
                 <div className={'hidden md:block'}>
                     <ul className={'flex gap-20 items-center'}>
@@ -36,10 +34,10 @@ export default function MainHeader() {
                     </ul>
                 </div>
 
-
-                <Link href={'/auth/login'} className={`hidden md:flex p-2 px-8 rounded-md text-center items-center myButtonColor `}>
-                    <h3 className={`font-bold text-m`}>Войти</h3>
-                </Link>
+                <HeaderLoginBtn
+                    isPcPlatform={true}
+                    toggleMenu={toggleMenu}
+                />
 
                 <div className="md:hidden">
                     <button onClick={toggleMenu} className="text-white p-2 focus:outline-none">
@@ -65,13 +63,14 @@ export default function MainHeader() {
                             />
                         ))}
                     </ul>
-                    <div className="p-4 border-t mb-5  border-gray-700">
-                        <Link href={'/auth/login'} onClick={toggleMenu} className={`block w-full mt-5 p-3 rounded-md text-center myButtonColor`}>
-                            <h3 className={`font-bold text-lg`}>Войти</h3>
-                        </Link>
-                    </div>
+                    <HeaderLoginBtn
+                        isPcPlatform={false}
+                        toggleMenu={toggleMenu}
+                    />
                 </div>
             )}
         </div>
     );
 }
+
+export default memo(MainHeader)

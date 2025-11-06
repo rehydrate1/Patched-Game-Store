@@ -1,14 +1,8 @@
 import Link from "next/link";
-import {MouseEventHandler} from "react";
+import {HeaderItemProps} from "@/types";
+import {memo} from "react";
 
-interface MobileHeaderItemProps {
-    text: string;
-    link: string;
-    functionName: MouseEventHandler;
-    className?: string;
-}
-
-export default function MobileHeaderItem({text, link, functionName, className = ''}: MobileHeaderItemProps) {
+function MobileHeaderItem({text, link, functionName, className = ''}: HeaderItemProps) {
 
     return (
         <li className="w-full">
@@ -21,3 +15,5 @@ export default function MobileHeaderItem({text, link, functionName, className = 
         </li>
     )
 }
+
+export default memo(MobileHeaderItem);

@@ -1,3 +1,5 @@
+import {MouseEventHandler} from "react";
+
 export interface BackEndResponse {
     error?: string;
 }
@@ -38,4 +40,11 @@ export interface AuthUserState {
     userName: string;
     email: string;
     created_at: string;
+}
+
+export interface HeaderItemProps {
+    text: string;
+    link: string;
+    functionName?: MouseEventHandler;
+    className?: string;
 }

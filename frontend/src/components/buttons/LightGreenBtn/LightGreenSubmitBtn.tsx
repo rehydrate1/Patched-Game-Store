@@ -1,7 +1,8 @@
+import {memo} from 'react'
 import {LightGreenBtnProps} from "@/components/buttons/LightGreenBtn/LightGreenBtn";
 
 
-export default function LightGreenSubmitBtn({label, disabled = false, className = ''}: LightGreenBtnProps) {
+function LightGreenSubmitBtn({label, disabled = false, className = ''}: LightGreenBtnProps) {
 
     return (
         <button
@@ -14,3 +15,5 @@ export default function LightGreenSubmitBtn({label, disabled = false, className 
         </button>
     )
 }
+
+export default memo(LightGreenSubmitBtn);

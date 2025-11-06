@@ -1,3 +1,5 @@
+import {memo} from "react";
+
 export interface LightGreenBtnProps {
     label: string;
     disabled?: boolean;
@@ -5,7 +7,7 @@ export interface LightGreenBtnProps {
     onClick?: () => void;
 }
 
-export default function LightGreenBtn({onClick, label, className = ''}: LightGreenBtnProps) {
+function LightGreenBtn({onClick, label, className = ''}: LightGreenBtnProps) {
 
     return (
         <button
@@ -16,3 +18,5 @@ export default function LightGreenBtn({onClick, label, className = ''}: LightGre
         </button>
     )
 }
+
+export default memo(LightGreenBtn);
