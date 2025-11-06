@@ -1,53 +1,106 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
-
-interface AuthUserState {
-    id: string;
-    userName: string;
-    email: string;
-}
+import {baseBackendUrl} from "@/lib";
+import {AuthBackendResponseStructure, AuthUserState, LoginRequestStructure, RegisterRequestStructure} from "@/types";
 
 interface AuthState{
-    isAuthenticated: boolean;
     userData: AuthUserState | null;
+    isAuthenticated: boolean;
+    accessToken: string | null;
+    refreshToken: string | null;
     isLoading: boolean;
 
-    initialize: () => Promise<void>;
-    logout: () => Promise<boolean>;
-}
+    login: (payload: LoginRequestStructure) => Promise<{ ok: true } | { ok: false; message: string }>;
+    register: (payload: RegisterRequestStructure) => Promise<{ ok: true } | { ok: false; message: string }>;
 
+    logout: () => void;
+}
 
 export const useAuthStore = create<AuthState>()(
     persist(
         (set, get) => ({
 
-            isAuthenticated: false,
             userData: null,
+            isAuthenticated: false,
+            accessToken: null,
+            refreshToken: null,
             isLoading: false,
 
-            initialize: async () => {
-                if (get().isLoading) return;
+            login: async (payload: LoginRequestStructure) => {
+                if (get().isLoading) return { ok: false, message: "Идёт запрос, подождите..." };
                 set({ isLoading: true });
+
                 try {
-                    const response = await fetch('/api/auth/session', {
-                        method: 'GET',
-                        credentials: 'include',
-                        cache: 'no-store',
+                    const response = await fetch(`${baseBackendUrl}/auth/login`, {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        credentials: "include",
+                        body: JSON.stringify(payload),
                     });
 
-                    if (response.ok) {
-                        const data = (await response.json()) as { user: AuthUserState };
-                        set({ isAuthenticated: true, userData: data.user });
-                    } else if (response.status === 401) {
-                        set({ isAuthenticated: false, userData: null });
-                    } else {
-                        // На неожиданные статусы также считаем неавторизованным
-                        set({ isAuthenticated: false, userData: null });
-                        // Можно залогировать текст ошибки при необходимости
+                    if (!response.ok) {
+                        const data = await response.json().catch(() => ({ message: "Ошибка авторизации" }));
+                        return { ok: false, message: data?.message || "Ошибка авторизации" };
                     }
-                } catch (e) {
-                    console.error(e)
-                    set({ isAuthenticated: false, userData: null });
+
+                    const data = (await response.json()) as AuthBackendResponseStructure;
+
+                    set({
+                        userData: {
+                            id: data.id,
+                            email: data.email,
+                            userName: data.userName,
+                            created_at: data.created_at,
+                        },
+                        accessToken: data.access_token,
+                        refreshToken: data.refresh_token,
+                        isAuthenticated: true,
+                    });
+
+                    return { ok: true };
+                } catch (error) {
+                    console.error(error);
+                    return { ok: false, message: "Не удалось связаться с сервером" };
+                } finally {
+                    set({ isLoading: false });
+                }
+            },
+
+            register: async (payload: RegisterRequestStructure) => {
+                if (get().isLoading) return { ok: false, message: "Идёт запрос, подождите..." };
+                set({ isLoading: true });
+
+                try {
+                    const response = await fetch(`${baseBackendUrl}/auth/register`, {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        credentials: "include",
+                        body: JSON.stringify(payload),
+                    });
+
+                    if (!response.ok) {
+                        const data = await response.json().catch(() => ({ message: "Ошибка регистрации" }));
+                        return { ok: false, message: data?.message || "Ошибка регистрации" };
+                    }
+
+                    const data = (await response.json()) as AuthBackendResponseStructure;
+
+                    set({
+                        userData: {
+                            id: data.id,
+                            email: data.email,
+                            userName: data.userName,
+                            created_at: data.created_at,
+                        },
+                        accessToken: data.access_token,
+                        refreshToken: data.refresh_token,
+                        isAuthenticated: true,
+                    });
+
+                    return { ok: true };
+                } catch (error) {
+                    console.error(error);
+                    return { ok: false, message: "Не удалось связаться с сервером" };
                 } finally {
                     set({ isLoading: false });
                 }
@@ -57,10 +110,10 @@ export const useAuthStore = create<AuthState>()(
             logout: async () => {
                 try {
                     const resp = await fetch('/api/auth/logout', { method: 'POST' });
-                    set({ isAuthenticated: false, userData: null });
+                    set({ userData: null, accessToken: null, refreshToken: null, isAuthenticated: false });
                     return resp.ok;
                 } catch {
-                    set({ isAuthenticated: false, userData: null });
+                    set({ userData: null, accessToken: null, refreshToken: null, isAuthenticated: false });
                     return false;
                 }
             },

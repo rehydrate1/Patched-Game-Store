@@ -20,6 +20,7 @@ import {useInputField} from "@/lib/hooks/useInputField";
 import {useSelectField} from "@/lib/hooks/useSelectField";
 import {usePageUtils} from "@/lib/hooks/usePageUtils";
 import {FormEvent} from "react";
+import Aurora from "@/components/UI/modern/Aurora";
 
 export default function AddNewKey() {
 
@@ -124,9 +125,17 @@ export default function AddNewKey() {
     }
 
     return (
-        <div className="flex items-center justify-center min-h-screen p-4 mt-8">
+        <div className="relative flex items-center justify-center min-h-screen p-4">
+            <div className="absolute inset-0 z-0">
+                <Aurora
+                    colorStops={["#099f5f", "#00FE92", "#00d17a"]}
+                    amplitude={0.6}
+                    speed={0.4}
+                    blend={0.45}
+                />
+            </div>
 
-            <div className={`w-full max-w-3xl p-6 space-y-6 rounded-lg mainColor`}>
+            <div className={`relative w-full max-w-3xl p-6 mt-4 space-y-6 rounded-lg mainColor`}>
                 <h1 className="text-2xl text-white font-semibold text-center">
                     Добавить новый ключ
                 </h1>

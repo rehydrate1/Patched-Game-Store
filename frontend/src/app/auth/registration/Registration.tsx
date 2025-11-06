@@ -6,11 +6,11 @@ import MainInput from "@/components/Inputs/MainInput";
 import HideInput from "@/components/Inputs/HideInput";
 import {validateConfirmPassword, validateUserEmail, validateUserName, validateUserPassword} from "@/lib/validators";
 import ServerError from "@/components/errors/ServerError";
-import {BackEndResponse} from "@/types";
 import LightGreenSubmitBtn from "@/components/buttons/LightGreenBtn/LightGreenSubmitBtn";
 import {usePageUtils} from "@/lib/hooks/usePageUtils";
 import {useInputField} from "@/lib/hooks/useInputField";
 import AuthContext from "@/components/UI/UiContext/AuthContext";
+import {useAuthStore} from "@/lib/store/authStore";
 
 export default function Registration(){
 
@@ -47,29 +47,24 @@ export default function Registration(){
         setIsSubmitting(true)
 
         try {
-            const response = await fetch("http://localhost:8080/api/user/registration", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                    userName: userName.inputState.value,
-                    email: email.inputState.value,
-                    password: password.inputState.value,
-                }),
-            });
+            const result = await useAuthStore.getState().register({
+                userName: userName.inputState.value,
+                email: email.inputState.value,
+                password: password.inputState.value,
+                rememberMe: false,
+            })
 
-            const data = (await response.json()) as BackEndResponse;
-
-            if (response.ok) {
-                router.replace('/');
-            } else {
-                setServerError(data.error || "Ошибка регистрации. Проверьте правильность введенных данных.");
-                setIsSubmitting(false);
+            if (result.ok) {
+                router.replace('/')
+                return
             }
-        }  catch (err) {
+
+            setServerError(result.message || "Ошибка регистрации. Проверьте правильность введенных данных.");
+        } catch (error) {
             setServerError("Не удалось связаться с сервером. Пожалуйста, проверьте ваше интернет-соединение или попробуйте позже.");
-            console.error("Registration error:", err);
+            console.error("Registration error:", error);
+            setIsSubmitting(false);
+        } finally {
             setIsSubmitting(false);
         }
     }

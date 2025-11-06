@@ -7,10 +7,10 @@ import HideInput from "@/components/Inputs/HideInput";
 import {validateUserEmail, validateUserPassword} from "@/lib/validators";
 import ServerError from "@/components/errors/ServerError";
 import {usePageUtils} from "@/lib/hooks/usePageUtils";
-import {BackEndResponse} from "@/types";
 import LightGreenSubmitBtn from "@/components/buttons/LightGreenBtn/LightGreenSubmitBtn";
 import {useInputField} from "@/lib/hooks/useInputField";
 import AuthContext from "@/components/UI/UiContext/AuthContext";
+import {useAuthStore} from "@/lib/store/authStore";
 
 export default function Login(){
 
@@ -41,29 +41,23 @@ export default function Login(){
         setIsSubmitting(true);
 
         try {
-            const response = await fetch("http://localhost:8080/api/user/login", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                    email: email.inputState.value,
-                    password: password.inputState.value,
-                    rememberMe: rememberMe,
-                }),
+            const result = await useAuthStore.getState().login({
+                email: email.inputState.value,
+                password: password.inputState.value,
+                rememberMe: rememberMe,
             });
 
-            const data = (await response.json()) as BackEndResponse;
-
-            if (response.ok) {
-                router.replace('/');
-            } else {
-                setServerError(data.error || "Ошибка авторизации. Проверьте правильность введенных данных.");
-                setIsSubmitting(false);
+            if (result.ok) {
+                router.replace("/");
+                return;
             }
-        }  catch (err) {
+
+            setServerError(result.message || "Ошибка авторизации. Проверьте правильность введенных данных.");
+        } catch (error) {
             setServerError("Не удалось связаться с сервером. Пожалуйста, проверьте ваше интернет-соединение или попробуйте позже.");
-            console.error("Login error:", err);
+            console.error("Login error:", error);
+            setIsSubmitting(false);
+        } finally {
             setIsSubmitting(false);
         }
     }

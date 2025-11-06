@@ -17,3 +17,25 @@ export interface CartItemPayload {
 export interface CartItem extends CartItemPayload {
     quantity: number;
 }
+
+export interface LoginRequestStructure {
+    email: string;
+    password: string;
+    rememberMe: boolean;
+}
+
+export interface RegisterRequestStructure extends LoginRequestStructure {
+    userName: string;
+}
+
+export interface AuthBackendResponseStructure extends AuthUserState {
+    access_token: string;
+    refresh_token: string;
+}
+
+export interface AuthUserState {
+    id: string;
+    userName: string;
+    email: string;
+    created_at: string;
+}
