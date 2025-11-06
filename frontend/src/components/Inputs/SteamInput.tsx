@@ -1,3 +1,5 @@
+import {memo} from "react";
+
 interface SteamInputProps {
     placeholder?: string,
     id: string,
@@ -7,7 +9,7 @@ interface SteamInputProps {
     error?: string;
 }
 
-export default function SteamInput({ id, placeholder = '', value, label, onChange, error }: SteamInputProps) {
+function SteamInput({ id, placeholder = '', value, label, onChange, error }: SteamInputProps) {
 
     return (
         <>
@@ -37,3 +39,5 @@ export default function SteamInput({ id, placeholder = '', value, label, onChang
         </>
     )
 }
+
+export default memo(SteamInput)

@@ -3,7 +3,7 @@
 import {
     CheckIcon
 } from '@heroicons/react/24/outline';
-import {useState, useEffect, FormEvent} from "react";
+import {useState, useEffect, FormEvent, useMemo} from "react";
 import SteamInput from "@/components/Inputs/SteamInput";
 import Link from "next/link";
 import {validatePromoCode, validateSteamBalance, validateSteamLogin} from "@/lib/validators";
@@ -24,6 +24,16 @@ export default function SteamBalance() {
     const [endPrice, setEndPrice] = useState<number>(0);
 
     const {serverError, setServerError, isSubmitting, setIsSubmitting, router} = usePageUtils()
+
+    const MarkIcon = useMemo(() => (
+        <CheckIcon className={`text-green-400 h-6 w-6 font-bold`}/>
+    ), [])
+
+    const ButtonToShop = useMemo(() => (
+        <Link href="/shop/catalog/keys" className="bg-white text-black font-bold py-2 px-6 rounded-lg transition-transform hover:scale-105">
+            Перейти в магазин
+        </Link>
+    ), [])
 
     useEffect(() => {
         const balanceNumber = parseFloat(balance.inputState.value) || 0;
@@ -169,18 +179,16 @@ export default function SteamBalance() {
                     <div className="mainColor p-6 rounded-xl border border-white/10">
                         <h3 className="text-xl font-bold mb-4">Почему выбирают Patched?</h3>
                         <ul className="space-y-3 text-gray-300">
-                            <li className="flex items-center gap-3"><CheckIcon className={`text-green-400 h-6 w-6 font-bold`}/> Моментальное пополнение</li>
-                            <li className="flex items-center gap-3"><CheckIcon className={`text-green-400 h-6 w-6 font-bold`}/> Гарантия безопасности платежа</li>
-                            <li className="flex items-center gap-3"><CheckIcon className={`text-green-400 h-6 w-6 font-bold`}/> Отзывчивая поддержка</li>
-                            <li className="flex items-center gap-3"><CheckIcon className={`text-green-400 h-6 w-6 font-bold`}/>Регулярные акции и скидки</li>
+                            <li className="flex items-center gap-3">{MarkIcon} Моментальное пополнение</li>
+                            <li className="flex items-center gap-3">{MarkIcon} Гарантия безопасности платежа</li>
+                            <li className="flex items-center gap-3">{MarkIcon} Отзывчивая поддержка</li>
+                            <li className="flex items-center gap-3">{MarkIcon} Регулярные акции и скидки</li>
                         </ul>
                     </div>
                     <div className="bg-gradient-to-r from-green-500 to-green-800 p-6 rounded-xl  text-center flex flex-col items-center">
                         <h3 className="text-2xl font-bold mb-2">Новые игры уже в Patched!</h3>
                         <p className="font-bold mb-4 max-w-xs">Покупайте ключи для Steam, Epic Games и других платформ по лучшим ценам.</p>
-                        <Link href="/shop/catalog/keys" className="bg-white text-black font-bold py-2 px-6 rounded-lg transition-transform hover:scale-105">
-                            Перейти в магазин
-                        </Link>
+                        {ButtonToShop}
                     </div>
                 </div>
 

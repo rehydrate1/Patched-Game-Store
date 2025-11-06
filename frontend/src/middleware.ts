@@ -1,7 +1,7 @@
 import type {NextRequest} from 'next/server'
 import {NextResponse} from 'next/server'
 
-const AUTH_COOKIE_NAME = 'token'; /// заменить на вроде access token
+const AUTH_COOKIE_NAME = '213'; /// заменить на вроде access token
 const AUTH_PATHS = ['/auth/login', '/auth/registration'];
 const DEFAULT_REDIRECT_PATH = '/';
 

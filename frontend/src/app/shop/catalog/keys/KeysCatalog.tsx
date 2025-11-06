@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect, useMemo } from 'react';
+import {useState, useEffect, useMemo, useCallback} from 'react';
 import {useRouter} from "next/navigation";
 import MainProductCard from "@/components/UI/productCards/MainProductCard/MainProductCard";
 import {keysCatalogDataItems} from "@/lib/data/keysCatalogData";
@@ -38,8 +38,8 @@ export default function KeysCatalog() {
     }, []);
 
     useEffect(() => {
-        let tempKeys = [...keysCatalogDataItems];
 
+        let tempKeys = [...keysCatalogDataItems];
 
         const from = parseFloat(priceFrom.inputState.value);
         const to = parseFloat(priceTo.inputState.value);
@@ -98,17 +98,17 @@ export default function KeysCatalog() {
         );
     };
 
-    const resetFilters = () => {
+    const resetFilters = useCallback(() => {
         priceFrom.setValue('');
         priceTo.setValue('');
         setSelectedPlatforms([]);
         setSelectedGenres([]);
         setSelectedApplications([]);
-    };
+    }, []);
 
-    const addNewKeyPage = () => {
+    const addNewKeyPage = useCallback(() => {
         router.push('/shop/catalog/keys/new');
-    };
+    }, []) ;
 
     return (
         <div className="flex flex-col md:flex-row container mx-auto my-10 gap-8">

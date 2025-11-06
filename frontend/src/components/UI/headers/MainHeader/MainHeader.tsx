@@ -14,7 +14,7 @@ function MainHeader() {
 
     const toggleMenu = useCallback(() => {
         setIsMenuOpen(!isMenuOpen);
-    }, []);
+    }, [isMenuOpen]);
 
     return (
         <div className={`mainColor relative`}>

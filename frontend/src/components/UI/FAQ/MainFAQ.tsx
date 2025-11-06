@@ -1,10 +1,8 @@
-"use client"
-
-import {useState} from "react";
+import {useState, memo} from "react";
 import {ChevronDownIcon} from '@heroicons/react/24/outline';
 import {FaqDataStructure} from "@/types";
 
-export default function MainFAQ({faqData}:{faqData: FaqDataStructure[]}) {
+function MainFAQ({faqData}:{faqData: FaqDataStructure[]}) {
 
     const [openFaq, setOpenFaq] = useState<number | null>(0);
 
@@ -36,3 +34,5 @@ export default function MainFAQ({faqData}:{faqData: FaqDataStructure[]}) {
         </div>
     )
 }
+
+export default memo(MainFAQ)
